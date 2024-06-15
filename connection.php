@@ -6,7 +6,7 @@ public static $connection;
 
 public static function setpConnection(){
     if(!isset(Database::$connection)){
-        Database::$connection=new mysqli("localhost","root","ThisisMysqlPW123","eshop","3306");
+        Database::$connection=new mysqli("localhost","root","ThisisMysqlPW123","artshopnew","3306");
     }
 }
 

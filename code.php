@@ -105,7 +105,7 @@ if (isset($_POST['register_btn'])) {
                 $_SESSION['status'] = "<h3>Registration Successful!</h3> <br>  <h4>Please Verify your Email</h4>";
             } else {
                 $_SESSION['status'] = "Registration Failed";
-                // header("Location: register.php");
+                header("Location: register.php");
             }
         }
     }

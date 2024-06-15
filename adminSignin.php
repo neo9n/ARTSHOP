@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <label class="form-label">Enter the verification code you got by an email</label>
-                                            <input type="text" class="form-control" id="vcode">
+                                            <input type="text" class="form-control" id="vcode">   <span id="shopNameError" class="error-message"></span>
                                         </div>
 
                                         <div class="modal-footer">

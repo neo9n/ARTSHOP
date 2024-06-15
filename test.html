@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/bootstrap.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="#" class="logo">Mercury</a>
+        <div class="search">
+          <input type="text" class="form-control" placeholder="Search">
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="user-dropdown">
+          <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="images/profile-pic.jpg" alt="Profile Picture" class="rounded-circle">
+              <span class="ms-2">Michelle Max</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Sign Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <nav class="nav">
+    <div class="container">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#" class="nav-link">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Yearly Sales</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Analytics</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Widgets</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Components</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="#">Invoices</a></li>
+            <li><a class="dropdown-item" href="#">Tables</a></li>
+            <li><a class="dropdown-item" href="#">Contacts</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Subscribers</h5>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="h2">✔992</span>
+                <i class="fas fa-chart-line text-success"></i>
+              </div>
+              <p class="card-text text-muted">18% higher than last month</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sales</h5>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="h2">✔$12,456</span>
+                <i class="fas fa-chart-line text-success"></i> </div>
+              <p class="card-text text-muted">25% increase from last week</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="card">
+            </div>
+        </div>
+        </div>
+    </div>
+  </main>
+  </body>
+</html>

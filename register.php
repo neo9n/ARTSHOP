@@ -24,56 +24,52 @@ $page_title = "Sign In"
                         <h1 class="headings">Sign In &</h1>
                         <h5>Step into the retail realm with flair</h5>
                     </div>
-                    <div class="card-body">                        
-                            <div class="form-group mb-3">
-                                <label >Name</label>
-                                <input type="text" name="name" id="name" class="form-control">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label >Mobile Number</label>
-                                <input type="text" name="mobile" id="mobile" class="form-control">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label >Email</label>
-                                <input type="text" name="email" id="email" class="form-control">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label >Password</label>
-                                <input type="text" name="pw" id="pw" class="form-control">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label >Confirm Password</label>
-                                <input type="text" name="cpw" id="cpw" class="form-control">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label >Gender</label>
-                                <select class="form-select" id="gender">
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label>Name</label>
+                            <input type="text" name="name" id="name" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Mobile Number</label>
+                            <input type="text" name="mobile" id="mobile" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Email</label>
+                            <input type="text" name="email" id="email" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Password</label>
+                            <input type="password" name="pw" id="pw" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Confirm Password</label>
+                            <input type="password" name="cpw" id="cpw" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Gender</label>
+                            <select class="form-select" id="gender">
 
-                                    <?php
+                                <?php
 
-                                    require "connection.php";
+                                require "connection.php";
 
-                                    $resultset = Database::search("SELECT * FROM `gender`");
-                                    $n = $resultset->num_rows;
+                                $resultset = Database::search("SELECT * FROM `gender`");
+                                $n = $resultset->num_rows;
 
-                                    for ($x = 0; $x < $n; $x++) {
-                                        $f = $resultset->fetch_assoc();
-                                    ?>
+                                for ($x = 0; $x < $n; $x++) {
+                                    $f = $resultset->fetch_assoc();
+                                ?>
 
-                                        <option value="<?php echo $f["id"]; ?>"><?php echo $f["gender_name"]; ?></option>
+                                    <option value="<?php echo $f["id"]; ?>"><?php echo $f["type"]; ?></option>
 
-                                    <?php
-
-                                    }
-
-                                    ?>
-
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <button onclick="signUp();" class="btn btn-primary">Sign In</button>
-                                <!-- id="submitButton" type="submit" name="register_btn"  -->
-                            </div>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button onclick="signUp();" class="button alternative">Sign In</button>
+                        </div>
                         </form>
                     </div>
                 </div>

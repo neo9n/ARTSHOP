@@ -12,8 +12,10 @@
         ?> - Artisan Alley
     </title>
     <link rel="icon" href="icons/logoSVG.svg" type="image/svg+xml">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" >
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="styles/buttons.scss">
+    <link rel="stylesheet" href="styles/footer.scss">
+    <link rel="stylesheet" href="styles/home.scss">
     <link rel="stylesheet" href="style.css">
 </head>
 
