@@ -5,20 +5,29 @@ $page_title = "Welcome to Seller Side"
 <?php include('includes/header.php'); ?>
 <?php include('includes/navbar.php'); ?>
 
-<div class="container">
-    <div class="dropdown">
-        <button class="dropbtn">Tharindu Geeshan</button>
-        <div class="dropdown-content">
-            <a href="#">View your profile</a>
-            <a href="#">Purchases and reviews</a>
-            <a href="#">Messages</a>
-            <a href="#">Special offers</a>
-            <a href="#">Etay Registry</a>
-            <a href="#">Account settings</a>
-            <a href="#">Sign out</a>
-        </div>
-    </div>
+<?php
+include('connection.php');
 
+// Check if the user is logged in as an administrator
+if (!isset($_SESSION['admin'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Display the admin dashboard
+?>
+
+<!-- HTML code for the admin panel layout -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <!-- Admin panel content -->
+    <!-- You can add sections for user management, product management, order tracking, etc. -->
+    <div class="col-md-12 mt-1">
+      <h2>Admin Panel</h2>
+      <p>Welcome to the admin panel!</p>
+    </div>
+  </div>
 </div>
 
 

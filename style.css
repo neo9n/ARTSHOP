@@ -521,7 +521,8 @@ select {
 }
 
 .search-box {
-  /* Existing styles */
+  /* Existing styles */  
+  border: 1px solid #ced4da;
   transition: all 0.3s ease-in-out;
 }
 
@@ -534,6 +535,10 @@ select {
 .stats-section {
   display: flex;
   justify-content: space-around;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .stat-card {
@@ -542,6 +547,9 @@ select {
   text-align: center;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .stat-card h3 {

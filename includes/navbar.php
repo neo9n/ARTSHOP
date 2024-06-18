@@ -1,6 +1,6 @@
 <div class="box">
   <nav class="navbar navbar-expand-lg navbar-dark container box">
-    
+
     <a href="index.php">
       <img src="icons/logoSVG.svg" alt="Logo" class="logo" title="Logo">
     </a>
@@ -31,6 +31,12 @@
           <a class="nav-link" href="addShop.php">
             <img src="icons/seller.svg" alt="Shop Management">
           </a>
+          <div class="dropdown dropdown">
+            <div class="dropdown-content">
+              <a href="#">Add My Store</a>
+              <a href="#">Manage My Store</a>
+            </div>
+          </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#">

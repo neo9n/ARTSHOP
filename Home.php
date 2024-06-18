@@ -21,7 +21,7 @@ include('includes/navbar.php');
     </div>
 </div>
 
-<?php include('home.html'); ?>
+<?php include('htmlFiles/home.html'); ?>
 
 <br>
 

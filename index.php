@@ -5,7 +5,7 @@ session_start();
 <?php include('includes/navbar.php'); ?>
 
 
-<?php include('home.html'); ?>
+<?php include('htmlFiles/home.html'); ?>
 
 
 <?php include('includes/footer.php'); ?>
