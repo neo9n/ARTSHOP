@@ -812,18 +812,20 @@ function signUp() {
     r.send(form);
   }
 }
-function changeTab(Sectionid, event) {
-  event.preventDefault(); // Prevent the default action of the anchor tag
-  const section = document.getElementById(Sectionid);
-  const container = document.getElementById("tab");
+function changeTab(sectionId, event) {
+    event.preventDefault(); // Prevent default link behavior
 
-  if (section && container) {
-    container.innerHTML = ""; // Clear the container
-    container.appendChild(section);
-  } else {
-    console.error("Invalid Sectionid or container not found.");
-  }
+    // Hide all sections
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+
+    // Show the selected section
+    const sectionToShow = document.getElementById(sectionId);
+    sectionToShow.style.display = 'block';
 }
+
 
 function testSwal() {
   if (true) {

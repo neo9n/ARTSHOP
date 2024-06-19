@@ -1,18 +1,129 @@
+.custom-col {
+  flex: 0 0 72.6667%;
+  max-width: 72.6667%;
+}
+
+.com{
+  color: black;
+}
+
+h1{
+  font-family: 'FS-Me-Bold';
+}
+
+.roundBox {
+  background-color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);    
+}
+
+.market-management {
+  font-family: 'Raleway';
+  text-transform: uppercase;
+  position: absolute;
+  left: 30px; /* Adjust left position as needed */
+  top: 50%;
+  font-size: 40px;
+  transform: translateY(-50%);
+
+}
+
+@media (max-width: 768px) {
+  .navbar-expand-lg {
+    flex-direction: column;
+  }
+} 
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('font/Raleway-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway-medium';
+  src: url('font/Raleway-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway-semibold';
+  src: url('font/Raleway-SemiBold.ttf') format('truetype');
+  src: url();
+}
+
+@font-face {
+  font-family: 'FS-Me-Medium';
+  src: url('font/FS-Me-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'FS-Me-Regular';
+  src: url('font/FS-Me-Regular.otf') format('opentype');
+  src: url();
+}
+
+@font-face {
+  font-family: 'FS-Me-Bold';
+  src: url('font/FS-Me-Bold.otf') format('opentype');
+  src: url();
+}
+
+@font-face {
+  font-family: 'FS-Me-Black';
+  src: url('font/FS-Me-Black.otf') format('opentype');
+  src: url();
+  src: url();
+}
+
+@font-face {
+  font-family: 'Raleway-light';
+  src: url('font/Raleway-Light.ttf') format('truetype');
+}
+
+.dashboard-list-heading {
+  font-family: 'Raleway', sans-serif;
+  display: inline-flex;
+  align-content: flex-end;
+  flex-direction: row;
+  padding-right: 30px;
+}
+
+
+.dashboard-list-sub-heading {
+  font-family: 'Raleway-light', sans-serif;
+  display: inline-flex;
+  flex-direction: row;
+}
+.dashboard-list {
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+  color: black;
+}
+
+
+.dash {
+  margin: 10px;
+  height: 100vh;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  padding-top: 10px;
+}
+
 .custom-control-input-error {
   height: 10px;
-  width: 10px; 
+  width: 10px;
   color: rgb(191, 71, 71);
 }
 
 .custom-control-input {
   height: 10px;
-  width: 10px; 
+  width: 10px;
   transition: height 0.3s ease, width 0.3s ease, box-shadow 0.3s ease;
 }
 
 .custom-control-input:hover {
   cursor: pointer;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.75); 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.75);
 }
 
 .error {
@@ -23,7 +134,7 @@
 .error-message {
   display: none;
   color: red;
-  font-size: 12px; 
+  font-size: 12px;
 }
 
 .video-preview {
@@ -364,6 +475,7 @@ select {
 
 .nav-item {
   margin: 0 10px;
+  padding-top: 10px;
 }
 .box {
   background-color: #abc9ea;
@@ -467,12 +579,33 @@ select {
   font-weight: bold;
 }
 
-/* market management */
 
 .header {
-  background-color: #333;
-  color: #fff;
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  color: #ffffff;
   padding: 10px 0;
+  flex-direction: column;
+}
+
+.header-content {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: end;
+  flex-direction: column;
+  padding: 0px;
+  margin: none;
+}
+
+.header .container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
 }
 
 .marketmBOX {
@@ -497,8 +630,8 @@ select {
 }
 
 .sidebar {
-  background-color: #333;
-  color: #fff;
+  background-color: black;
+  color: #000000;
 }
 
 .sidebar ul {
@@ -521,7 +654,7 @@ select {
 }
 
 .search-box {
-  /* Existing styles */  
+  /* Existing styles */
   border: 1px solid #ced4da;
   transition: all 0.3s ease-in-out;
 }
