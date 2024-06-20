@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Overview</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Market Overview</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+                <h2>$36,2531.00 USD <span class="text-success">(+1.37%)</span></h2>
+                <canvas id="marketOverviewChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to render the chart
+        var ctx = document.getElementById('marketOverviewChart').getContext('2d');
+        var marketOverviewChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                datasets: [
+                    {
+                        label: 'Last week',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: [200, 250, 180, 200, 270, 240, 260, 210, 230, 220, 190, 280]
+                    },
+                    {
+                        label: 'This week',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        data: [220, 280, 200, 220, 300, 260, 280, 230, 250, 240, 210, 300]
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

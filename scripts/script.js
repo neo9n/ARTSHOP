@@ -1,3 +1,42 @@
+function adminLogin(){
+  var e = document.getElementById("email");
+  var pw = document.getElementById("password");
+  if (!e.value.trim()) {
+    swal("Please enter your Email!");
+    return;
+  } else if (!isValidEmail(e.value)) {
+    swal("The email you tried to enter is not valid!");
+    return;
+  } else if (!pw.value.trim()) {
+    swal("Please enter your Password!");
+    return;
+  } else {
+    var form = new FormData();
+    form.append("e", e.value);
+    form.append("pw", pw.value);
+    form.append("rememberMe","2");
+
+    var r = new XMLHttpRequest();
+
+    r.onreadystatechange = function () {
+      if (r.readyState == 4) {
+        var text = r.responseText;
+        console.log("Response from server:", text);
+        if (text == "Success") {
+          SuccessM("You have successfully Logged In!");
+          window.location.href = "adminPanel.php";
+        } else if (text == "Error") {
+          ErrorM("Invalid Email or Password. Please try again.");
+        } else {
+          ErrorM("Something went wrong!");
+        }
+      }
+    };
+    r.open("POST", "signInProcess.php", true);
+    r.send(form);
+  }
+}
+
 function checkRadioButtons(btnGroupName) {
   var op = false;
   var radios = document.getElementsByName(btnGroupName);

@@ -5,10 +5,10 @@ $page_title = "Market Management";
 <?php include('includes/header.php'); ?>
 <?php include('includes/navbar.php'); ?>
 
-<section class="bg-black text-light p-5 text-sm-start">
+<section class="bg-black text-light p-5 text-sm-start align-items-center justify-content-center">
     <div class="container-fluid">
         <div class="d-flex">
-            <div class="header-text">
+            <div class="header-text ">
                 <h1>Shop Management</h1>
             </div>
             <div class="text-end d-block side-text-header ms-auto">
@@ -20,12 +20,12 @@ $page_title = "Market Management";
     </div>
 </section>
 
-<section class="bg-black text-dark p-0 text-sm-start m-0">
+<section class="bg-black text-dark p-0 text-sm-start m-0 vh-100">
     <div class="container-fluid  m-0 p-0">
         <div class="row d-flex m-0 p-0">
             <div class="roundBox rounded p-2 col-3 bg-black p-2">
-                <nav class="rounded sidebar m-0">
-                    <ul class="nav flex-column">
+                <nav class="rounded sidebar m-0 pb-5">
+                    <ul class="nav flex-column ">
                         <li class="nav-item ">
                             <input type="text" class="form-control search-box dashboard-list dashboard-list-sub-heading" placeholder="Search" />
                         </li>
@@ -59,9 +59,7 @@ $page_title = "Market Management";
             </div>
             <div class="roundBox rounded p-2 col-9 bg-black p-2">
                 <div class="roundBox p-3 m-0 rounded m-0 bg-light">
-                    <div id="tab" class="active-tab">
-
-
+                    <div id="tab" class="active-tab" >
                         <section id="dash" class="bg-light text-black p-5 text-sm-start m-0 section" style="display: none;">
                             <div class="text-start mb-3">
                                 <h2>Dashboard</h2>

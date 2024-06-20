@@ -1,3 +1,16 @@
+body{
+  height: 100vh;
+  width: auto;
+}
+
+.full-height {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .custom-col {
   flex: 0 0 72.6667%;
   max-width: 72.6667%;
@@ -432,7 +445,7 @@ select {
 }
 
 * {
-  font-family: "Quicksand";
+  font-family: "Raleway-Medium";
   font-size: 14px;
 }
 
