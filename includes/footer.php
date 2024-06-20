@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="scripts/script.js"></script>
 <script src="scripts/creds.js"></script>
 <script src="scripts/bootstrap.bundle.js"></script>

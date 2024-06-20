@@ -1,4 +1,71 @@
-function adminLogin(){
+document.addEventListener("DOMContentLoaded", function () {
+  loadGraphs();
+  initializeFileInput();
+});
+
+function loadGraphs() {
+  var labels = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
+  var datasets = [
+    {
+      label: "Last week",
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      borderWidth: 1,
+      data: [200, 250, 180, 200, 270, 240, 260, 210, 230, 220, 190, 280],
+    },
+    {
+      label: "This week",
+      backgroundColor: "rgba(75, 192, 192, 0.5)",
+      borderColor: "rgba(75, 192, 192, 1)",
+      borderWidth: 1,
+      data: [100, 280, 200, 220, 300, 260, 280, 230, 250, 240, 210, 300],
+    },
+  ];
+
+  graph(labels, datasets);
+}
+
+function graph(labels, datasets) {
+  var ctx = document.getElementById("marketOverviewChart").getContext("2d");
+  var marketOverviewChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: datasets,
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+    },
+  });
+}
+
+function adminLogin() {
   var e = document.getElementById("email");
   var pw = document.getElementById("password");
   if (!e.value.trim()) {
@@ -14,7 +81,7 @@ function adminLogin(){
     var form = new FormData();
     form.append("e", e.value);
     form.append("pw", pw.value);
-    form.append("rememberMe","2");
+    form.append("rememberMe", "2");
 
     var r = new XMLHttpRequest();
 
@@ -158,14 +225,17 @@ function displayVideoPreview(file) {
 
 function initializeFileInput() {
   const fileInput = document.getElementById("videoInput");
-  fileInput.addEventListener("change", handleFileSelect);
+  if (fileInput) {
+    fileInput.addEventListener("change", handleFileSelect);
+  } else {
+    console.error("Element with id 'videoInput' not found.");
+  }
 }
 
 function handleFileSelect(event) {
   const file = event.target.files[0];
   displayVideoPreview(file);
 }
-document.addEventListener("DOMContentLoaded", initializeFileInput);
 
 function removeElement(Id) {
   var element = document.getElementById(Id);
@@ -852,19 +922,18 @@ function signUp() {
   }
 }
 function changeTab(sectionId, event) {
-    event.preventDefault(); // Prevent default link behavior
+  event.preventDefault(); // Prevent default link behavior
 
-    // Hide all sections
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.style.display = 'none';
-    });
+  // Hide all sections
+  const sections = document.querySelectorAll(".section");
+  sections.forEach((section) => {
+    section.style.display = "none";
+  });
 
-    // Show the selected section
-    const sectionToShow = document.getElementById(sectionId);
-    sectionToShow.style.display = 'block';
+  // Show the selected section
+  const sectionToShow = document.getElementById(sectionId);
+  sectionToShow.style.display = "block";
 }
-
 
 function testSwal() {
   if (true) {
