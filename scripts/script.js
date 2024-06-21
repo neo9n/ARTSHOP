@@ -986,7 +986,67 @@ function SimpleErrorM(msg) {
 }
 
 
-function addUser() {  
+function showAlert(message) {
+  swal(message);
+}
+
+function isValidInput(fn, ln, m, e, pw, cpw, g) {
+  if (!fn.value.trim()) {
+    showAlert("Please enter your First name!");
+    return false;
+  } else if (!ln.value.trim()) {
+    showAlert("Please enter your Last name!");
+    return false;
+  } else if (!m.value.trim()) {
+    showAlert("Please enter your Mobile number!");
+    return false;
+  } else if (!isValidMobile(m.value)) {
+    showAlert("The mobile number you entered is incorrect! Please make sure the number is correct!");
+    return false;
+  } else if (!e.value.trim()) {
+    showAlert("Please enter your Email!");
+    return false;
+  } else if (!isValidEmail(e.value)) {
+    showAlert("The email you entered is not valid!");
+    return false;
+  } else if (!pw.value.trim()) {
+    showAlert("Please enter your Password!");
+    return false;
+  } else if (cpw.value !== pw.value) {
+    showAlert("Your passwords don't match. Please try again!");
+    return false;
+  } else if (!g.value.trim()) {
+    showAlert("Please select your gender!");
+    return false;
+  }
+  return true;
+}
+
+function handleResponse(r) {
+  if (r.readyState == 4) {
+    var text = r.responseText;
+    console.log("Response from server:", text);
+    if (text == "Success") {
+      ["uname", "lname", "fname", "cpw", "email", "pw", "mobile"].forEach(id => document.getElementById(id).value = "");
+      SuccessM("You have successfully registered!");
+    } else if (text == "Error") {
+      ErrorM("User with the same Email Address or Mobile Number already exists!");
+    } else {
+      ErrorM("Something went wrong!");
+    }
+  }
+}
+
+function submitForm(url, form) {
+  var r = new XMLHttpRequest();
+  r.onreadystatechange = function () {
+    handleResponse(r);
+  };
+  r.open("POST", url, true);
+  r.send(form);
+}
+
+function addUser() {
   var un = document.getElementById("uname");
   var fn = document.getElementById("fname");
   var ln = document.getElementById("lname");
@@ -996,38 +1056,9 @@ function addUser() {
   var m = document.getElementById("mobile");
   var g = document.getElementById("gender");
 
-  if (!fn.value.trim()) {
-    swal("Please enter your First name!");
-    return;
-  } else if (!ln.value.trim()) {
-    swal("Please enter your Last name!");
-    return;
-  } else if (!m.value.trim()) {
-    swal("Please enter your Mobile number!");
-    return;
-  } else if (!isValidMobile(m.value)) {
-    swal(
-      "The mobile number you try to enter is incorrect! Please Make sure the number you enter is correct!"
-    );
-    return;
-  } else if (!e.value.trim()) {
-    swal("Please enter your Email!");
-    return;
-  } else if (!isValidEmail(e.value)) {
-    swal("The email you tried to enter is not valid!");
-    return;
-  } else if (!pw.value.trim()) {
-    swal("Please enter your Password!");
-    return;
-  } else if (cpw.value !== pw.value) {
-    swal("Your passwords don't match. Please try again!");
-    return;
-  } else if (!g.value.trim()) {
-    swal("Please select your gender!");
-    return;
-  } else {
+  if (isValidInput(fn, ln, m, e, pw, cpw, g)) {
     var form = new FormData();
-    form.append("un",un.value);
+    form.append("un", un.value);
     form.append("fn", fn.value);
     form.append("ln", ln.value);
     form.append("cpw", cpw.value);
@@ -1036,35 +1067,9 @@ function addUser() {
     form.append("m", m.value);
     form.append("g", g.value);
 
-    var r = new XMLHttpRequest();
-
-    r.onreadystatechange = function () {
-      if (r.readyState == 4) {
-        var text = r.responseText;
-        console.log("Response from server:", text);
-        if (text == "Success") {
-          document.getElementById("uname").value = "";
-          document.getElementById("lname").value = "";
-          document.getElementById("fname").value = "";
-          document.getElementById("cpw").value = "";
-          document.getElementById("email").value = "";
-          document.getElementById("pw").value = "";
-          document.getElementById("mobile").value = "";
-          SuccessM("You have successfully registered!");
-        } else if (text == "Error") {
-          ErrorM(
-            "user with the same Email Address or Mobile Number already exists!"
-          );
-        } else {
-          ErrorM("Something went wrong!");
-        }
-      }
-    };
-    r.open("POST", "addUserProcess.php", true);
-    r.send(form);
+    submitForm("addUserProcess.php", form);
   }
 }
-
 
 function signUp() {
   var fn = document.getElementById("fname");
@@ -1075,36 +1080,7 @@ function signUp() {
   var m = document.getElementById("mobile");
   var g = document.getElementById("gender");
 
-  if (!fn.value.trim()) {
-    swal("Please enter your First name!");
-    return;
-  } else if (!ln.value.trim()) {
-    swal("Please enter your Last name!");
-    return;
-  } else if (!m.value.trim()) {
-    swal("Please enter your Mobile number!");
-    return;
-  } else if (!isValidMobile(m.value)) {
-    swal(
-      "The mobile number you try to enter is incorrect! Please Make sure the number you enter is correct!"
-    );
-    return;
-  } else if (!e.value.trim()) {
-    swal("Please enter your Email!");
-    return;
-  } else if (!isValidEmail(e.value)) {
-    swal("The email you tried to enter is not valid!");
-    return;
-  } else if (!pw.value.trim()) {
-    swal("Please enter your Password!");
-    return;
-  } else if (cpw.value !== pw.value) {
-    swal("Your passwords don't match. Please try again!");
-    return;
-  } else if (!g.value.trim()) {
-    swal("Please select your gender!");
-    return;
-  } else {
+  if (isValidInput(fn, ln, m, e, pw, cpw, g)) {
     var form = new FormData();
     form.append("fn", fn.value);
     form.append("ln", ln.value);
@@ -1114,33 +1090,10 @@ function signUp() {
     form.append("m", m.value);
     form.append("g", g.value);
 
-    var r = new XMLHttpRequest();
-
-    r.onreadystatechange = function () {
-      if (r.readyState == 4) {
-        var text = r.responseText;
-        console.log("Response from server:", text);
-        if (text == "Success") {
-          document.getElementById("lname").value = "";
-          document.getElementById("fname").value = "";
-          document.getElementById("cpw").value = "";
-          document.getElementById("email").value = "";
-          document.getElementById("pw").value = "";
-          document.getElementById("mobile").value = "";
-          SuccessM("You have successfully registered!");
-        } else if (text == "Error") {
-          ErrorM(
-            "user with the same Email Address or Mobile Number already exists!"
-          );
-        } else {
-          ErrorM("Something went wrong!");
-        }
-      }
-    };
-    r.open("POST", "signUpProcess.php", true);
-    r.send(form);
+    submitForm("signUpProcess.php", form);
   }
 }
+
 
 function changeTab(sectionId, event) {
   event.preventDefault(); // Prevent default link behavior
