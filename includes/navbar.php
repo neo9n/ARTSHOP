@@ -1,5 +1,5 @@
-<nav class="navbar bg-light navbar-expand-lg navbar-light">
-    <div class="container">
+<section class="bg-light px-5 py-0 m-0">
+    <nav class="navbar bg-light navbar-expand-lg navbar-light">
         <a href="index.php">
             <img src="icons/logoSVG.svg" alt="Logo" class="logo" title="Logo">
         </a>
@@ -10,8 +10,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control max-vw-100 d-flex" placeholder="Search for Items" aria-label="Search" aria-describedby="button-addon2">
+                    <div class="input-group mb-3 ">
+                        <input type="text" class="form-control d-flex" placeholder="Search for Items" aria-label="Search" aria-describedby="button-addon2">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
                     </div>
                 </li>
@@ -62,5 +62,5 @@
                 </li>
             </ul>
         </div>
-    </div>
-</nav>
+    </nav>
+</section>
