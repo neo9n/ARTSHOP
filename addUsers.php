@@ -1,76 +1,88 @@
 <?php
-$page_title = "AdminPanel";
+session_start();
+$page_title = "Add Users"
 ?>
-
 <?php include('includes/header.php'); ?>
 <?php include('includes/navbar.php'); ?>
 
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Add User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form id="addUserForm" method="POST" action="add_user.php">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="user-details-tab" data-toggle="tab" href="#user-details" role="tab" aria-controls="user-details" aria-selected="true">User Details</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="false">Permissions</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="user-details" role="tabpanel" aria-labelledby="user-details-tab">
-                        <div class="form-group mt-3">
-                            <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+
+
+<div class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6    ">
+                <div class="alert">
+                    <?php
+                    if (isset($_SESSION['status'])) {
+                        echo "<h4>" . $_SESSION['status'] . "</h4>";
+                        unset($_SESSION['status']);
+                    }
+                    ?>
+                </div>
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h1 class="headings">Add a new User</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label>User Name</label>
+                            <input type="text" name="name" id="uname" class="form-control">
+                        </div>    
+                        <div class="form-group mb-3">
+                            <label>First Name</label>
+                            <input type="text" name="name" id="fname" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        <div class="form-group mb-3">
+                            <label>Last Name</label>
+                            <input type="text" name="name" id="lname" class="form-control">
+                        </div>                    
+                        <div class="form-group mb-3">
+                            <label>Mobile Number</label>
+                            <input type="text" name="mobile" id="mobile" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email address (Username)</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="form-group mb-3">
+                            <label>Email</label>
+                            <input type="text" name="email" id="email" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="phone">Phone number</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        <div class="form-group mb-3">
+                            <label>Password</label>
+                            <input type="password" name="pw" id="pw" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="userGroup">User group</label>
-                            <select class="form-control" id="userGroup" name="userGroup" required>
-                                <option value="">Select a group</option>
-                                <option value="Europe">Europe</option>
-                                <option value="Asia">Asia</option>
-                                <option value="America">America</option>
+                        <div class="form-group mb-3">
+                            <label>Confirm Password</label>
+                            <input type="password" name="cpw" id="cpw" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Gender</label>
+                            <select class="form-select" id="gender">
+
+                                <?php
+
+                                require "connection.php";
+
+                                $resultset = Database::search("SELECT * FROM `gender`");
+                                $n = $resultset->num_rows;
+
+                                for ($x = 0; $x < $n; $x++) {
+                                    $f = $resultset->fetch_assoc();
+                                ?>
+
+                                    <option value="<?php echo $f["id"]; ?>"><?php echo $f["type"]; ?></option>
+
+                                <?php
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="accessLevel">Access</label>
-                            <select class="form-control" id="accessLevel" name="accessLevel" required>
-                                <option value="Administrator">Administrator</option>
-                                <option value="User">User</option>
-                                <option value="Focused User">Focused User</option>
-                            </select>
+                            <button onclick="addUser();" class="button alternative">Sign In</button>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
-                        <!-- Permissions content goes here -->
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Next</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
-<?php include('includes/advertisement.php'); ?>
 <?php include('includes/footer.php'); ?>

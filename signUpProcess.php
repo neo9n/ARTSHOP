@@ -14,11 +14,7 @@ $num_rows = $r->num_rows;
 
 if ($num_rows > 0) {
     echo "Error";
-} else {
-    $d = new DateTime();
-    $tz = new DateTimeZone("Asia/Colombo");
-    $d->setTimezone($tz);
-    $date = $d->format("Y-m-d H:i:s");
+} else {    
 
     Database::iud("INSERT INTO `customer`(`fname`,`lname`,`email`,`pw`,`mobile`,`gender_id`)
     VALUES('" . $fn . "','" . $ln . "','" . $e . "','" . $pw . "','" . $m . "','" . $g . "')");
