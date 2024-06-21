@@ -1,20 +1,9 @@
 <?php
-require "connection.php";
+$page_title = "Store Management";
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eShop | Manage Users</title>
-
-    <link rel="icon" href="resources/logo.svg" />
-    <link rel="stylesheet" href="bootstrap.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
-</head>
-
+<?php include('includes/header.php'); ?>
+<?php include('includes/navbar.php'); ?>
 <body style="background-color: #74EBD5; background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%); min-height: 100vh;">
 
     <div class="container-fluid">
