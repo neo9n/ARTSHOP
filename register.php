@@ -26,8 +26,12 @@ $page_title = "Sign In"
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
-                            <label>Name</label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <label>First Name</label>
+                            <input type="text" name="name" id="fname" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Last Name</label>
+                            <input type="text" name="name" id="lname" class="form-control">
                         </div>
                         <div class="form-group mb-3">
                             <label>Mobile Number</label>

@@ -2,13 +2,14 @@
 
 require "connection.php";
 
-$n = $_POST["n"];
+$fn = $_POST["fn"];
+$ln = $_POST["ln"];
 $e = $_POST["e"];
 $pw = $_POST["pw"];
 $m = $_POST["m"];
 $g = $_POST["g"];
 
-$r = Database::search("SELECT * FROM `users` WHERE `email`= '" . $e . "' OR `mobile`= '" . $m . "'");
+$r = Database::search("SELECT * FROM `customer` WHERE `email`= '" . $e . "' OR `mobile`= '" . $m . "'");
 $num_rows = $r->num_rows;
 
 if ($num_rows > 0) {
@@ -19,8 +20,8 @@ if ($num_rows > 0) {
     $d->setTimezone($tz);
     $date = $d->format("Y-m-d H:i:s");
 
-    Database::iud("INSERT INTO `users`(`name`,`email`,`password`,`mobile`,`dateReg`,`gender_id`) 
-    VALUES('" . $n . "','" . $e . "','" . $pw . "','" . $m . "','" . $date . "','" . $g . "')");
-        echo "Success";
-}
+    Database::iud("INSERT INTO `customer`(`fname`,`lname`,`email`,`pw`,`mobile`,`gender_id`)
+    VALUES('" . $fn . "','" . $ln . "','" . $e . "','" . $pw . "','" . $m . "','" . $g . "')");
 
+    echo "Success";
+}

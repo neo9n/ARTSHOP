@@ -544,7 +544,6 @@ function validationList() {
   if (SectionNumber === 3) {
     op = op && validateAndAlert("image", "Please upload an image");
     op = op && validateAndAlert("images", "Please upload more pictures");
-    op = op && validateAndAlert("seo_keywords", "Please enter SEO keywords");
     op =
       op &&
       validateAndAlert("newCategory", "Please enter the name of the category");
@@ -775,7 +774,6 @@ const validationMessages = {
 
 const inputFieldIds = [
   "shopName",
-  "seo_keywords",
   "newCategory",
   "section",
   "price",
@@ -988,15 +986,19 @@ function SimpleErrorM(msg) {
 }
 
 function signUp() {
-  var n = document.getElementById("name");
+  var fn = document.getElementById("fname");
+  var ln = document.getElementById("lname");
   var cpw = document.getElementById("cpw");
   var e = document.getElementById("email");
   var pw = document.getElementById("pw");
   var m = document.getElementById("mobile");
   var g = document.getElementById("gender");
 
-  if (!n.value.trim()) {
-    swal("Please enter your name!");
+  if (!fn.value.trim()) {
+    swal("Please enter your First name!");
+    return;
+  } else if (!ln.value.trim()) {
+    swal("Please enter your Last name!");
     return;
   } else if (!m.value.trim()) {
     swal("Please enter your Mobile number!");
@@ -1023,7 +1025,8 @@ function signUp() {
     return;
   } else {
     var form = new FormData();
-    form.append("n", n.value);
+    form.append("fn", fn.value);
+    form.append("ln", ln.value);
     form.append("cpw", cpw.value);
     form.append("e", e.value);
     form.append("pw", pw.value);
@@ -1037,7 +1040,8 @@ function signUp() {
         var text = r.responseText;
         console.log("Response from server:", text);
         if (text == "Success") {
-          document.getElementById("name").value = "";
+          document.getElementById("lname").value = "";
+          document.getElementById("fname").value = "";
           document.getElementById("cpw").value = "";
           document.getElementById("email").value = "";
           document.getElementById("pw").value = "";
