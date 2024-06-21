@@ -511,53 +511,186 @@ function gloweffect(pageName) {
     ball.style.boxShadow = "0 0 10px rgba(0, 123, 255, 0.7)";
   }
 }
-
 function isEmptyDropDown(id) {
   var dropdown = document.getElementById(id);
-  var selectedValue = dropdown.value;
-  return selectedValue === "";
+  return dropdown.value === "";
 }
 
-function validateElementsOutput(dropdownId, emptyReturns) {
+function validateElementsOutput(dropdownId) {
   var dropdown = document.getElementById(dropdownId);
-  var selectedValue = dropdown.value;
-  if (selectedValue === "") {
-    return emptyReturns;
-  } else {
-    // No need to negate the value here
-    return true;
-  }
+  return dropdown.value !== "";
 }
 
 function validateAndAlert(id, msg) {
-  var isValid = true;
-  if (isEmptyDropDown(id)) {
+  if (isEmptyDropDown(id) || !validateElementsOutput(id)) {
     errorSpanToggle(id, msg);
-    isValid = false;
-  } else if (validateElementsOutput(id)) {
-    errorSpanToggle(id, msg);
-    isValid = false;
+    return false;
   }
-  return isValid;
+  return true;
 }
 
 function validationList() {
   var alertMsg = "You can't leave this empty";
   var op = true;
+
   if (SectionNumber === 1) {
     op = validateAndAlert("shopLanguage", alertMsg);
-    op = validateAndAlert("shopCountry", alertMsg);
-    op = validateAndAlert("shopCurrency", alertMsg);
+    op = op && validateAndAlert("shopCountry", alertMsg);
+    op = op && validateAndAlert("shopCurrency", alertMsg);
   }
-  // if (SectionNumber === 2) {
-  //   op = validateAndAlert("shopName", alertMsg);
-  // }
-  alert(op);
+  if (SectionNumber === 2) {
+    op = validateAndAlert("shopName", alertMsg);
+  }
+  if (SectionNumber === 3) {
+    op = op && validateAndAlert("image", "Please upload an image");
+    op = op && validateAndAlert("images", "Please upload more pictures");
+    op = op && validateAndAlert("seo_keywords", "Please enter SEO keywords");
+    op =
+      op &&
+      validateAndAlert("newCategory", "Please enter the name of the category");
+    op = op && validateAndAlert("section", "Please enter the section name");
+    op = op && validateAndAlert("price", "Please enter the price");
+    op = op && validateAndAlert("quantity", "Please enter the quantity");
+    op =
+      op &&
+      validateAndAlert(
+        "instruction",
+        "Please enter the personalization instructions"
+      );
+    op =
+      op &&
+      validateAndAlert("whatBuyerSees", "Please add what the buyer will see");
+    op = op && validateAndAlert("fixed_price", "Please enter the fixed price");
+    op =
+      op &&
+      validateAndAlert("originZIPCode", "Please enter the origin ZIP code");
+    op = op && validateAndAlert("item-weight", "Please enter the item weight");
+    op =
+      op &&
+      validateAndAlert("package-length", "Please enter the package length");
+    op =
+      op && validateAndAlert("package-width", "Please enter the package width");
+    op =
+      op &&
+      validateAndAlert("package-height", "Please enter the package height");
+    op =
+      op &&
+      validateAndAlert("hs-tariff-number", "Please enter the HS Tariff Number");
+
+    op =
+      op &&
+      validateAndAlert(
+        "add-category",
+        "Please select whether to add a new category"
+      );
+    op =
+      op &&
+      validateAndAlert(
+        "shipping-service-usps",
+        "Please select a shipping service"
+      );
+    op =
+      op &&
+      validateAndAlert(
+        "shipping-service-fedex",
+        "Please select a shipping service"
+      );
+    op =
+      op &&
+      validateAndAlert(
+        "shipping-service-other",
+        "Please select a shipping service"
+      );
+
+    op = op && validateAndAlert("SelCategory", "Please select a category");
+    op = op && validateAndAlert("whomade", "Please select who made the item");
+    op =
+      op &&
+      validateAndAlert("processing_time", "Please select processing time");
+    op =
+      op && validateAndAlert("returnpolicy", "Please select a return policy");
+
+    op =
+      op && validateAndAlert("brief-overview", "Please enter a brief overview");
+    op =
+      op &&
+      validateAndAlert(
+        "custom-return-policy-text",
+        "Please enter a custom return policy description"
+      );
+  }
+
+  if (SectionNumber === 4) {
+    op = op && validateAndAlert("bank-location", "Please enter bank-location");
+    op = op && validateAndAlert("add-country", "Please enter add-country");
+    op = op && validateAndAlert("country-name", "Please enter country-name");
+    op =
+      op &&
+      validateAndAlert("country-residence", "Please enter country-residence");
+    op = op && validateAndAlert("first-name", "Please enter first-name");
+    op = op && validateAndAlert("last-name", "Please enter last-name");
+    op = op && validateAndAlert("month", "Please enter month");
+    op = op && validateAndAlert("day", "Please enter day");
+    op = op && validateAndAlert("year", "Please enter year");
+    op = op && validateAndAlert("number", "Please enter number");
+    op = op && validateAndAlert("street-name", "Please enter street-name");
+    op = op && validateAndAlert("address-line2", "Please enter address-line2");
+    op = op && validateAndAlert("city-town", "Please enter city-town");
+    op = op && validateAndAlert("state", "Please enter state");
+    op = op && validateAndAlert("postal-code", "Please enter postal-code");
+    op = op && validateAndAlert("phone-number", "Please enter phone-number");
+    op = op && validateAndAlert("yes", "Please enter yes");
+    op = op && validateAndAlert("no", "Please enter no");
+    op =
+      op &&
+      validateAndAlert("sanctioned-region", "Please enter sanctioned-region");
+    op = op && validateAndAlert("Day2", "Please enter Day2");
+    op = op && validateAndAlert("month2", "Please enter month2");
+    op = op && validateAndAlert("year2", "Please enter year2");
+    op = op && validateAndAlert("full-name", "Please enter full-name");
+    op = op && validateAndAlert("bank-name", "Please enter bank-name");
+    op = op && validateAndAlert("iban", "Please enter iban");
+    op = op && validateAndAlert("swift-bic", "Please enter swift-bic");
+  }
+
+  if (SectionNumber === 5) {
+    op = op && validateAndAlert("card-number", "Please enter your card number");
+    op =
+      op &&
+      validateAndAlert(
+        "expiration-month",
+        "Please select the expiration month"
+      );
+    op =
+      op &&
+      validateAndAlert("expiration-year", "Please select the expiration year");
+    op = op && validateAndAlert("ccv", "Please enter your CCV");
+    op =
+      op &&
+      validateAndAlert("name-on-card", "Please enter the name on your card");
+  }
+
+  if (SectionNumber === 6) {
+    op =
+      op &&
+      validateAndAlert("authMethod", "Please choose an option to get started");
+    op =
+      op &&
+      validateAndAlert(
+        "emailMethod",
+        "Please select how you want to receive the authentication code"
+      );
+    op =
+      op &&
+      validateAndAlert(
+        "email2",
+        "Please enter your email address for verification"
+      );
+  }
   return op;
 }
 
 function savencon(pageName) {
-  // alert(validationList());
   if (validationList()) {
     var element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
@@ -570,7 +703,7 @@ function savencon(pageName) {
     gloweffect(pageName);
     load(pageName);
     if (SectionNumber == 7) {
-      section.style.display = "block";
+      document.getElementById("section").style.display = "block";
       document.getElementById("final").style.display = "block";
     }
   }
@@ -579,16 +712,18 @@ function savencon(pageName) {
 function errorSpanToggle(elementId, alertMsg) {
   var element = document.getElementById(elementId);
   var errorSpan = document.getElementById(elementId + "Error");
-  var selectedValue = element.value;
-  if (selectedValue === "") {
+
+  if (element.value === "") {
     element.classList.add("error");
     errorSpan.textContent = alertMsg;
     errorSpan.style.display = "inline";
-    return false;
+    element.focus();
+    setTimeout(function () {
+      element.blur();
+    }, 3000);
   } else {
     element.classList.remove("error");
     errorSpan.style.display = "none";
-    return true;
   }
 }
 

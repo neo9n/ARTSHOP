@@ -363,7 +363,7 @@ $page_title = "Sign In"
     <div class="container">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Description *</h5>
+          <h5 class="card-title">Description</h5>
           <textarea class="form-control" rows="5" placeholder="Start with a brief overview that describes your item's finest features. Shoppers will only see the first few lines of your description at first, so make it count!" id="brief-overview"></textarea><span id="brief-overviewError" class="error-message"></span>
           <small class="form-text text-muted">Not sure what else to say? Shoppers also like hearing about your process, and the story behind this item.</small>
         </div>
