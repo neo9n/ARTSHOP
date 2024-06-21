@@ -1037,15 +1037,6 @@ function handleResponse(r) {
   }
 }
 
-function submitForm(url, form) {
-  var r = new XMLHttpRequest();
-  r.onreadystatechange = function () {
-    handleResponse(r);
-  };
-  r.open("POST", url, true);
-  r.send(form);
-}
-
 function addUser() {
   var un = document.getElementById("uname");
   var fn = document.getElementById("fname");
@@ -1154,6 +1145,14 @@ function signIn() {
     r.open("POST", "signInProcess.php", true);
     r.send(form);
   }
+}
+function submitForm(url, form) {
+  var r = new XMLHttpRequest();
+  r.onreadystatechange = function () {
+    handleResponse(r);
+  };
+  r.open("POST", url, true);
+  r.send(form);
 }
 
 function gotoPage(pageLocation) {

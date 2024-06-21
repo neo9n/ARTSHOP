@@ -1,4 +1,4 @@
-<section class="bg-light px-5 py-0 m-0">
+<section class="bg-light m-0 p-0 d-flex justify-content-center container-fluid">
     <nav class="navbar bg-light navbar-expand-lg navbar-light">
         <a href="index.php">
             <img src="icons/logoSVG.svg" alt="Logo" class="logo" title="Logo">
@@ -44,8 +44,13 @@
                         <div class="dropdown-content">
                             <a href="#">Messages</a>
                             <a href="#">Special Offers</a>
-                            <a href="register.php">Register</a>
-                            <a href="login.php">Sign Out</a>
+                            <?php
+                            if (isset($_SESSION['name'])) {
+                                echo ('<a href="login.php">Sign Out</a>');
+                            } else {
+                                echo ('<a href="register.php">Register</a>');
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="dropdown-menu">

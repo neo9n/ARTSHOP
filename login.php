@@ -18,7 +18,7 @@ $page_title = "Sign In"
 
                         <div class="form-group mb-3">
                             <label>Email</label>
-                            <input type="text" name="email" id="email" class="form-control">   <span id="shopNameError" class="error-message"></span>
+                            <input type="text" name="email" id="email" class="form-control"> <span id="shopNameError" class="error-message"></span>
                         </div>
                         <div class="form-group mb-3">
                             <label>Password</label>
@@ -29,8 +29,13 @@ $page_title = "Sign In"
                             <label class="form-check-lable">Remember Me</label>
                         </div>
                         <br>
-                        <div class="form-group">
-                            <button onclick="signIn();" class="button alternative">Log In</button>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <button onclick="signIn();" class="button alternative">Log In</button>
+                            </div>
+                            <div class="form-group col-6 justify-content-end align-items-center d-flex">
+                                <a href="register.php" class="text-decoration-none align-content-center">Don't have an Account yet?</a>
+                            </div>
                         </div>
                         </form>
                     </div>

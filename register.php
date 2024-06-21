@@ -4,11 +4,7 @@ $page_title = "Sign In"
 ?>
 <?php include('includes/header.php'); ?>
 <?php include('includes/navbar.php'); ?>
-
-
-
-<div class="py-5">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-6    ">
                 <div class="alert">
@@ -71,8 +67,13 @@ $page_title = "Sign In"
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <button onclick="signUp();" class="button alternative">Sign In</button>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <button onclick="signUp();" class="button alternative">Sign In</button>
+                            </div>
+                            <div class="form-group col-6 justify-content-end align-items-center d-flex">
+                                <a href="login.php" class="text-decoration-none align-content-center">Already Registered?</a>
+                            </div>
                         </div>
                         </form>
                     </div>
@@ -80,6 +81,5 @@ $page_title = "Sign In"
             </div>
         </div>
     </div>
-</div>
 
 <?php include('includes/footer.php'); ?>
