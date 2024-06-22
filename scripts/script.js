@@ -81,7 +81,6 @@ function adminLogin() {
     var form = new FormData();
     form.append("e", e.value);
     form.append("pw", pw.value);
-    form.append("rememberMe", "2");
     submitForm("adminLoginProcess.php", form);
   }
 }

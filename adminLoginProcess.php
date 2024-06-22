@@ -14,7 +14,7 @@ $n = $resultset->num_rows;
 if ($n == 1) {
   echo "Success";
   $d = $resultset->fetch_assoc(); 
-  $name = $d['name'];
+  $name = $d['uname'];
   $_SESSION["name"] = $name;
 
   
