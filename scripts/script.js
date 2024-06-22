@@ -82,25 +82,202 @@ function adminLogin() {
     form.append("e", e.value);
     form.append("pw", pw.value);
     form.append("rememberMe", "2");
+    submitForm("adminLoginProcess.php", form);
+  }
+}
 
-    var r = new XMLHttpRequest();
+function section3Backend() {
+  const values = {};
 
-    r.onreadystatechange = function () {
-      if (r.readyState == 4) {
-        var text = r.responseText;
-        console.log("Response from server:", text);
-        if (text == "Success") {
-          SuccessM("You have successfully Logged In!");
-          window.location.href = "adminPanel.php";
-        } else if (text == "Error") {
-          ErrorM("Invalid Email or Password. Please try again.");
-        } else {
-          ErrorM("Something went wrong!");
-        }
+  inputElements.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+          if (element.type === 'file') {
+              values[id] = element.files.length > 0 ? element.files[0].name : 'No file selected';
+          } else if (element.type === 'radio' || element.type === 'checkbox') {
+              values[id] = element.checked;
+          } else {
+              values[id] = element.value;
+          }
+      } else {
+          console.warn(`Element with id "${id}" not found`);
       }
-    };
-    r.open("POST", "signInProcess.php", true);
-    r.send(form);
+  });
+
+  // Additional radio button groups
+  values['renewal_option'] = document.querySelector('input[name="renewal_option"]:checked')?.value || '';
+  values['item_type'] = document.querySelector('input[name="item_type"]:checked')?.value || '';
+  values['enterFixedPrices'] = document.querySelector('input[name="enterFixedPrices"]:checked')?.value || '';
+  values['shippingop'] = document.querySelector('input[name="shippingop"]:checked')?.value || '';
+
+  // Additional checkboxes
+  values['freeShipping'] = document.getElementById('freeShipping').checked;
+  values['freeDomesticShipping'] = document.getElementById('freeDomesticShipping').checked;
+  values['freeInternationalShipping'] = document.getElementById('freeInternationalShipping').checked;
+
+  console.log('Input values:', values);
+  
+  // You can add code here to send the values to a backend service or perform other actions
+}
+
+function getShopinitData() {
+  // Get values from dropdown menus
+  var shopLanguage = document.getElementById("shopLanguage").value;
+  var shopCountry = document.getElementById("shopCountry").value;
+  var shopCurrency = document.getElementById("shopCurrency").value;
+
+  // Prepare the message
+  var message =
+    "Shop Preferences:\n\n" +
+    "Language: " +
+    (shopLanguage || "Not selected") +
+    "\n" +
+    "Country: " +
+    (shopCountry || "Not selected") +
+    "\n" +
+    "Currency: " +
+    (shopCurrency || "Not selected");
+    alert(message);
+}
+
+function getShopNameInfo() {
+  // Get input value
+  var shopName = document.getElementById('shopName').value;
+
+  // Prepare alert message
+  var alertMessage = "Shop Name Information:\n\n" +
+      "Shop Name: " + shopName;
+
+  // Display alert
+  alert(alertMessage);
+}
+
+function getBillingInfo() {
+  // Get input values
+  var cardNumber = document.getElementById('card-number').value;
+  var expirationMonth = document.getElementById('expiration-month').value;
+  var expirationYear = document.getElementById('expiration-year').value;
+  var ccv = document.getElementById('ccv').value;
+  var nameOnCard = document.getElementById('name-on-card').value;
+
+  // Prepare alert message
+  var alertMessage = "Billing Information:\n\n" +
+      "Card Number: " + cardNumber + "\n" +
+      "Expiration Date: " + expirationMonth + "/" + expirationYear + "\n" +
+      "CCV: " + ccv + "\n" +
+      "Name on Card: " + nameOnCard;
+
+  // Display alert
+  alert(alertMessage);
+}
+
+function getTwoFactorAuthInfo() {
+  // Get input values
+  var authMethod = document.getElementById('authMethod').value;
+  var emailMethod = document.getElementById('emailMethod').value;
+  var email = document.getElementById('email2').value;
+
+  // Prepare alert message
+  var alertMessage = "Two-Factor Authentication Information:\n\n" +
+      "Authentication Method: " + authMethod + "\n" +
+      "Email Verification Method: " + emailMethod + "\n" +
+      "Email Address: " + email;
+
+  // Display alert
+  alert(alertMessage);
+}
+
+function section4Backend() {
+  let inputValues = {
+      bankLocation: document.getElementById('bank-location').value,
+      addCountry: document.getElementById('add-country').checked,
+      countryName: document.getElementById('country-name').value,
+      sellerType: document.querySelector('input[name="seller-type"]:checked').value,
+      countryOfResidence: document.getElementById('bank-location').value,
+      firstName: document.getElementById('first-name').value,
+      lastName: document.getElementById('last-name').value,
+      dob: {
+          month: document.getElementById('month').value,
+          day: document.getElementById('day').value,
+          year: document.getElementById('year').value
+      },
+      address: {
+          number: document.getElementById('number').value,
+          streetName: document.getElementById('street-name').value,
+          addressLine2: document.getElementById('address-line2').value,
+          cityTown: document.getElementById('city-town').value,
+          state: document.getElementById('state').value,
+          postalCode: document.getElementById('postal-code').value
+      },
+      phoneNumber: document.getElementById('phone-number').value,
+      livedInSanctionedRegion: document.querySelector('input[name="lived"]:checked').value,
+      sanctionedRegion: document.getElementById('sanctioned-region').value,
+      lastDayInSanctionedRegion: {
+          day: document.getElementById('Day2').value,
+          month: document.getElementById('month2').value,
+          year: document.getElementById('year2').value
+      },
+      bankInfo: {
+          fullName: document.getElementById('full-name').value,
+          bankName: document.getElementById('bank-name').value,
+          iban: document.getElementById('iban').value,
+          swiftBic: document.getElementById('swift-bic').value
+      }
+  };
+
+  alert(JSON.stringify(inputValues, null, 2));
+}
+
+const inputElements = [
+  'image', 'images', 'videoInput', 'seo_keywords', 'SelCategory', 'newCategory',
+  'whomade', 'brief-overview', 'section', 'price', 'quantity', 'instruction',
+  'whatBuyerSees', 'fixed_price', 'originZIPCode', 'processing_time',
+  'shipping-country', 'name', 'handlingFee', 'hs-tariff-number', 'item-weight',
+  'package-length', 'package-width', 'package-height', 'returnpolicy',
+  'custom-return-policy-text'
+];
+
+function submitForm(url, form) {
+  var r = new XMLHttpRequest();
+  r.onreadystatechange = function () {
+    handleResponse(r, url);
+  };
+  r.open("POST", url, true);
+  r.send(form);
+}
+
+function handleResponse(r, url) {
+  if (r.readyState == 4) {
+    var text = r.responseText;
+    alert(text);
+    console.log("Response from server:", text);
+    selectResponseNExecute(url, text);
+  }
+}
+
+function selectResponseNExecute(url, text) {
+  if (url == "addUserProcess.php") {
+    if (text == "Success") {
+      ["uname", "lname", "fname", "cpw", "email", "pw", "mobile"].forEach(
+        (id) => (document.getElementById(id).value = "")
+      );
+      SuccessM("You have successfully registered!");
+    } else if (text == "Error") {
+      ErrorM(
+        "User with the same Email Address or Mobile Number already exists!"
+      );
+    } else {
+      ErrorM("Something went wrong!");
+    }
+  } else if (url == "adminLoginProcess.php") {
+    if (text == "Success") {
+      SuccessM("You have successfully Logged In!");
+      window.location.href = "adminPanel.php";
+    } else if (text == "Error") {
+      ErrorM("Invalid Email or Password. Please try again.");
+    } else {
+      ErrorM("Something went wrong!");
+    }
   }
 }
 
@@ -689,6 +866,28 @@ function validationList() {
   return op;
 }
 
+function handleSection() {
+  switch (SectionNumber) {
+    case 1:
+      getShopinitData();
+      break;
+    case 2:
+      getShopNameInfo();
+      break;
+    case 3:
+      section3Backend();
+      break;
+    case 4:
+      section4Backend();
+      break;
+    case 5:
+      getTwoFactorAuthInfo();
+      break;
+    default:
+      console.log("Invalid section number");
+  }
+}
+
 function savencon(pageName) {
   if (validationList()) {
     var element = document.getElementById(pageName + "d" + SectionNumber);
@@ -698,6 +897,9 @@ function savencon(pageName) {
       element.style.backgroundImage =
         "url(\"data:image/svg+xml;utf8,<svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/></svg>\")";
     }
+    
+    handleSection();
+
     SectionNumber += 1;
     gloweffect(pageName);
     load(pageName);
@@ -985,7 +1187,6 @@ function SimpleErrorM(msg) {
   swal(msg);
 }
 
-
 function showAlert(message) {
   swal(message);
 }
@@ -1001,7 +1202,9 @@ function isValidInput(fn, ln, m, e, pw, cpw, g) {
     showAlert("Please enter your Mobile number!");
     return false;
   } else if (!isValidMobile(m.value)) {
-    showAlert("The mobile number you entered is incorrect! Please make sure the number is correct!");
+    showAlert(
+      "The mobile number you entered is incorrect! Please make sure the number is correct!"
+    );
     return false;
   } else if (!e.value.trim()) {
     showAlert("Please enter your Email!");
@@ -1020,21 +1223,6 @@ function isValidInput(fn, ln, m, e, pw, cpw, g) {
     return false;
   }
   return true;
-}
-
-function handleResponse(r) {
-  if (r.readyState == 4) {
-    var text = r.responseText;
-    console.log("Response from server:", text);
-    if (text == "Success") {
-      ["uname", "lname", "fname", "cpw", "email", "pw", "mobile"].forEach(id => document.getElementById(id).value = "");
-      SuccessM("You have successfully registered!");
-    } else if (text == "Error") {
-      ErrorM("User with the same Email Address or Mobile Number already exists!");
-    } else {
-      ErrorM("Something went wrong!");
-    }
-  }
 }
 
 function addUser() {
@@ -1084,7 +1272,6 @@ function signUp() {
     submitForm("signUpProcess.php", form);
   }
 }
-
 
 function changeTab(sectionId, event) {
   event.preventDefault(); // Prevent default link behavior
@@ -1145,14 +1332,6 @@ function signIn() {
     r.open("POST", "signInProcess.php", true);
     r.send(form);
   }
-}
-function submitForm(url, form) {
-  var r = new XMLHttpRequest();
-  r.onreadystatechange = function () {
-    handleResponse(r);
-  };
-  r.open("POST", url, true);
-  r.send(form);
 }
 
 function gotoPage(pageLocation) {

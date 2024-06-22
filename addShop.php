@@ -78,94 +78,94 @@ $page_title = "Sign In"
   <br>
   <br>
 
-  <section id="addShopsection1" class="container py-6">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <h1>Shop preferences</h1>
-          <p>Let's get started! Tell us about you and your shop.</p>
+    <section id="addShopsection1" class="container py-6">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1>Shop preferences</h1>
+            <p>Let's get started! Tell us about you and your shop.</p>
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="shopLanguage">Shop language</label>
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="shopLanguage">Shop language</label>
 
-            <?php
+              <?php
 
-            $query = "SELECT * FROM `language`";
-            $resultSet = Database::search($query);
+              $query = "SELECT * FROM `language`";
+              $resultSet = Database::search($query);
 
-            if ($resultSet->num_rows > 0) {
-              echo '<select class="form-control" id="shopLanguage" >';
+              if ($resultSet->num_rows > 0) {
+                echo '<select class="form-control" id="shopLanguage" >';
+                echo '<option value="" selected disabled></option>';
+
+                while ($row = $resultSet->fetch_assoc()) {
+                  $language_code = $row['id'];
+                  $language_name = $row['name'];
+                  echo "<option value=\"$language_code\">$language_name</option>";
+                }
+                echo '</select>';
+              }
+              $resultSet->close();
+              ?>
+              <span id="shopLanguageError" class="error-message"></span>
+              <br>
+
+              <small class="form-text text-muted">The default language will be displayed to your customers. You can add more languages later.</small>
+            </div>
+            <div class="form-group">
+              <label for="shopCountry">Shop country</label>
+              <?php
+              $query = "SELECT * FROM countries";
+              $resultSet = Database::search($query);
+
+              echo '<select class="form-control" id="shopCountry"  >';
               echo '<option value="" selected disabled></option>';
 
               while ($row = $resultSet->fetch_assoc()) {
-                $language_code = $row['id'];
-                $language_name = $row['name'];
-                echo "<option value=\"$language_code\">$language_name</option>";
+                $country_code = $row['id'];
+                $country_name = $row['name'];
+                echo "<option value=\"$country_code\">$country_name</option>";
               }
               echo '</select>';
-            }
-            $resultSet->close();
-            ?>
-            <span id="shopLanguageError" class="error-message"></span>
-            <br>
 
-            <small class="form-text text-muted">The default language will be displayed to your customers. You can add more languages later.</small>
+              $resultSet->close();
+              ?>
+              <span id="shopCountryError" class="error-message"></span>
+              <small class="form-text text-muted">Tell us where your shop is based. This will help us determine some things, but you can't change it later.</small>
+            </div>
+            <div class="form-group">
+              <label for="shopCurrency">Shop currency</label>
+              <?php
+
+              $query = "SELECT * FROM currency";
+              $resultSet = Database::search($query);
+
+              echo '<select class="form-control" id="shopCurrency" >';
+              echo '<option value="" selected disabled></option>';
+
+              while ($row = $resultSet->fetch_assoc()) {
+                $shopCurrency_code = $row['id'];
+                $shopCurrency_name = $row['name'];
+                echo "<option value=\"$shopCurrency_code\">$shopCurrency_name</option>";
+              }
+              echo '</select>';
+              $resultSet->close();
+              ?>
+              <span id="shopCurrencyError" class="error-message"></span>
+              <small class="form-text text-muted">The currency you choose will be the currency your products are priced in. Customers will see prices in this currency.</small>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="shopCountry">Shop country</label>
-            <?php
-            $query = "SELECT * FROM countries";
-            $resultSet = Database::search($query);
-
-            echo '<select class="form-control" id="shopCountry"  >';
-            echo '<option value="" selected disabled></option>';
-
-            while ($row = $resultSet->fetch_assoc()) {
-              $country_code = $row['id'];
-              $country_name = $row['name'];
-              echo "<option value=\"$country_code\">$country_name</option>";
-            }
-            echo '</select>';
-
-            $resultSet->close();
-            ?>
-            <span id="shopCountryError" class="error-message"></span>
-            <small class="form-text text-muted">Tell us where your shop is based. This will help us determine some things, but you can't change it later.</small>
+          <div class="col-md-6">
+            <h3>Your billing info</h3>
+            <p>This is where you'll enter the information we'll use to send you your payouts.</p>
+            <button onclick="gotoPage('billing.php')" class="button">Set up billing</button>
           </div>
-          <div class="form-group">
-            <label for="shopCurrency">Shop currency</label>
-            <?php
-
-            $query = "SELECT * FROM currency";
-            $resultSet = Database::search($query);
-
-            echo '<select class="form-control" id="shopCurrency" >';
-            echo '<option value="" selected disabled></option>';
-
-            while ($row = $resultSet->fetch_assoc()) {
-              $shopCurrency_code = $row['id'];
-              $shopCurrency_name = $row['name'];
-              echo "<option value=\"$shopCurrency_code\">$shopCurrency_name</option>";
-            }
-            echo '</select>';
-            $resultSet->close();
-            ?>
-            <span id="shopCurrencyError" class="error-message"></span>
-            <small class="form-text text-muted">The currency you choose will be the currency your products are priced in. Customers will see prices in this currency.</small>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <h3>Your billing info</h3>
-          <p>This is where you'll enter the information we'll use to send you your payouts.</p>
-          <button onclick="gotoPage('billing.php')" class="button">Set up billing</button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <section id="addShopsection2" class="container py-6">
     <div class="container">
