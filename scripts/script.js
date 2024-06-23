@@ -491,7 +491,12 @@ function createBox(text) {
   container.appendChild(newDiv);
 }
 
-var wordList = [];
+wordList = [];
+
+function validateWordList() {
+  return wordList.length > 0;
+}
+
 function takeKeywordsList() {
   var input = document.getElementById("seo_keywords");
   var word = input.value;
@@ -661,7 +666,7 @@ function showAdditionalFields(inputId) {
   additionalFields.style.opacity = 1;
 }
 
-var SectionNumber = 1;
+var SectionNumber = 3;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -914,34 +919,32 @@ const friendlyNames = {
 };
 
 function validateShippingOptions() {
-  const shippingOptions = document.getElementsByName("shippingop");
-  let isSelected = false;
+  const freeShipping = document.getElementById("freeShipping");
+  const freeDomesticShipping = document.getElementById("freeDomesticShipping");
+  const freeInternationalShipping = document.getElementById(
+    "freeInternationalShipping"
+  );
+  const errorSpan = document.getElementById("shippingOptionsError");
 
-  for (let i = 0; i < shippingOptions.length; i++) {
-    if (shippingOptions[i].checked) {
-      isSelected = true;
-      break;
-    }
-  }
-
-  const errorSpan = document.getElementById("shippingopError");
-  if (!isSelected) {
-    if (errorSpan) {
-      showError(errorSpan, null, "Please select a shipping option.");
-    } else {
-      swal("Please select a shipping option.");
-    }
+  if (
+    !freeShipping.checked &&
+    !freeDomesticShipping.checked &&
+    !freeInternationalShipping.checked
+  ) {
+    showError(
+      errorSpan,
+      freeShipping,
+      "Please select at least one shipping option"
+    );
     return false;
   } else {
-    if (errorSpan) {
-      clearError(errorSpan, null);
-    }
+    clearError(errorSpan, freeShipping);
     return true;
   }
 }
 
 function validateAndAlert(idOrFunction, msg) {
-  if (typeof idOrFunction === 'object' && idOrFunction.validate) {
+  if (typeof idOrFunction === "object" && idOrFunction.validate) {
     const result = idOrFunction.validate();
     if (!result) {
       // You might want to show this error message somewhere
@@ -950,7 +953,7 @@ function validateAndAlert(idOrFunction, msg) {
     return result;
   }
 
-  if (typeof idOrFunction === 'function') {
+  if (typeof idOrFunction === "function") {
     const result = idOrFunction();
     if (!result) {
       console.error(msg);
@@ -960,10 +963,20 @@ function validateAndAlert(idOrFunction, msg) {
 
   if (idOrFunction === "shippingop") {
     return validateShippingOptions();
-  } 
+  }
 
   const element = document.getElementById(idOrFunction);
   const errorSpan = document.getElementById(idOrFunction + "Error");
+
+  if (idOrFunction === "seo_keywords") {
+    if (validateWordList()) {
+      clearError(errorSpan, element);
+      return true;
+    } else {
+      showError(errorSpan, element, msg);
+      return false;
+    }
+  }
 
   if (!element || !errorSpan) {
     console.error(`Element or error span for '${idOrFunction}' not found.`);
@@ -974,8 +987,10 @@ function validateAndAlert(idOrFunction, msg) {
   const customPrice = document.getElementById("enterFixedPrices");
   const cusPolicy = document.getElementById("new-policy");
 
-  const isCusPolicy = idOrFunction === "custom-return-policy-text" && !cusPolicy.checked;
-  const isNewCategory = idOrFunction === "newCategory" && !addCategoryCheckbox.checked;
+  const isCusPolicy =
+    idOrFunction === "custom-return-policy-text" && !cusPolicy.checked;
+  const isNewCategory =
+    idOrFunction === "newCategory" && !addCategoryCheckbox.checked;
   const isFixedPrice = idOrFunction === "fixed_price" && !customPrice.checked;
 
   if (isNewCategory || isFixedPrice || isCusPolicy) {
@@ -993,14 +1008,24 @@ function validateAndAlert(idOrFunction, msg) {
 }
 
 function validateExpirationDate() {
-  const monthValid = validateExpirationField("expiration-month", "Please select a month");
-  const yearValid = validateExpirationField("expiration-year", "Please select a year");
-  
+  const monthValid = validateExpirationField(
+    "expiration-month",
+    "Please select a month"
+  );
+  const yearValid = validateExpirationField(
+    "expiration-year",
+    "Please select a year"
+  );
+
   if (monthValid && yearValid) {
     clearError(document.getElementById("expiration-dateError"));
     return true;
   } else {
-    showError(document.getElementById("expiration-dateError"), null, "Please select a valid expiration date");
+    showError(
+      document.getElementById("expiration-dateError"),
+      null,
+      "Please select a valid expiration date"
+    );
     return false;
   }
 }
@@ -1008,7 +1033,7 @@ function validateExpirationDate() {
 function validateExpirationField(fieldId, errorMsg) {
   const field = document.getElementById(fieldId);
   const errorSpan = document.getElementById(fieldId + "Error");
-  
+
   if (field.value === field.options[0].text) {
     showError(errorSpan, field, errorMsg);
     return false;
@@ -1022,14 +1047,14 @@ function validateDate() {
   const monthValid = validateDateField("month", "Please select a month");
   const dayValid = validateDateField("day", "Please select a day");
   const yearValid = validateDateField("year", "Please select a year");
-  
+
   return monthValid && dayValid && yearValid;
 }
 
 function validateDateField(fieldId, errorMsg) {
   const field = document.getElementById(fieldId);
   const errorSpan = document.getElementById(fieldId + "Error");
-  
+
   if (field.value === field.options[0].text) {
     showError(errorSpan, field, errorMsg);
     return false;
@@ -1083,9 +1108,9 @@ function validationList() {
   const alertMsg = "You can't leave this empty";
 
   const validations = {
-    // [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
-    // [SECTION_2]: ["shopName"],
-    // [SECTION_3]: [
+    [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
+    [SECTION_2]: ["shopName"],
+    [SECTION_3]: [
       // ["image", "Please upload an image"],
       // ["images", "Please upload more pictures"],
       // ["newCategory", "Please enter the name of the category"],
@@ -1104,37 +1129,43 @@ function validationList() {
       // ["hs-tariff-number", "Please enter the HS Tariff Number"],
       // ["shippingop", "Please select a shipping option"],
       // ["SelCategory", "Please select a category"],
-      // ["whomade", "Please select who made the item"],
+      // ["whomade", "Please select who made the item"],[
+      // { validate: validateShippingOptions, errorMsg: "Please select at least one shipping option" },
+      // ["handlingFee", "Please enter the Handling fee amount"],
       // ["processing_time", "Please select processing time"],
       // ["returnpolicy", "Please select a return policy"],
+      ["seo_keywords", "Please add atleast One key Word"],
       // [
       //   "custom-return-policy-text",
       //   "Please enter a custom return policy description",
       // ],
-    // ],
+    ],
     [SECTION_4]: [
-      // ["bank-location", "Please enter bank-location"],
-      // ["country-residence", "Please enter country-residence"],
-      // ["first-name", "Please enter first-name"],
-      // ["last-name", "Please enter last-name"],
-      // [{ validate: validateDate, errorMsg: "Please select a valid date" }],
-      // ["number", "Please enter number"],
-      // ["street-name", "Please enter street-name"],
-      // ["address-line2", "Please enter address-line2"],
-      // ["city-town", "Please enter city-town"],
-      // ["state", "Please enter state"],
-      // ["postal-code", "Please enter postal-code"],
-      // ["phone-number", "Please enter phone-number"],
-      // ["full-name", "Please enter full-name"],
-      // ["bank-name", "Please enter bank-name"],
-      // ["iban", "Please enter iban"],
-      // ["swift-bic", "Please enter swift-bic"],
+      ["bank-location", "Please enter bank-location"],
+      ["country-residence", "Please enter country-residence"],
+      ["first-name", "Please enter first-name"],
+      ["last-name", "Please enter last-name"],
+      [{ validate: validateDate, errorMsg: "Please select a valid date" }],
+      ["number", "Please enter number"],
+      ["street-name", "Please enter street-name"],
+      ["address-line2", "Please enter address-line2"],
+      ["city-town", "Please enter city-town"],
+      ["state", "Please enter state"],
+      ["postal-code", "Please enter postal-code"],
+      ["phone-number", "Please enter phone-number"],
+      ["full-name", "Please enter full-name"],
+      ["bank-name", "Please enter bank-name"],
+      ["iban", "Please enter iban"],
+      ["swift-bic", "Please enter swift-bic"],
     ],
     [SECTION_5]: [
-      // ["card-number", "Please enter your card number"],
-      // [{ validate: validateExpirationDate }, "Please select a valid expiration date"],
-      // ["ccv", "Please enter your CCV"],
-      // ["name-on-card", "Please enter the name on your card"],
+      ["card-number", "Please enter your card number"],
+      [
+        { validate: validateExpirationDate },
+        "Please select a valid expiration date",
+      ],
+      ["ccv", "Please enter your CCV"],
+      ["name-on-card", "Please enter the name on your card"],
     ],
     [SECTION_6]: [
       ["authMethod", "Please choose an authentication method"],
@@ -1152,7 +1183,11 @@ function validationList() {
   });
 
   (validations[SectionNumber] || []).forEach((field) => {
-    if (Array.isArray(field) && typeof field[0] === 'object' && field[0].validate) {
+    if (
+      Array.isArray(field) &&
+      typeof field[0] === "object" &&
+      field[0].validate
+    ) {
       op = op && validateAndAlert(field[0], field[1]);
     } else if (Array.isArray(field)) {
       op = op && validateAndAlert(field[0], field[1]);
@@ -1195,6 +1230,8 @@ function savencon(pageName) {
       element.style.backgroundImage =
         "url(\"data:image/svg+xml;utf8,<svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/></svg>\")";
     }
+
+    handleSection();
 
     SectionNumber += 1;
     gloweffect(pageName);

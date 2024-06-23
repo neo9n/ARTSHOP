@@ -550,10 +550,12 @@ $page_title = "Sign In"
           <input type="checkbox" class="form-check-input" id="freeInternationalShipping">
           <label class="form-check-label" for="freeInternationalShipping">Free international shipping</label>
         </div>
+        <span id="shippingOptionsError" class="error-message"></span>
         <div class="form-group">
           <label for="handlingFee">Handling fee</label>
           <small class="form-text text-muted">We'll add this to the buyer's shipping total, they won't see it separately</small>
-          <input type="text" class="form-control" id="handlingFee" placeholder="USD"> <span id="handlingFeeError" class="error-message"></span>
+          <input type="text" class="form-control" id="handlingFee" placeholder="USD">
+          <span id="handlingFeeError" class="error-message"></span>
         </div>
       </div>
     </div>
@@ -1060,59 +1062,59 @@ $page_title = "Sign In"
   </section>
 
   <section id="addShopsection6" class="bg-light py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="mb-4 text-center">Keep Your Shop Extra Safe</h2>
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6 border-end">
-                <h4 class="mb-3">Two-Factor Authentication</h4>
-                <p class="text-muted">Enhance your account security by setting up two-factor authentication. This ensures that only you can access your Artisan Alley account.</p>
-                <p class="text-muted">After setup, you'll enter a unique code sent to your chosen method every time you sign in.</p>
-                <div class="alert alert-info" role="alert">
-                  <i class="fas fa-info-circle me-2"></i>
-                  Some countries may not support SMS or phone call authentication. For the best experience, we recommend using an authenticator app.
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="mb-4 text-center">Keep Your Shop Extra Safe</h2>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 border-end">
+                  <h4 class="mb-3">Two-Factor Authentication</h4>
+                  <p class="text-muted">Enhance your account security by setting up two-factor authentication. This ensures that only you can access your Artisan Alley account.</p>
+                  <p class="text-muted">After setup, you'll enter a unique code sent to your chosen method every time you sign in.</p>
+                  <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Some countries may not support SMS or phone call authentication. For the best experience, we recommend using an authenticator app.
+                  </div>
+                  <p><a href="#" class="text-decoration-none">Learn more about two-factor authentication <i class="fas fa-arrow-right ms-1"></i></a></p>
                 </div>
-                <p><a href="#" class="text-decoration-none">Learn more about two-factor authentication <i class="fas fa-arrow-right ms-1"></i></a></p>
-              </div>
-              <div class="col-md-6">
-                <h4 class="mb-3">Set Up Two-Factor Authentication</h4>
-                <form>
-                  <div class="mb-3">
-                    <label for="authMethod" class="form-label">Choose an authentication method</label>
-                    <select class="form-select" id="authMethod">
-                      <option selected disabled value="">Select a method</option>
-                      <option value="1">Email</option>
-                      <option value="2">Authenticator App</option>
-                      <option value="3">SMS</option>
-                    </select>
-                    <span id="authMethodError" class="text-danger"></span>
-                  </div>
-                  <div class="mb-3">
-                    <label for="emailMethod" class="form-label">Verification method</label>
-                    <select class="form-select" id="emailMethod">
-                      <option selected disabled value="">Select a verification method</option>
-                      <option value="1">Receive authentication code via Email</option>
-                    </select>
-                    <span id="emailMethodError" class="text-danger"></span>
-                  </div>
-                  <div class="mb-3">
-                    <label for="email2" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email2" placeholder="Enter your email">
-                    <span id="email2Error" class="text-danger"></span>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Set Up Two-Factor Authentication</button>
-                </form>
+                <div class="col-md-6">
+                  <h4 class="mb-3">Set Up Two-Factor Authentication</h4>
+                  <form>
+                    <div class="mb-3">
+                      <label for="authMethod" class="form-label">Choose an authentication method</label>
+                      <select class="form-select" id="authMethod">
+                        <option selected disabled value="">Select a method</option>
+                        <option value="1">Email</option>
+                        <option value="2">Authenticator App</option>
+                        <option value="3">SMS</option>
+                      </select>
+                      <span id="authMethodError" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                      <label for="emailMethod" class="form-label">Verification method</label>
+                      <select class="form-select" id="emailMethod">
+                        <option selected disabled value="">Select a verification method</option>
+                        <option value="1">Receive authentication code via Email</option>
+                      </select>
+                      <span id="emailMethodError" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email2" class="form-label">Email address</label>
+                      <input type="email" class="form-control" id="email2" placeholder="Enter your email">
+                      <span id="email2Error" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Set Up Two-Factor Authentication</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <section id="final" class="container py-5 final">
     <div class="container text-center">
