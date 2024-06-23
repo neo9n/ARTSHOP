@@ -992,6 +992,32 @@ function validateAndAlert(idOrFunction, msg) {
   }
 }
 
+function validateExpirationDate() {
+  const monthValid = validateExpirationField("expiration-month", "Please select a month");
+  const yearValid = validateExpirationField("expiration-year", "Please select a year");
+  
+  if (monthValid && yearValid) {
+    clearError(document.getElementById("expiration-dateError"));
+    return true;
+  } else {
+    showError(document.getElementById("expiration-dateError"), null, "Please select a valid expiration date");
+    return false;
+  }
+}
+
+function validateExpirationField(fieldId, errorMsg) {
+  const field = document.getElementById(fieldId);
+  const errorSpan = document.getElementById(fieldId + "Error");
+  
+  if (field.value === field.options[0].text) {
+    showError(errorSpan, field, errorMsg);
+    return false;
+  } else {
+    clearError(errorSpan, field);
+    return true;
+  }
+}
+
 function validateDate() {
   const monthValid = validateDateField("month", "Please select a month");
   const dayValid = validateDateField("day", "Please select a day");
@@ -1105,18 +1131,14 @@ function validationList() {
       // ["swift-bic", "Please enter swift-bic"],
     ],
     [SECTION_5]: [
-      ["card-number", "Please enter your card number"],
-      ["expiration-month", "Please select the expiration month"],
-      ["expiration-year", "Please select the expiration year"],
-      ["ccv", "Please enter your CCV"],
-      ["name-on-card", "Please enter the name on your card"],
+      // ["card-number", "Please enter your card number"],
+      // [{ validate: validateExpirationDate }, "Please select a valid expiration date"],
+      // ["ccv", "Please enter your CCV"],
+      // ["name-on-card", "Please enter the name on your card"],
     ],
     [SECTION_6]: [
-      ["authMethod", "Please choose an option to get started"],
-      [
-        "emailMethod",
-        "Please select how you want to receive the authentication code",
-      ],
+      ["authMethod", "Please choose an authentication method"],
+      ["emailMethod", "Please select a verification method"],
       ["email2", "Please enter your email address for verification"],
     ],
   };
