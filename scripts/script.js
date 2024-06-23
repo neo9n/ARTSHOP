@@ -88,34 +88,44 @@ function adminLogin() {
 function section3Backend() {
   const values = {};
 
-  inputElements.forEach(id => {
-      const element = document.getElementById(id);
-      if (element) {
-          if (element.type === 'file') {
-              values[id] = element.files.length > 0 ? element.files[0].name : 'No file selected';
-          } else if (element.type === 'radio' || element.type === 'checkbox') {
-              values[id] = element.checked;
-          } else {
-              values[id] = element.value;
-          }
+  inputElements.forEach((id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      if (element.type === "file") {
+        values[id] =
+          element.files.length > 0 ? element.files[0].name : "No file selected";
+      } else if (element.type === "radio" || element.type === "checkbox") {
+        values[id] = element.checked;
       } else {
-          console.warn(`Element with id "${id}" not found`);
+        values[id] = element.value;
       }
+    } else {
+      console.warn(`Element with id "${id}" not found`);
+    }
   });
 
   // Additional radio button groups
-  values['renewal_option'] = document.querySelector('input[name="renewal_option"]:checked')?.value || '';
-  values['item_type'] = document.querySelector('input[name="item_type"]:checked')?.value || '';
-  values['enterFixedPrices'] = document.querySelector('input[name="enterFixedPrices"]:checked')?.value || '';
-  values['shippingop'] = document.querySelector('input[name="shippingop"]:checked')?.value || '';
+  values["renewal_option"] =
+    document.querySelector('input[name="renewal_option"]:checked')?.value || "";
+  values["item_type"] =
+    document.querySelector('input[name="item_type"]:checked')?.value || "";
+  values["enterFixedPrices"] =
+    document.querySelector('input[name="enterFixedPrices"]:checked')?.value ||
+    "";
+  values["shippingop"] =
+    document.querySelector('input[name="shippingop"]:checked')?.value || "";
 
   // Additional checkboxes
-  values['freeShipping'] = document.getElementById('freeShipping').checked;
-  values['freeDomesticShipping'] = document.getElementById('freeDomesticShipping').checked;
-  values['freeInternationalShipping'] = document.getElementById('freeInternationalShipping').checked;
+  values["freeShipping"] = document.getElementById("freeShipping").checked;
+  values["freeDomesticShipping"] = document.getElementById(
+    "freeDomesticShipping"
+  ).checked;
+  values["freeInternationalShipping"] = document.getElementById(
+    "freeInternationalShipping"
+  ).checked;
 
-  console.log('Input values:', values);
-  
+  console.log("Input values:", values);
+
   // You can add code here to send the values to a backend service or perform other actions
 }
 
@@ -136,16 +146,15 @@ function getShopinitData() {
     "\n" +
     "Currency: " +
     (shopCurrency || "Not selected");
-    alert(message);
+  alert(message);
 }
 
 function getShopNameInfo() {
   // Get input value
-  var shopName = document.getElementById('shopName').value;
+  var shopName = document.getElementById("shopName").value;
 
   // Prepare alert message
-  var alertMessage = "Shop Name Information:\n\n" +
-      "Shop Name: " + shopName;
+  var alertMessage = "Shop Name Information:\n\n" + "Shop Name: " + shopName;
 
   // Display alert
   alert(alertMessage);
@@ -153,18 +162,28 @@ function getShopNameInfo() {
 
 function getBillingInfo() {
   // Get input values
-  var cardNumber = document.getElementById('card-number').value;
-  var expirationMonth = document.getElementById('expiration-month').value;
-  var expirationYear = document.getElementById('expiration-year').value;
-  var ccv = document.getElementById('ccv').value;
-  var nameOnCard = document.getElementById('name-on-card').value;
+  var cardNumber = document.getElementById("card-number").value;
+  var expirationMonth = document.getElementById("expiration-month").value;
+  var expirationYear = document.getElementById("expiration-year").value;
+  var ccv = document.getElementById("ccv").value;
+  var nameOnCard = document.getElementById("name-on-card").value;
 
   // Prepare alert message
-  var alertMessage = "Billing Information:\n\n" +
-      "Card Number: " + cardNumber + "\n" +
-      "Expiration Date: " + expirationMonth + "/" + expirationYear + "\n" +
-      "CCV: " + ccv + "\n" +
-      "Name on Card: " + nameOnCard;
+  var alertMessage =
+    "Billing Information:\n\n" +
+    "Card Number: " +
+    cardNumber +
+    "\n" +
+    "Expiration Date: " +
+    expirationMonth +
+    "/" +
+    expirationYear +
+    "\n" +
+    "CCV: " +
+    ccv +
+    "\n" +
+    "Name on Card: " +
+    nameOnCard;
 
   // Display alert
   alert(alertMessage);
@@ -172,15 +191,21 @@ function getBillingInfo() {
 
 function getTwoFactorAuthInfo() {
   // Get input values
-  var authMethod = document.getElementById('authMethod').value;
-  var emailMethod = document.getElementById('emailMethod').value;
-  var email = document.getElementById('email2').value;
+  var authMethod = document.getElementById("authMethod").value;
+  var emailMethod = document.getElementById("emailMethod").value;
+  var email = document.getElementById("email2").value;
 
   // Prepare alert message
-  var alertMessage = "Two-Factor Authentication Information:\n\n" +
-      "Authentication Method: " + authMethod + "\n" +
-      "Email Verification Method: " + emailMethod + "\n" +
-      "Email Address: " + email;
+  var alertMessage =
+    "Two-Factor Authentication Information:\n\n" +
+    "Authentication Method: " +
+    authMethod +
+    "\n" +
+    "Email Verification Method: " +
+    emailMethod +
+    "\n" +
+    "Email Address: " +
+    email;
 
   // Display alert
   alert(alertMessage);
@@ -188,52 +213,75 @@ function getTwoFactorAuthInfo() {
 
 function section4Backend() {
   let inputValues = {
-      bankLocation: document.getElementById('bank-location').value,
-      addCountry: document.getElementById('add-country').checked,
-      countryName: document.getElementById('country-name').value,
-      sellerType: document.querySelector('input[name="seller-type"]:checked').value,
-      countryOfResidence: document.getElementById('bank-location').value,
-      firstName: document.getElementById('first-name').value,
-      lastName: document.getElementById('last-name').value,
-      dob: {
-          month: document.getElementById('month').value,
-          day: document.getElementById('day').value,
-          year: document.getElementById('year').value
-      },
-      address: {
-          number: document.getElementById('number').value,
-          streetName: document.getElementById('street-name').value,
-          addressLine2: document.getElementById('address-line2').value,
-          cityTown: document.getElementById('city-town').value,
-          state: document.getElementById('state').value,
-          postalCode: document.getElementById('postal-code').value
-      },
-      phoneNumber: document.getElementById('phone-number').value,
-      livedInSanctionedRegion: document.querySelector('input[name="lived"]:checked').value,
-      sanctionedRegion: document.getElementById('sanctioned-region').value,
-      lastDayInSanctionedRegion: {
-          day: document.getElementById('Day2').value,
-          month: document.getElementById('month2').value,
-          year: document.getElementById('year2').value
-      },
-      bankInfo: {
-          fullName: document.getElementById('full-name').value,
-          bankName: document.getElementById('bank-name').value,
-          iban: document.getElementById('iban').value,
-          swiftBic: document.getElementById('swift-bic').value
-      }
+    bankLocation: document.getElementById("bank-location").value,
+    addCountry: document.getElementById("add-country").checked,
+    countryName: document.getElementById("country-name").value,
+    sellerType: document.querySelector('input[name="seller-type"]:checked')
+      .value,
+    countryOfResidence: document.getElementById("bank-location").value,
+    firstName: document.getElementById("first-name").value,
+    lastName: document.getElementById("last-name").value,
+    dob: {
+      month: document.getElementById("month").value,
+      day: document.getElementById("day").value,
+      year: document.getElementById("year").value,
+    },
+    address: {
+      number: document.getElementById("number").value,
+      streetName: document.getElementById("street-name").value,
+      addressLine2: document.getElementById("address-line2").value,
+      cityTown: document.getElementById("city-town").value,
+      state: document.getElementById("state").value,
+      postalCode: document.getElementById("postal-code").value,
+    },
+    phoneNumber: document.getElementById("phone-number").value,
+    livedInSanctionedRegion: document.querySelector(
+      'input[name="lived"]:checked'
+    ).value,
+    sanctionedRegion: document.getElementById("sanctioned-region").value,
+    lastDayInSanctionedRegion: {
+      day: document.getElementById("Day2").value,
+      month: document.getElementById("month2").value,
+      year: document.getElementById("year2").value,
+    },
+    bankInfo: {
+      fullName: document.getElementById("full-name").value,
+      bankName: document.getElementById("bank-name").value,
+      iban: document.getElementById("iban").value,
+      swiftBic: document.getElementById("swift-bic").value,
+    },
   };
 
   alert(JSON.stringify(inputValues, null, 2));
 }
 
 const inputElements = [
-  'image', 'images', 'videoInput', 'seo_keywords', 'SelCategory', 'newCategory',
-  'whomade', 'brief-overview', 'section', 'price', 'quantity', 'instruction',
-  'whatBuyerSees', 'fixed_price', 'originZIPCode', 'processing_time',
-  'shipping-country', 'name', 'handlingFee', 'hs-tariff-number', 'item-weight',
-  'package-length', 'package-width', 'package-height', 'returnpolicy',
-  'custom-return-policy-text'
+  "image",
+  "images",
+  "videoInput",
+  "shippingop",
+  "SelCategory",
+  "newCategory",
+  "whomade",
+  "brief-overview",
+  "section",
+  "price",
+  "quantity",
+  "instruction",
+  "whatBuyerSees",
+  "fixed_price",
+  "originZIPCode",
+  "processing_time",
+  "shipping-country",
+  "name",
+  "handlingFee",
+  "hs-tariff-number",
+  "item-weight",
+  "package-length",
+  "package-width",
+  "package-height",
+  "returnpolicy",
+  "custom-return-policy-text",
 ];
 
 function submitForm(url, form) {
@@ -687,245 +735,12 @@ function gloweffect(pageName) {
     ball.style.boxShadow = "0 0 10px rgba(0, 123, 255, 0.7)";
   }
 }
-function isEmptyDropDown(id) {
-  var dropdown = document.getElementById(id);
-  return dropdown.value === "";
-}
-
-function validateElementsOutput(dropdownId) {
-  var dropdown = document.getElementById(dropdownId);
-  return dropdown.value !== "";
-}
-
-function validateAndAlert(id, msg) {
-  if (isEmptyDropDown(id) || !validateElementsOutput(id)) {
-    errorSpanToggle(id, msg);
-    return false;
-  }
-  return true;
-}
-
-function validationList() {
-  var alertMsg = "You can't leave this empty";
-  var op = true;
-
-  if (SectionNumber === 1) {
-    op = validateAndAlert("shopLanguage", alertMsg);
-    op = op && validateAndAlert("shopCountry", alertMsg);
-    op = op && validateAndAlert("shopCurrency", alertMsg);
-  }
-  if (SectionNumber === 2) {
-    op = validateAndAlert("shopName", alertMsg);
-  }
-  if (SectionNumber === 3) {
-    op = op && validateAndAlert("image", "Please upload an image");
-    op = op && validateAndAlert("images", "Please upload more pictures");
-    op =
-      op &&
-      validateAndAlert("newCategory", "Please enter the name of the category");
-    op = op && validateAndAlert("section", "Please enter the section name");
-    op = op && validateAndAlert("price", "Please enter the price");
-    op = op && validateAndAlert("quantity", "Please enter the quantity");
-    op =
-      op &&
-      validateAndAlert(
-        "instruction",
-        "Please enter the personalization instructions"
-      );
-    op =
-      op &&
-      validateAndAlert("whatBuyerSees", "Please add what the buyer will see");
-    op = op && validateAndAlert("fixed_price", "Please enter the fixed price");
-    op =
-      op &&
-      validateAndAlert("originZIPCode", "Please enter the origin ZIP code");
-    op = op && validateAndAlert("item-weight", "Please enter the item weight");
-    op =
-      op &&
-      validateAndAlert("package-length", "Please enter the package length");
-    op =
-      op && validateAndAlert("package-width", "Please enter the package width");
-    op =
-      op &&
-      validateAndAlert("package-height", "Please enter the package height");
-    op =
-      op &&
-      validateAndAlert("hs-tariff-number", "Please enter the HS Tariff Number");
-
-    op =
-      op &&
-      validateAndAlert(
-        "add-category",
-        "Please select whether to add a new category"
-      );
-    op =
-      op &&
-      validateAndAlert(
-        "shipping-service-usps",
-        "Please select a shipping service"
-      );
-    op =
-      op &&
-      validateAndAlert(
-        "shipping-service-fedex",
-        "Please select a shipping service"
-      );
-    op =
-      op &&
-      validateAndAlert(
-        "shipping-service-other",
-        "Please select a shipping service"
-      );
-
-    op = op && validateAndAlert("SelCategory", "Please select a category");
-    op = op && validateAndAlert("whomade", "Please select who made the item");
-    op =
-      op &&
-      validateAndAlert("processing_time", "Please select processing time");
-    op =
-      op && validateAndAlert("returnpolicy", "Please select a return policy");
-
-    op =
-      op && validateAndAlert("brief-overview", "Please enter a brief overview");
-    op =
-      op &&
-      validateAndAlert(
-        "custom-return-policy-text",
-        "Please enter a custom return policy description"
-      );
-  }
-
-  if (SectionNumber === 4) {
-    op = op && validateAndAlert("bank-location", "Please enter bank-location");
-    op = op && validateAndAlert("add-country", "Please enter add-country");
-    op = op && validateAndAlert("country-name", "Please enter country-name");
-    op =
-      op &&
-      validateAndAlert("country-residence", "Please enter country-residence");
-    op = op && validateAndAlert("first-name", "Please enter first-name");
-    op = op && validateAndAlert("last-name", "Please enter last-name");
-    op = op && validateAndAlert("month", "Please enter month");
-    op = op && validateAndAlert("day", "Please enter day");
-    op = op && validateAndAlert("year", "Please enter year");
-    op = op && validateAndAlert("number", "Please enter number");
-    op = op && validateAndAlert("street-name", "Please enter street-name");
-    op = op && validateAndAlert("address-line2", "Please enter address-line2");
-    op = op && validateAndAlert("city-town", "Please enter city-town");
-    op = op && validateAndAlert("state", "Please enter state");
-    op = op && validateAndAlert("postal-code", "Please enter postal-code");
-    op = op && validateAndAlert("phone-number", "Please enter phone-number");
-    op = op && validateAndAlert("yes", "Please enter yes");
-    op = op && validateAndAlert("no", "Please enter no");
-    op =
-      op &&
-      validateAndAlert("sanctioned-region", "Please enter sanctioned-region");
-    op = op && validateAndAlert("Day2", "Please enter Day2");
-    op = op && validateAndAlert("month2", "Please enter month2");
-    op = op && validateAndAlert("year2", "Please enter year2");
-    op = op && validateAndAlert("full-name", "Please enter full-name");
-    op = op && validateAndAlert("bank-name", "Please enter bank-name");
-    op = op && validateAndAlert("iban", "Please enter iban");
-    op = op && validateAndAlert("swift-bic", "Please enter swift-bic");
-  }
-
-  if (SectionNumber === 5) {
-    op = op && validateAndAlert("card-number", "Please enter your card number");
-    op =
-      op &&
-      validateAndAlert(
-        "expiration-month",
-        "Please select the expiration month"
-      );
-    op =
-      op &&
-      validateAndAlert("expiration-year", "Please select the expiration year");
-    op = op && validateAndAlert("ccv", "Please enter your CCV");
-    op =
-      op &&
-      validateAndAlert("name-on-card", "Please enter the name on your card");
-  }
-
-  if (SectionNumber === 6) {
-    op =
-      op &&
-      validateAndAlert("authMethod", "Please choose an option to get started");
-    op =
-      op &&
-      validateAndAlert(
-        "emailMethod",
-        "Please select how you want to receive the authentication code"
-      );
-    op =
-      op &&
-      validateAndAlert(
-        "email2",
-        "Please enter your email address for verification"
-      );
-  }
-  return op;
-}
-
-function handleSection() {
-  switch (SectionNumber) {
-    case 1:
-      getShopinitData();
-      break;
-    case 2:
-      getShopNameInfo();
-      break;
-    case 3:
-      section3Backend();
-      break;
-    case 4:
-      section4Backend();
-      break;
-    case 5:
-      getTwoFactorAuthInfo();
-      break;
-    default:
-      console.log("Invalid section number");
-  }
-}
-
-function savencon(pageName) {
-  if (validationList()) {
-    var element = document.getElementById(pageName + "d" + SectionNumber);
-    if (element) {
-      element.style.backgroundColor = "";
-      element.style.boxShadow = "";
-      element.style.backgroundImage =
-        "url(\"data:image/svg+xml;utf8,<svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/></svg>\")";
-    }
-    
-    handleSection();
-
-    SectionNumber += 1;
-    gloweffect(pageName);
-    load(pageName);
-    if (SectionNumber == 7) {
-      document.getElementById("section").style.display = "block";
-      document.getElementById("final").style.display = "block";
-    }
-  }
-}
-
-function errorSpanToggle(elementId, alertMsg) {
-  var element = document.getElementById(elementId);
-  var errorSpan = document.getElementById(elementId + "Error");
-
-  if (element.value === "") {
-    element.classList.add("error");
-    errorSpan.textContent = alertMsg;
-    errorSpan.style.display = "inline";
-    element.focus();
-    setTimeout(function () {
-      element.blur();
-    }, 3000);
-  } else {
-    element.classList.remove("error");
-    errorSpan.style.display = "none";
-  }
-}
+const SECTION_1 = 1;
+const SECTION_2 = 2;
+const SECTION_3 = 3;
+const SECTION_4 = 4;
+const SECTION_5 = 5;
+const SECTION_6 = 6;
 
 const dropdownIds = [
   "shopLanguage",
@@ -949,29 +764,6 @@ const dropdownIds = [
   "authMethod",
   "smsMethod",
 ];
-
-const validationMessages = {
-  shopLanguage: "Please select a language for the shop",
-  shopCountry: "Please select a Country for your shop",
-  shopCurrency: "Please select a currency",
-  SelCategory: "Please select a Category for the item",
-  whomade: "Please select an Option",
-  processing_time: "Please select an Option",
-  "shipping-country": "Please select an Option",
-  returnpolicy: "Please select a Return policy Option",
-  "bank-location": "Please select an Option",
-  month: "Please select a Month",
-  day: "Please select a Day",
-  year: "Please select an Year",
-  "sanctioned-region": "Please select an Region",
-  Day2: "Please select a Day",
-  month2: "Please select a Month",
-  year2: "Please select an Year",
-  "expiration-month": "Please select an Option",
-  "expiration-year": "Please select an Option",
-  authMethod: "Choose an option to get started",
-  smsMethod: "Verify your account through",
-};
 
 const inputFieldIds = [
   "shopName",
@@ -1041,6 +833,29 @@ const inputFieldIds = [
   "package-height",
 ];
 
+const validationMessages = {
+  shopLanguage: "Please select a language for the shop",
+  shopCountry: "Please select a Country for your shop",
+  shopCurrency: "Please select a currency",
+  SelCategory: "Please select a Category for the item",
+  whomade: "Please select an Option",
+  processing_time: "Please select an Option",
+  "shipping-country": "Please select an Option",
+  returnpolicy: "Please select a Return policy Option",
+  "bank-location": "Please select an Option",
+  month: "Please select a Month",
+  day: "Please select a Day",
+  year: "Please select an Year",
+  "sanctioned-region": "Please select an Region",
+  Day2: "Please select a Day",
+  month2: "Please select a Month",
+  year2: "Please select an Year",
+  "expiration-month": "Please select an Option",
+  "expiration-year": "Please select an Option",
+  authMethod: "Choose an option to get started",
+  smsMethod: "Verify your account through",
+};
+
 const friendlyNames = {
   shopName: "Shop Name",
   seo_keywords: "SEO Keywords",
@@ -1098,6 +913,224 @@ const friendlyNames = {
   "package-width": "Package Width",
   "package-height": "Package Height",
 };
+
+function validateAndAlert(id, msg) {
+  const element = document.getElementById(id);
+  const errorSpan = document.getElementById(id + "Error");
+
+  if (!element || !errorSpan) {
+    console.error(`Element or error span for '${id}' not found.`);
+    return false;
+  }
+
+  const addCategoryCheckbox = document.getElementById("add-category");
+  const customPrice = document.getElementById("enterFixedPrices");
+
+  const isNewCategory = id === "newCategory" && !addCategoryCheckbox.checked;
+  const isFixedPrice = id === "fixed_price" && !customPrice.checked;
+
+  if (isNewCategory || isFixedPrice) {
+    clearError(errorSpan, element);
+    return true;
+  }
+
+  if (isEmpty(element)) {
+    showError(errorSpan, element, msg);
+    return false;
+  } else {
+    clearError(errorSpan, element);
+    return true;
+  }
+}
+
+function showError(errorSpan, element, msg) {
+  errorSpan.textContent = msg;
+  errorSpan.style.display = "block";
+  element.classList.add("is-invalid");
+  element.focus();
+  element.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function clearError(errorSpan, element) {
+  errorSpan.textContent = "";
+  errorSpan.style.display = "none";
+  element.classList.remove("is-invalid");
+}
+
+function isEmpty(element) {
+  return element.value.trim() === "";
+}
+
+function isEmpty(element) {
+  switch (element.type) {
+    case "select-one":
+    case "text":
+    case "textarea":
+    case "email":
+    case "number":
+      return element.value.trim() === "";
+
+    case "checkbox":
+    case "radio":
+      return !element.checked;
+
+    case "file":
+      return element.files.length === 0;
+
+    default:
+      return false;
+  }
+}
+
+function validationList() {
+  let op = true;
+  const alertMsg = "You can't leave this empty";
+
+  const validations = {
+    // [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
+    // [SECTION_2]: ["shopName"],
+    [SECTION_3]: [
+      // ["image", "Please upload an image"],
+      // ["images", "Please upload more pictures"],
+      // ["newCategory", "Please enter the name of the category"],
+      // ["brief-overview", "Please enter a brief overview"],
+      // ["section", "Please enter the section name"],
+      // ["price", "Please enter the price"],
+      // ["quantity", "Please enter the quantity"],
+      // ["instruction", "Please enter the personalization instructions"],
+      // ["whatBuyerSees", "Please add what the buyer will see"],
+      // ["fixed_price", "Please enter the fixed price"],
+      // ["originZIPCode", "Please enter the origin ZIP code"],
+      // ["item-weight", "Please enter the item weight"],
+      // ["package-length", "Please enter the package length"],
+      // ["package-width", "Please enter the package width"],
+      // ["package-height", "Please enter the package height"],
+      // ["hs-tariff-number", "Please enter the HS Tariff Number"],
+      ["shipping-service-usps", "Please select a shipping service"],
+      ["shipping-service-fedex", "Please select a shipping service"],
+      ["shipping-service-other", "Please select a shipping service"],
+      ["SelCategory", "Please select a category"],
+      ["whomade", "Please select who made the item"],
+      ["processing_time", "Please select processing time"],
+      ["returnpolicy", "Please select a return policy"],
+      [
+        "custom-return-policy-text",
+        "Please enter a custom return policy description",
+      ],
+    ],
+    [SECTION_4]: [
+      ["bank-location", "Please enter bank-location"],
+      ["add-country", "Please enter add-country"],
+      ["country-name", "Please enter country-name"],
+      ["country-residence", "Please enter country-residence"],
+      ["first-name", "Please enter first-name"],
+      ["last-name", "Please enter last-name"],
+      ["month", "Please enter month"],
+      ["day", "Please enter day"],
+      ["year", "Please enter year"],
+      ["number", "Please enter number"],
+      ["street-name", "Please enter street-name"],
+      ["address-line2", "Please enter address-line2"],
+      ["city-town", "Please enter city-town"],
+      ["state", "Please enter state"],
+      ["postal-code", "Please enter postal-code"],
+      ["phone-number", "Please enter phone-number"],
+      ["yes", "Please enter yes"],
+      ["no", "Please enter no"],
+      ["sanctioned-region", "Please enter sanctioned-region"],
+      ["Day2", "Please enter Day2"],
+      ["month2", "Please enter month2"],
+      ["year2", "Please enter year2"],
+      ["full-name", "Please enter full-name"],
+      ["bank-name", "Please enter bank-name"],
+      ["iban", "Please enter iban"],
+      ["swift-bic", "Please enter swift-bic"],
+    ],
+    [SECTION_5]: [
+      ["card-number", "Please enter your card number"],
+      ["expiration-month", "Please select the expiration month"],
+      ["expiration-year", "Please select the expiration year"],
+      ["ccv", "Please enter your CCV"],
+      ["name-on-card", "Please enter the name on your card"],
+    ],
+    [SECTION_6]: [
+      ["authMethod", "Please choose an option to get started"],
+      [
+        "emailMethod",
+        "Please select how you want to receive the authentication code",
+      ],
+      ["email2", "Please enter your email address for verification"],
+    ],
+  };
+
+  (validations[SectionNumber] || []).forEach((field) => {
+    if (Array.isArray(field)) {
+      op = op && validateAndAlert(field[0], field[1]);
+    } else {
+      op = op && validateAndAlert(field, alertMsg);
+    }
+  });
+
+  return op;
+}
+
+function handleSection() {
+  switch (SectionNumber) {
+    case SECTION_1:
+      getShopinitData();
+      break;
+    case SECTION_2:
+      getShopNameInfo();
+      break;
+    case SECTION_3:
+      // section3Backend();
+      break;
+    case SECTION_4:
+      section4Backend();
+      break;
+    case SECTION_5:
+      getTwoFactorAuthInfo();
+      break;
+    default:
+      console.log("Invalid section number");
+  }
+}
+
+function savencon(pageName) {
+  if (validationList()) {
+    const element = document.getElementById(pageName + "d" + SectionNumber);
+    if (element) {
+      element.style.backgroundColor = "";
+      element.style.boxShadow = "";
+      element.style.backgroundImage =
+        "url(\"data:image/svg+xml;utf8,<svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/></svg>\")";
+    }
+
+    SectionNumber += 1;
+    gloweffect(pageName);
+    load(pageName);
+    if (SectionNumber == 7) {
+      document.getElementById("section").style.display = "block";
+      document.getElementById("final").style.display = "block";
+    }
+  }
+}
+
+function errorSpanToggle(elementId, alertMsg) {
+  const element = document.getElementById(elementId);
+  const errorSpan = document.getElementById(elementId + "Error");
+
+  if (isEmpty(element)) {
+    element.classList.add("error");
+    errorSpan.textContent = alertMsg;
+    errorSpan.style.display = "inline";
+    element.focus();
+    setTimeout(() => element.blur(), 3000);
+  } else {
+    element.classList.remove("error");
+    errorSpan.style.display = "none";
+  }
+}
 
 function initializeDropdownValidation() {
   dropdownIds.forEach((dropdownId) => {

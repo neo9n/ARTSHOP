@@ -78,94 +78,94 @@ $page_title = "Sign In"
   <br>
   <br>
 
-    <section id="addShopsection1" class="container py-6">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <h1>Shop preferences</h1>
-            <p>Let's get started! Tell us about you and your shop.</p>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="shopLanguage">Shop language</label>
-
-              <?php
-
-              $query = "SELECT * FROM `language`";
-              $resultSet = Database::search($query);
-
-              if ($resultSet->num_rows > 0) {
-                echo '<select class="form-control" id="shopLanguage" >';
-                echo '<option value="" selected disabled></option>';
-
-                while ($row = $resultSet->fetch_assoc()) {
-                  $language_code = $row['id'];
-                  $language_name = $row['name'];
-                  echo "<option value=\"$language_code\">$language_name</option>";
-                }
-                echo '</select>';
-              }
-              $resultSet->close();
-              ?>
-              <span id="shopLanguageError" class="error-message"></span>
-              <br>
-
-              <small class="form-text text-muted">The default language will be displayed to your customers. You can add more languages later.</small>
-            </div>
-            <div class="form-group">
-              <label for="shopCountry">Shop country</label>
-              <?php
-              $query = "SELECT * FROM countries";
-              $resultSet = Database::search($query);
-
-              echo '<select class="form-control" id="shopCountry"  >';
-              echo '<option value="" selected disabled></option>';
-
-              while ($row = $resultSet->fetch_assoc()) {
-                $country_code = $row['id'];
-                $country_name = $row['name'];
-                echo "<option value=\"$country_code\">$country_name</option>";
-              }
-              echo '</select>';
-
-              $resultSet->close();
-              ?>
-              <span id="shopCountryError" class="error-message"></span>
-              <small class="form-text text-muted">Tell us where your shop is based. This will help us determine some things, but you can't change it later.</small>
-            </div>
-            <div class="form-group">
-              <label for="shopCurrency">Shop currency</label>
-              <?php
-
-              $query = "SELECT * FROM currency";
-              $resultSet = Database::search($query);
-
-              echo '<select class="form-control" id="shopCurrency" >';
-              echo '<option value="" selected disabled></option>';
-
-              while ($row = $resultSet->fetch_assoc()) {
-                $shopCurrency_code = $row['id'];
-                $shopCurrency_name = $row['name'];
-                echo "<option value=\"$shopCurrency_code\">$shopCurrency_name</option>";
-              }
-              echo '</select>';
-              $resultSet->close();
-              ?>
-              <span id="shopCurrencyError" class="error-message"></span>
-              <small class="form-text text-muted">The currency you choose will be the currency your products are priced in. Customers will see prices in this currency.</small>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <h3>Your billing info</h3>
-            <p>This is where you'll enter the information we'll use to send you your payouts.</p>
-            <button onclick="gotoPage('billing.php')" class="button">Set up billing</button>
-          </div>
+  <section id="addShopsection1" class="container py-6">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Shop preferences</h1>
+          <p>Let's get started! Tell us about you and your shop.</p>
         </div>
       </div>
-    </section>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="shopLanguage">Shop language</label>
+
+            <?php
+
+            $query = "SELECT * FROM `language`";
+            $resultSet = Database::search($query);
+
+            if ($resultSet->num_rows > 0) {
+              echo '<select class="form-control" id="shopLanguage" >';
+              echo '<option value="" selected disabled></option>';
+
+              while ($row = $resultSet->fetch_assoc()) {
+                $language_code = $row['id'];
+                $language_name = $row['name'];
+                echo "<option value=\"$language_code\">$language_name</option>";
+              }
+              echo '</select>';
+            }
+            $resultSet->close();
+            ?>
+            <span id="shopLanguageError" class="error-message"></span>
+            <br>
+
+            <small class="form-text text-muted">The default language will be displayed to your customers. You can add more languages later.</small>
+          </div>
+          <div class="form-group">
+            <label for="shopCountry">Shop country</label>
+            <?php
+            $query = "SELECT * FROM countries";
+            $resultSet = Database::search($query);
+
+            echo '<select class="form-control" id="shopCountry"  >';
+            echo '<option value="" selected disabled></option>';
+
+            while ($row = $resultSet->fetch_assoc()) {
+              $country_code = $row['id'];
+              $country_name = $row['name'];
+              echo "<option value=\"$country_code\">$country_name</option>";
+            }
+            echo '</select>';
+
+            $resultSet->close();
+            ?>
+            <span id="shopCountryError" class="error-message"></span>
+            <small class="form-text text-muted">Tell us where your shop is based. This will help us determine some things, but you can't change it later.</small>
+          </div>
+          <div class="form-group">
+            <label for="shopCurrency">Shop currency</label>
+            <?php
+
+            $query = "SELECT * FROM currency";
+            $resultSet = Database::search($query);
+
+            echo '<select class="form-control" id="shopCurrency" >';
+            echo '<option value="" selected disabled></option>';
+
+            while ($row = $resultSet->fetch_assoc()) {
+              $shopCurrency_code = $row['id'];
+              $shopCurrency_name = $row['name'];
+              echo "<option value=\"$shopCurrency_code\">$shopCurrency_name</option>";
+            }
+            echo '</select>';
+            $resultSet->close();
+            ?>
+            <span id="shopCurrencyError" class="error-message"></span>
+            <small class="form-text text-muted">The currency you choose will be the currency your products are priced in. Customers will see prices in this currency.</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h3>Your billing info</h3>
+          <p>This is where you'll enter the information we'll use to send you your payouts.</p>
+          <button onclick="gotoPage('billing.php')" class="button">Set up billing</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="addShopsection2" class="container py-6">
     <div class="container">
@@ -205,6 +205,7 @@ $page_title = "Sign In"
           <div class="mb-3">
             <label for="image" class="form-label">Upload an image</label>
             <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewAndCreateImages(event,this.id,'img-holder-one')">
+            <span id="imageError" class="error-message"></span>
             <br>
             <div class="img-holder" id="img-holder-one">
               <div class="image-container">
@@ -225,6 +226,7 @@ $page_title = "Sign In"
             <div class="mb-3">
               <label for="images" class="form-label">Upload more pictures</label>
               <input type="file" class="form-control" id="images" name="images[]" accept="image/*" multiple onchange="previewAndCreateImages(event,this.id,'img-holder')">
+              <span id="imagesError" class="error-message"></span>
               <br>
               <div class="img-holder" id="img-holder"></div>
             </div>
@@ -305,10 +307,13 @@ $page_title = "Sign In"
       <br>
       <section class="new-category" id="new-category">
         <h5>Add Your Category name here</h5>
+
         <div class="mb-3">
           <input type="text" class="form-control" id="newCategory" placeholder="Enter Name of the category here">
           <span id="newCategoryError" class="error-message"></span>
         </div>
+
+
         <button onclick="addCatergory();" class="button fast">Add</button>
       </section>
 
@@ -498,25 +503,25 @@ $page_title = "Sign In"
             <p>Choose the postal services you'll offer. Buyers can see these options at checkout.</p>
 
             <div class="checkbox-wrapper">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="shippingop" id="shipping-service-usps" value="USPS First Class Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');">
-                <label class="form-check-label" for="shipping-service-usps">USPS First Class Mail</label>
+              <div class="btn-group" role="group" aria-label="Shipping options">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="USPS First Class Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <label class="btn btn-outline-primary" for="shipping-service-usps">USPS First Class Mail</label>
+
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="FedEx Priority Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <label class="btn btn-outline-primary" for="shipping-service-fedex">FedEx Priority Mail</label>
+
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-other" value="Other" onchange="toggleAdditionalFields('shipping-service-other', this.checked, 'ship');" autocomplete="off">
+                <label class="btn btn-outline-primary" for="shipping-service-other">Other</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="shippingop" id="shipping-service-fedex" value="FedEx Priority Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');">
-                <label class="form-check-label" for="shipping-service-fedex">FedEx Priority Mail</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="shippingop" id="shipping-service-other" value="Other" onchange="toggleAdditionalFields('shipping-service-other', this.checked, 'ship');">
-                <label class="form-check-label" for="shipping-service-other">Other</label>
-              </div>
+
               <br>
               <section class="ship" id="ship">
                 <h5>Add Shipping Service</h5>
                 <div class="mb-3">
-                  <input type="text" class="form-control" id="name" placeholder="Enter Name of the Shipping Service"> <span id="nameError" class="error-message"></span>
+                  <input type="text" class="form-control" id="name" placeholder="Enter Name of the Shipping Service">
+                  <span id="nameError" class="error-message"></span>
                 </div>
-                <button type="submit" class="button fast">Add</button>
+                <button type="submit" class="btn btn-primary">Add</button>
               </section>
             </div>
 
@@ -815,7 +820,7 @@ $page_title = "Sign In"
           <label for="dob">Your date of birth *</label>
           <div class="row">
             <div class="col">
-              <select id="month" class="form-select" >
+              <select id="month" class="form-select">
                 <option>Month</option>
                 <option value="01">January</option>
                 <option value="02">February</option>
@@ -833,7 +838,7 @@ $page_title = "Sign In"
               <span id="monthError" class="error-message"></span>
             </div>
             <div class="col">
-              <select id="day" class="form-select" >
+              <select id="day" class="form-select">
                 <option>Day</option>
                 <option>01</option>
                 <option>02</option>
@@ -870,7 +875,7 @@ $page_title = "Sign In"
               <span id="dayError" class="error-message"></span>
             </div>
             <div class="col">
-              <select id="year" class="form-select" >
+              <select id="year" class="form-select">
                 <option>Year</option>
                 <option>Year</option>
                 <option>2022</option>
@@ -979,7 +984,7 @@ $page_title = "Sign In"
         <div class="row">
           <div class="col-md-6">
             <label for="sanctioned-region">Which sanctioned region did you live in? *</label>
-            <select id="sanctioned-region" class="form-select" >
+            <select id="sanctioned-region" class="form-select">
               <option>Select region</option>
               <!-- Add region options here -->
             </select>
@@ -991,7 +996,7 @@ $page_title = "Sign In"
             <label for="last-day">When was the last day you lived there? *</label>
             <div class="row">
               <div class="col">
-                <select id="Day2" class="form-select" >
+                <select id="Day2" class="form-select">
                   <option>Day</option>
                   <option>01</option>
                   <option>02</option>
@@ -1028,7 +1033,7 @@ $page_title = "Sign In"
                 <span id="day2Error" class="error-message"></span>
               </div>
               <div class="col">
-                <select id="month2" class="form-select" >
+                <select id="month2" class="form-select">
                   <option>Month</option>
                   <option value="01">January</option>
                   <option value="02">February</option>
@@ -1046,7 +1051,7 @@ $page_title = "Sign In"
                 <span id="month2Error" class="error-message"></span>
               </div>
               <div class="col">
-                <select id="year2" class="form-select" >
+                <select id="year2" class="form-select">
                   <option>Year</option>
                   <option>2022</option>
                   <option>2021</option>
@@ -1136,7 +1141,7 @@ $page_title = "Sign In"
               <div class="form-group col-md-6">
                 <label for="expiration-date">Expiration date *</label>
                 <div class="input-group">
-                  <select class="custom-select" id="expiration-month" >
+                  <select class="custom-select" id="expiration-month">
                     <option selected>Choose a month</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
@@ -1152,7 +1157,7 @@ $page_title = "Sign In"
                     <option value="12">December</option>
                   </select>
                   <span id="expiration-monthError" class="error-message"></span>
-                  <select class="custom-select" id="expiration-year" >
+                  <select class="custom-select" id="expiration-year">
                     <option selected>Choose year</option>
                     <option>year</option>
                     <option>2022</option>
