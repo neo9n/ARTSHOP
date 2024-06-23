@@ -745,20 +745,6 @@ $page_title = "Sign In"
           <span id="bank-locationError" class="error-message"></span>
         </div>
 
-        <div class="custom-control custom-radio">
-          <input type="checkbox" id="add-country" name="new-op" class="custom-control-input" onchange="toggleAdditionalFieldscheckbox('countries', this.id,)">
-          <label class="custom-control-label">Add Your Country</label>
-        </div>
-
-        <br>
-        <section class="countries" id="countries">
-          <h5>Add Your Country name here</h5>
-          <div class="mb-3">
-            <input type="text" class="form-control" id="country-name" placeholder="Enter Name of the country here"> <span id="country-nameError" class="error-message"></span>
-          </div>
-          <button type="submit" class="button fast" onclick="addCountry();">Add</button>
-        </section>
-
         <div class="col-md-6">
           <fieldset>
             <legend>For tax purposes, what type of seller are you?</legend>
@@ -793,9 +779,8 @@ $page_title = "Sign In"
           <?php
           $query = "SELECT * FROM countries";
           $resultSet = Database::search($query);
-          echo '<select class="form-control" id="bank-location" >';
+          echo '<select class="form-control" id="country-residence" >';
           echo '<option value="" selected disabled></option>';
-
           while ($row = $resultSet->fetch_assoc()) {
             $country_id = $row['id'];
             $country_name = $row['name'];
@@ -804,7 +789,7 @@ $page_title = "Sign In"
           echo '</select>';
           $resultSet->close();
           ?>
-          <span id="bank-locationError" class="error-message"></span>
+          <span id="country-residenceError" class="error-message"></span>
         </div>
         <div class="col-md-4">
           <label for="first-name">First name *</label>
@@ -815,7 +800,7 @@ $page_title = "Sign In"
           <input type="text" id="last-name" class="form-control"> <span id="last-nameError" class="error-message"></span>
         </div>
       </div>
-      <div class="row">
+      <div id="date-of-birth" class="row">
         <div class="col-md-4">
           <label for="dob">Your date of birth *</label>
           <div class="row">
@@ -877,7 +862,6 @@ $page_title = "Sign In"
             <div class="col">
               <select id="year" class="form-select">
                 <option>Year</option>
-                <option>Year</option>
                 <option>2022</option>
                 <option>2021</option>
                 <option>2020</option>
@@ -911,8 +895,11 @@ $page_title = "Sign In"
               <span id="yearError" class="error-message"></span>
             </div>
           </div>
+          <!-- Added error span for the entire date of birth field -->
+          <span id="date-of-birthError" class="error-message"></span>
         </div>
       </div>
+      <span id="date-of-birthError" class="error-message"></span>
       <div class="row">
         <div class="col-md-12">
           <p><strong>Taxpayer address *</strong> <em>This should be the same address used when filing taxes, not a P.O. Box or business address</em></p>
@@ -950,143 +937,6 @@ $page_title = "Sign In"
         <div class="col-md-4">
           <label for="phone-number">Phone number</label>
           <input type="text" id="phone-number" class="form-control"> <span id="phone-numberError" class="error-message"></span>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h4>Share some more info about where you've lived</h4>
-          <p>Due to sanctions laws that help keep our marketplace safe, you'll need to let us know if you've lived in one of these places for more than 6 months in the past 10 years: Cuba, Iran, North Korea, Syria, Crimea, Donetsk People's Republic ("DNR"), or Luhansk People's Republic ("LNR"). You'll still be able to sell on Artisan Alley once we can verify that you're living somewhere else now. <a href="#">Review our Sanctions Policy</a></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-check">
-            <input onchange="showAdditionalFields('additional-fields');" class="form-check-input" type="radio" name="lived" id="yes" value="yes">
-            <label class="form-check-label" for="yes">
-              Yes
-            </label>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-check">
-            <input onchange="hideAdditionalFields('additional-fields');" class="form-check-input" type="radio" name="lived" id="no" value="no">
-            <label class="form-check-label" for="no">
-              No
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div id="additional-fields" style="display: none;">
-        <div class="row">
-          <div class="col-md-6">
-            <label for="sanctioned-region">Which sanctioned region did you live in? *</label>
-            <select id="sanctioned-region" class="form-select">
-              <option>Select region</option>
-              <!-- Add region options here -->
-            </select>
-            <span id="sanctioned-regionError" class="error-message"></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="last-day">When was the last day you lived there? *</label>
-            <div class="row">
-              <div class="col">
-                <select id="Day2" class="form-select">
-                  <option>Day</option>
-                  <option>01</option>
-                  <option>02</option>
-                  <option>03</option>
-                  <option>04</option>
-                  <option>05</option>
-                  <option>06</option>
-                  <option>07</option>
-                  <option>08</option>
-                  <option>09</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
-                  <option>15</option>
-                  <option>16</option>
-                  <option>17</option>
-                  <option>18</option>
-                  <option>19</option>
-                  <option>20</option>
-                  <option>21</option>
-                  <option>22</option>
-                  <option>23</option>
-                  <option>24</option>
-                  <option>25</option>
-                  <option>26</option>
-                  <option>27</option>
-                  <option>28</option>
-                  <option>29</option>
-                  <option>30</option>
-                  <option>31</option>
-                </select>
-                <span id="day2Error" class="error-message"></span>
-              </div>
-              <div class="col">
-                <select id="month2" class="form-select">
-                  <option>Month</option>
-                  <option value="01">January</option>
-                  <option value="02">February</option>
-                  <option value="03">March</option>
-                  <option value="04">April</option>
-                  <option value="05">May</option>
-                  <option value="06">June</option>
-                  <option value="07">July</option>
-                  <option value="08">August</option>
-                  <option value="09">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
-                </select>
-                <span id="month2Error" class="error-message"></span>
-              </div>
-              <div class="col">
-                <select id="year2" class="form-select">
-                  <option>Year</option>
-                  <option>2022</option>
-                  <option>2021</option>
-                  <option>2020</option>
-                  <option>2019</option>
-                  <option>2018</option>
-                  <option>2017</option>
-                  <option>2016</option>
-                  <option>2015</option>
-                  <option>2014</option>
-                  <option>2013</option>
-                  <option>2012</option>
-                  <option>2011</option>
-                  <option>2010</option>
-                  <option>2009</option>
-                  <option>2008</option>
-                  <option>2007</option>
-                  <option>2006</option>
-                  <option>2005</option>
-                  <option>2004</option>
-                  <option>2003</option>
-                  <option>2002</option>
-                  <option>2001</option>
-                  <option>2000</option>
-                  <option>1999</option>
-                  <option>1998</option>
-                  <option>1997</option>
-                  <option>1996</option>
-                  <option>1995</option>
-                  <option>1994</option>
-                </select>
-                <span id="year2Error" class="error-message"></span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

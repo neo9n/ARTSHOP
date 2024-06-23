@@ -146,7 +146,7 @@ function getShopinitData() {
     "\n" +
     "Currency: " +
     (shopCurrency || "Not selected");
-    swal(message);
+  swal(message);
 }
 
 function getShopNameInfo() {
@@ -214,7 +214,6 @@ function getTwoFactorAuthInfo() {
 function section4Backend() {
   let inputValues = {
     bankLocation: document.getElementById("bank-location").value,
-    addCountry: document.getElementById("add-country").checked,
     countryName: document.getElementById("country-name").value,
     sellerType: document.querySelector('input[name="seller-type"]:checked')
       .value,
@@ -915,7 +914,7 @@ const friendlyNames = {
 };
 
 function validateShippingOptions() {
-  const shippingOptions = document.getElementsByName('shippingop');
+  const shippingOptions = document.getElementsByName("shippingop");
   let isSelected = false;
 
   for (let i = 0; i < shippingOptions.length; i++) {
@@ -925,12 +924,12 @@ function validateShippingOptions() {
     }
   }
 
-  const errorSpan = document.getElementById('shippingopError');
+  const errorSpan = document.getElementById("shippingopError");
   if (!isSelected) {
     if (errorSpan) {
-      showError(errorSpan, null, 'Please select a shipping option.');
+      showError(errorSpan, null, "Please select a shipping option.");
     } else {
-      swal('Please select a shipping option.');
+      swal("Please select a shipping option.");
     }
     return false;
   } else {
@@ -941,16 +940,33 @@ function validateShippingOptions() {
   }
 }
 
-function validateAndAlert(id, msg) {
-  if (id === 'shippingop') {
-    return validateShippingOptions();
+function validateAndAlert(idOrFunction, msg) {
+  if (typeof idOrFunction === 'object' && idOrFunction.validate) {
+    const result = idOrFunction.validate();
+    if (!result) {
+      // You might want to show this error message somewhere
+      console.error(msg);
+    }
+    return result;
   }
 
-  const element = document.getElementById(id);
-  const errorSpan = document.getElementById(id + "Error");
+  if (typeof idOrFunction === 'function') {
+    const result = idOrFunction();
+    if (!result) {
+      console.error(msg);
+    }
+    return result;
+  }
+
+  if (idOrFunction === "shippingop") {
+    return validateShippingOptions();
+  } 
+
+  const element = document.getElementById(idOrFunction);
+  const errorSpan = document.getElementById(idOrFunction + "Error");
 
   if (!element || !errorSpan) {
-    console.error(`Element or error span for '${id}' not found.`);
+    console.error(`Element or error span for '${idOrFunction}' not found.`);
     return false;
   }
 
@@ -958,9 +974,9 @@ function validateAndAlert(id, msg) {
   const customPrice = document.getElementById("enterFixedPrices");
   const cusPolicy = document.getElementById("new-policy");
 
-  const isCusPolicy = id === "custom-return-policy-text" && !cusPolicy.checked;
-  const isNewCategory = id === "newCategory" && !addCategoryCheckbox.checked;
-  const isFixedPrice = id === "fixed_price" && !customPrice.checked;
+  const isCusPolicy = idOrFunction === "custom-return-policy-text" && !cusPolicy.checked;
+  const isNewCategory = idOrFunction === "newCategory" && !addCategoryCheckbox.checked;
+  const isFixedPrice = idOrFunction === "fixed_price" && !customPrice.checked;
 
   if (isNewCategory || isFixedPrice || isCusPolicy) {
     clearError(errorSpan, element);
@@ -972,6 +988,27 @@ function validateAndAlert(id, msg) {
     return false;
   } else {
     clearError(errorSpan, element);
+    return true;
+  }
+}
+
+function validateDate() {
+  const monthValid = validateDateField("month", "Please select a month");
+  const dayValid = validateDateField("day", "Please select a day");
+  const yearValid = validateDateField("year", "Please select a year");
+  
+  return monthValid && dayValid && yearValid;
+}
+
+function validateDateField(fieldId, errorMsg) {
+  const field = document.getElementById(fieldId);
+  const errorSpan = document.getElementById(fieldId + "Error");
+  
+  if (field.value === field.options[0].text) {
+    showError(errorSpan, field, errorMsg);
+    return false;
+  } else {
+    clearError(errorSpan, field);
     return true;
   }
 }
@@ -1022,7 +1059,7 @@ function validationList() {
   const validations = {
     // [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
     // [SECTION_2]: ["shopName"],
-    [SECTION_3]: [
+    // [SECTION_3]: [
       // ["image", "Please upload an image"],
       // ["images", "Please upload more pictures"],
       // ["newCategory", "Please enter the name of the category"],
@@ -1044,35 +1081,28 @@ function validationList() {
       // ["whomade", "Please select who made the item"],
       // ["processing_time", "Please select processing time"],
       // ["returnpolicy", "Please select a return policy"],
-      [ "custom-return-policy-text", "Please enter a custom return policy description"]
-    ],
+      // [
+      //   "custom-return-policy-text",
+      //   "Please enter a custom return policy description",
+      // ],
+    // ],
     [SECTION_4]: [
-      ["bank-location", "Please enter bank-location"],
-      ["add-country", "Please enter add-country"],
-      ["country-name", "Please enter country-name"],
-      ["country-residence", "Please enter country-residence"],
-      ["first-name", "Please enter first-name"],
-      ["last-name", "Please enter last-name"],
-      ["month", "Please enter month"],
-      ["day", "Please enter day"],
-      ["year", "Please enter year"],
-      ["number", "Please enter number"],
-      ["street-name", "Please enter street-name"],
-      ["address-line2", "Please enter address-line2"],
-      ["city-town", "Please enter city-town"],
-      ["state", "Please enter state"],
-      ["postal-code", "Please enter postal-code"],
-      ["phone-number", "Please enter phone-number"],
-      ["yes", "Please enter yes"],
-      ["no", "Please enter no"],
-      ["sanctioned-region", "Please enter sanctioned-region"],
-      ["Day2", "Please enter Day2"],
-      ["month2", "Please enter month2"],
-      ["year2", "Please enter year2"],
-      ["full-name", "Please enter full-name"],
-      ["bank-name", "Please enter bank-name"],
-      ["iban", "Please enter iban"],
-      ["swift-bic", "Please enter swift-bic"],
+      // ["bank-location", "Please enter bank-location"],
+      // ["country-residence", "Please enter country-residence"],
+      // ["first-name", "Please enter first-name"],
+      // ["last-name", "Please enter last-name"],
+      // [{ validate: validateDate, errorMsg: "Please select a valid date" }],
+      // ["number", "Please enter number"],
+      // ["street-name", "Please enter street-name"],
+      // ["address-line2", "Please enter address-line2"],
+      // ["city-town", "Please enter city-town"],
+      // ["state", "Please enter state"],
+      // ["postal-code", "Please enter postal-code"],
+      // ["phone-number", "Please enter phone-number"],
+      // ["full-name", "Please enter full-name"],
+      // ["bank-name", "Please enter bank-name"],
+      // ["iban", "Please enter iban"],
+      // ["swift-bic", "Please enter swift-bic"],
     ],
     [SECTION_5]: [
       ["card-number", "Please enter your card number"],
@@ -1093,6 +1123,16 @@ function validationList() {
 
   (validations[SectionNumber] || []).forEach((field) => {
     if (Array.isArray(field)) {
+      op = op && validateAndAlert(field[0], field[1]);
+    } else {
+      op = op && validateAndAlert(field, alertMsg);
+    }
+  });
+
+  (validations[SectionNumber] || []).forEach((field) => {
+    if (Array.isArray(field) && typeof field[0] === 'object' && field[0].validate) {
+      op = op && validateAndAlert(field[0], field[1]);
+    } else if (Array.isArray(field)) {
       op = op && validateAndAlert(field[0], field[1]);
     } else {
       op = op && validateAndAlert(field, alertMsg);
