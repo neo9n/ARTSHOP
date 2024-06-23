@@ -3,13 +3,8 @@
 require "connection.php";
 if (isset($_GET["id"])) {
     $pid = $_GET["id"];
-
-    $production_rs = Database::search("SELECT `product`.`id`, `product`.`category_id`,
-    `product`.`model_has_brand_id`, `product`.`title`, `product`.`price`, `product`.`qty`,
-    `product`.`description`, `product`.`condition_id`, `product`.`status_id`, `product`.`users_email`,
-    `model`.`name` AS `mname`, `brand`.`name` AS `bname` FROM `product` INNER JOIN `model_has_brand` ON
-    `model_has_brand`.`id` = `product`.`model_has_brand_id` INNER JOIN `brand` ON `brand`.`id` = `model_has_brand`.`brand_id`
-    INNER JOIN `model` ON `model`.`id` = `model_has_brand`.`model_id` WHERE `product`.`id` = '" . $pid . "'");
+    $query = "SELECT * FROM item WHERE id = '" . $pid . "'";
+    $production_rs = Database::search($query);
 
     $product_num = $production_rs->num_rows;
 

@@ -1,7 +1,19 @@
-<script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js" integrity="sha256-O11zcGEd6w4SQFlm8i/Uk5VAB+EhNNmynVLznwS6TJ4=" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="scripts/script.js"></script>
+<script src="scripts/creds.js"></script>
+<script src="scripts/bootstrap.bundle.js"></script>
+<script src="scripts/bootstrap.js"></script>
+<script src="scripts/buttons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 </body>
+
+<?php include 'includes/footer.html'; ?> </body>
 
 </html>
