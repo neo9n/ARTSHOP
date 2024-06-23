@@ -146,7 +146,7 @@ function getShopinitData() {
     "\n" +
     "Currency: " +
     (shopCurrency || "Not selected");
-  alert(message);
+    swal(message);
 }
 
 function getShopNameInfo() {
@@ -296,7 +296,7 @@ function submitForm(url, form) {
 function handleResponse(r, url) {
   if (r.readyState == 4) {
     var text = r.responseText;
-    alert(text);
+    swal(text);
     console.log("Response from server:", text);
     selectResponseNExecute(url, text);
   }
@@ -590,7 +590,7 @@ function previewVideo(event) {
   }
   const file = event.target.files[0];
   if (!file.type.match("video.*")) {
-    alert("Please select a video file.");
+    swal("Please select a video file.");
     return;
   }
   const reader = new FileReader();
@@ -914,7 +914,38 @@ const friendlyNames = {
   "package-height": "Package Height",
 };
 
+function validateShippingOptions() {
+  const shippingOptions = document.getElementsByName('shippingop');
+  let isSelected = false;
+
+  for (let i = 0; i < shippingOptions.length; i++) {
+    if (shippingOptions[i].checked) {
+      isSelected = true;
+      break;
+    }
+  }
+
+  const errorSpan = document.getElementById('shippingopError');
+  if (!isSelected) {
+    if (errorSpan) {
+      showError(errorSpan, null, 'Please select a shipping option.');
+    } else {
+      swal('Please select a shipping option.');
+    }
+    return false;
+  } else {
+    if (errorSpan) {
+      clearError(errorSpan, null);
+    }
+    return true;
+  }
+}
+
 function validateAndAlert(id, msg) {
+  if (id === 'shippingop') {
+    return validateShippingOptions();
+  }
+
   const element = document.getElementById(id);
   const errorSpan = document.getElementById(id + "Error");
 
@@ -925,11 +956,13 @@ function validateAndAlert(id, msg) {
 
   const addCategoryCheckbox = document.getElementById("add-category");
   const customPrice = document.getElementById("enterFixedPrices");
+  const cusPolicy = document.getElementById("new-policy");
 
+  const isCusPolicy = id === "custom-return-policy-text" && !cusPolicy.checked;
   const isNewCategory = id === "newCategory" && !addCategoryCheckbox.checked;
   const isFixedPrice = id === "fixed_price" && !customPrice.checked;
 
-  if (isNewCategory || isFixedPrice) {
+  if (isNewCategory || isFixedPrice || isCusPolicy) {
     clearError(errorSpan, element);
     return true;
   }
@@ -1006,17 +1039,12 @@ function validationList() {
       // ["package-width", "Please enter the package width"],
       // ["package-height", "Please enter the package height"],
       // ["hs-tariff-number", "Please enter the HS Tariff Number"],
-      ["shipping-service-usps", "Please select a shipping service"],
-      ["shipping-service-fedex", "Please select a shipping service"],
-      ["shipping-service-other", "Please select a shipping service"],
-      ["SelCategory", "Please select a category"],
-      ["whomade", "Please select who made the item"],
-      ["processing_time", "Please select processing time"],
-      ["returnpolicy", "Please select a return policy"],
-      [
-        "custom-return-policy-text",
-        "Please enter a custom return policy description",
-      ],
+      // ["shippingop", "Please select a shipping option"],
+      // ["SelCategory", "Please select a category"],
+      // ["whomade", "Please select who made the item"],
+      // ["processing_time", "Please select processing time"],
+      // ["returnpolicy", "Please select a return policy"],
+      [ "custom-return-policy-text", "Please enter a custom return policy description"]
     ],
     [SECTION_4]: [
       ["bank-location", "Please enter bank-location"],
@@ -1212,11 +1240,6 @@ function SuccessM(msg) {
 
 function ErrorM(msg) {
   swal("Oops!", msg, "error");
-}
-
-function SimpleErrorM(msg) {
-  alert("nice");
-  swal(msg);
 }
 
 function showAlert(message) {
