@@ -1138,9 +1138,4 @@ $page_title = "Sign In"
       </div>
     </div>
   </div>
-
-
-
-
-
   <?php include('includes/footer.php'); ?>

@@ -86,34 +86,18 @@ function adminLogin() {
 }
 
 function getShopinitData() {
-  // Get values from dropdown menus
   var shopLanguage = document.getElementById("shopLanguage").value;
   var shopCountry = document.getElementById("shopCountry").value;
   var shopCurrency = document.getElementById("shopCurrency").value;
 
-  // Prepare the message
-  var message =
-    "Shop Preferences:\n\n" +
-    "Language: " +
-    (shopLanguage || "Not selected") +
-    "\n" +
-    "Country: " +
-    (shopCountry || "Not selected") +
-    "\n" +
-    "Currency: " +
-    (shopCurrency || "Not selected");
-  swal(message);
+  sessionStorage.setItem("shopLanguage", shopLanguage);
+  sessionStorage.setItem("shopCountry", shopCountry);
+  sessionStorage.setItem("shopCurrency", shopCurrency);
 }
 
 function getShopNameInfo() {
-  // Get input value
   var shopName = document.getElementById("shopName").value;
-
-  // Prepare alert message
-  var alertMessage = "Shop Name Information:\n\n" + "Shop Name: " + shopName;
-
-  // Display alert
-  alert(alertMessage);
+  sessionStorage.setItem("shopName", shopName);
 }
 
 function getBillingInfo() {
@@ -917,7 +901,7 @@ function validateAndAlert(idOrFunction, msg) {
 }
 
 function validateExpirationDate() {
-  alert("OK")
+  alert("OK");
   const monthInput = "expiration-month";
   const yearInput = "expiration-year";
   const monthValid = validateExpirationField(
@@ -1001,8 +985,14 @@ function validateDateField(fieldId, errorMsg) {
 }
 
 function validateEXDate() {
-  const monthValid = validateDateField("expiration-month", "Please select a month");
-  const yearValid = validateDateField("expiration-year", "Please select a year");
+  const monthValid = validateDateField(
+    "expiration-month",
+    "Please select a month"
+  );
+  const yearValid = validateDateField(
+    "expiration-year",
+    "Please select a year"
+  );
 
   const b = monthValid && yearValid;
   alert(b);
@@ -1075,7 +1065,7 @@ const SECTION3 = [
   ["returnpolicy", "Please select a return policy"],
 ];
 
-function validateSection3Inputs() {
+function validateAndStoreSection3Inputs() {
   let collectedMessages = [];
   let notPrintedIds = [];
 
@@ -1090,33 +1080,26 @@ function validateSection3Inputs() {
         notPrintedIds.push(id);
       }
     } else if (typeof item === "object" && item.validate && item.errorMsg) {
-      // Handle the special case for shipping options
       if (item.validate()) {
-        collectedMessages.push(item.errorMsg + ": Selected");
+        collectedMessages.push(`${item.errorMsg}: Selected`);
       } else {
         notPrintedIds.push("Shipping Options");
       }
     }
   });
 
-  collectedMessages.push("Shopping option : " + getSelectedShippingOption);
-  let words = "";
-  for (const word of wordList) {
-    words += (words ? " " : "") + word;
-  }
-  collectedMessages.push("Word List : " + words);
+  collectedMessages.push(`Shopping option: ${getSelectedShippingOption()}`);
 
-  if (collectedMessages.length > 0) {
-    alert("Collected Input Values:\n\n" + collectedMessages.join("\n"));
-  }
+  let words = wordList.join(" ");
+  collectedMessages.push(`Word List: ${words}`);
 
-  if (notPrintedIds.length > 0) {
-    console.log(
-      "The following inputs were not printed due to empty values:",
-      notPrintedIds.join(", ")
-    );
-  }
+  collectedMessages.forEach((message) => {
+    const key = message.split(":")[0].trim();
+    const val = message.split(":")[1].trim();
+    sessionStorage.setItem(key, val);
+  });
 }
+
 
 function validationList() {
   let op = true;
@@ -1177,7 +1160,7 @@ function validationList() {
       ["swift-bic", "Please enter swift-bic"],
     ],
     [SECTION_5]: [
-      ["card-number", "Please enter your card number"],      
+      ["card-number", "Please enter your card number"],
       // [{ validate: validateEXDate, errorMsg: "Please select a valid date" }],
       ["ccv", "Please enter your CCV"],
       ["name-on-card", "Please enter the name on your card"],
@@ -1189,9 +1172,9 @@ function validationList() {
     ],
   };
 
-  // First block of code checks if the field is an array and if so, 
+  // First block of code checks if the field is an array and if so,
   // calls the validateAndAlert function with the first element of the array and the second element of the array.
-(validations[SectionNumber] || []).forEach((field) => {
+  (validations[SectionNumber] || []).forEach((field) => {
     if (Array.isArray(field)) {
       op = op && validateAndAlert(field[0], field[1]);
     } else {
@@ -1199,8 +1182,8 @@ function validationList() {
     }
   });
 
-// Second block of code checks if the field is an array and if so, checks if the first element of the array is an object and if it has a validate property. If it is, it calls the validateAndAlert function with the first element of the array and the second element of the array. If it's not, it calls the validateAndAlert function with the first element of the array and the alertMsg.
-(validations[SectionNumber] || []).forEach((field) => {
+  // Second block of code checks if the field is an array and if so, checks if the first element of the array is an object and if it has a validate property. If it is, it calls the validateAndAlert function with the first element of the array and the second element of the array. If it's not, it calls the validateAndAlert function with the first element of the array and the alertMsg.
+  (validations[SectionNumber] || []).forEach((field) => {
     if (
       Array.isArray(field) &&
       typeof field[0] === "object" &&
@@ -1217,40 +1200,23 @@ function validationList() {
   return op;
 }
 
-function validateAndDisplaySection6Inputs() {
+function validateAndStoreSection6Inputs() {
   const inputIds = ["authMethod", "emailMethod", "email2"];
-
-  let collectedValues = [];
 
   inputIds.forEach((id) => {
     const inputElement = document.getElementById(id);
     if (inputElement && inputElement.value.trim() !== "") {
       let value = inputElement.value;
-
-      // For select elements, get the selected option text
       if (inputElement.tagName.toLowerCase() === "select") {
         value = inputElement.options[inputElement.selectedIndex].text;
       }
-
-      collectedValues.push(`${id}: ${value}`);
+      sessionStorage.setItem(id, value);
     } else {
-      console.log(
-        `Input with ID "${id}" was not printed (empty or not found).`
-      );
     }
   });
-
-  if (collectedValues.length > 0) {
-    alert(
-      "Collected authentication and verification information:\n\n" +
-        collectedValues.join("\n")
-    );
-  } else {
-    alert("No authentication or verification information was collected.");
-  }
 }
 
-function validateAndDisplaySection5Inputs() {
+function validateAndStoreSection5Inputs() {
   const inputIds = [
     "card-number",
     "expiration-month",
@@ -1259,27 +1225,16 @@ function validateAndDisplaySection5Inputs() {
     "name-on-card",
   ];
 
-  let collectedValues = [];
-
   inputIds.forEach((id) => {
     const inputElement = document.getElementById(id);
     if (inputElement && inputElement.value.trim() !== "") {
-      collectedValues.push(`${id}: ${inputElement.value}`);
-    } else {
-      console.log(
-        `Input with ID "${id}" was not printed (empty or not found).`
-      );
+      sessionStorage.setItem(id, inputElement.value);
     }
   });
-
-  if (collectedValues.length > 0) {
-    alert("Collected input values:\n\n" + collectedValues.join("\n"));
-  } else {
-    alert("No input values were collected.");
-  }
 }
 
-function validateSection4Inputs() {
+
+function validateAndStoreSection4Inputs() {
   const inputIds = [
     "bank-location",
     "country-residence",
@@ -1304,19 +1259,18 @@ function validateSection4Inputs() {
     const element = document.getElementById(id);
     if (element && element.value) {
       collectedValues.push(`${id}: ${element.value}`);
-    } else {
-      console.log(`Input value for ${id} was not retrieved.`);
     }
   });
 
-  collectedValues.push("DOB :" + printDateOfBirth());
+  collectedValues.push(`DOB: ${printDateOfBirth()}`);
 
-  if (collectedValues.length > 0) {
-    alert("Collected input values:\n\n" + collectedValues.join("\n"));
-  } else {
-    alert("No input values were collected.");
-  }
+  collectedValues.forEach((value) => {
+    const key = value.split(":")[0].trim();
+    const val = value.split(":")[1].trim();
+    sessionStorage.setItem(key, val);
+  });
 }
+
 
 function handleSection() {
   switch (SectionNumber) {
@@ -1330,13 +1284,13 @@ function handleSection() {
       validateSection3Inputs();
       break;
     case SECTION_4:
-      validateSection4Inputs();
+      validateAndStoreSection4Inputs();
       break;
     case SECTION_5:
-      validateAndDisplaySection5Inputs();
+      validateAndStoreSection5Inputs();
       break;
     case SECTION_6:
-      validateAndDisplaySection6Inputs();
+      validateAndStoreSection6Inputs();
       break;
     default:
       console.log("Invalid section number");
