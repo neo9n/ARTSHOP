@@ -541,7 +541,35 @@ function showAdditionalFields(inputId) {
   additionalFields.style.opacity = 1;
 }
 
-var SectionNumber = 6;
+function retrieveDataFromSessionStorage() {
+  let data = {};
+  for (let i = 0; i < sessionStorage.length; i++) {
+    let key = sessionStorage.key(i);
+    let value = sessionStorage.getItem(key);
+    data[key] = value;
+  }
+  return data;
+}
+
+function sendDataToPHP(data) {
+  const xhr = new XMLHttpRequest();
+  const url = 'path/to/your/php/file.php';
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        console.log('Data sent successfully');
+      } else {
+        console.error('Failed to send data. Status:', xhr.status);
+      }
+    }
+  };
+
+  xhr.send(JSON.stringify(data));
+}
+
+var SectionNumber = 1;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1308,13 +1336,13 @@ function savencon(pageName) {
     }
     handleSection();
 
-    // SectionNumber += 1;
-    // gloweffect(pageName);
-    // load(pageName);
-    // if (SectionNumber == 7) {
-    //   document.getElementById("section").style.display = "block";
-    //   document.getElementById("final").style.display = "block";
-    // }
+    SectionNumber += 1;
+    gloweffect(pageName);
+    load(pageName);
+    if (SectionNumber == 7) {
+      document.getElementById("section").style.display = "block";
+      document.getElementById("final").style.display = "block";
+    }
   }
 }
 
