@@ -279,7 +279,6 @@ function addCountry(event) {
 }
 
 function addCatergory() {
-  alert("OK");
   var inputField = document.getElementById("newCategory");
   if (!inputField.value.trim()) {
     swal("Please enter your New Category name!");
@@ -537,7 +536,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 4;
+var SectionNumber = 3;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -897,7 +896,6 @@ function validateAndAlert(idOrFunction, msg) {
 }
 
 function validateExpirationDate() {
-  alert("OK");
   const monthInput = "expiration-month";
   const yearInput = "expiration-year";
   const monthValid = validateExpirationField(
@@ -1172,12 +1170,11 @@ function getShopinitData() {
 function getShopNameInfo() {
   var shopName = document.getElementById("shopName").value;
   sessionStorage.setItem("shopName", shopName);
-  
-  
 }
 
-function addShop(){
+function addShop() {
   const dataToSend = retrieveDataFromSessionStorage();
+  printSessionStorage();
   sendDataToPHP(dataToSend);
 }
 
@@ -1214,6 +1211,8 @@ function validateAndStoreSection3Inputs() {
     const val = message.split(":")[1].trim();
     sessionStorage.setItem(key, val);
   });
+  sessionStorage.setItem("videoInput",document.getElementById("videoInput"));
+  addShop();
 }
 function validateAndStoreSection6Inputs() {
   const inputIds = ["authMethod", "emailMethod", "email2"];
@@ -1267,12 +1266,28 @@ function validateAndStoreSection4Inputs() {
     "swift-bic",
   ];
 
-  inputIds.forEach(function(id) {
+  inputIds.forEach(function (id) {
     const value = document.getElementById(id).value;
-  
     sessionStorage.setItem(id, value);
   });
-  addShop();
+  sessionStorage.setItem("dob", getDOB());
+}
+
+function getDOB() {
+  const year = document.getElementById("year").value;
+  const month = document.getElementById("month").value;
+  const date = document.getElementById("day").value;
+  const dob = `${year}-${month}-${date}`;
+  return dob;
+}
+
+
+function printSessionStorage() {
+  for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    const value = sessionStorage.getItem(key);
+    console.log(`Key: ${key}, Value: ${value}`);
+  }
 }
 
 function handleSection() {
@@ -1284,7 +1299,7 @@ function handleSection() {
       getShopNameInfo();
       break;
     case SECTION_3:
-      validateSection3Inputs();
+      validateAndStoreSection3Inputs();
       break;
     case SECTION_4:
       validateAndStoreSection4Inputs();
@@ -1301,7 +1316,7 @@ function handleSection() {
 }
 
 function savencon(pageName) {
-  if (validationList()) {
+  if (true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
@@ -1598,7 +1613,6 @@ function sendDataToPHP(data) {
 
   xhr.send(form);
 }
-
 
 function gotoPage(pageLocation) {
   window.location.href = pageLocation;

@@ -21,5 +21,9 @@ public static function search($q){
     return $resultset;
 }
 
+public static function getLastInsertedId(){
+    Database::setpConnection();
+    return Database::$connection->insert_id;
 }
-?>
+
+}
