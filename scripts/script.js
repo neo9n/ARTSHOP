@@ -85,21 +85,6 @@ function adminLogin() {
   }
 }
 
-function getShopinitData() {
-  var shopLanguage = document.getElementById("shopLanguage").value;
-  var shopCountry = document.getElementById("shopCountry").value;
-  var shopCurrency = document.getElementById("shopCurrency").value;
-
-  sessionStorage.setItem("shopLanguage", shopLanguage);
-  sessionStorage.setItem("shopCountry", shopCountry);
-  sessionStorage.setItem("shopCurrency", shopCurrency);
-}
-
-function getShopNameInfo() {
-  var shopName = document.getElementById("shopName").value;
-  sessionStorage.setItem("shopName", shopName);
-}
-
 function getBillingInfo() {
   // Get input values
   var cardNumber = document.getElementById("card-number").value;
@@ -293,7 +278,8 @@ function addCountry(event) {
   );
 }
 
-function addCategory(event) {
+function addCatergory() {
+  alert("OK");
   var inputField = document.getElementById("newCategory");
   if (!inputField.value.trim()) {
     swal("Please enter your New Category name!");
@@ -551,24 +537,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-function sendDataToPHP(data) {
-  const xhr = new XMLHttpRequest();
-  const url = 'addshopProcess.php';
-  xhr.open('POST', url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        console.log('Data sent successfully');
-      } else {
-        console.error('Failed to send data. Status:', xhr.status);
-      }
-    }
-  };
-  xhr.send(JSON.stringify(data));
-}
-
-var SectionNumber = 1;
+var SectionNumber = 4;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1092,42 +1061,6 @@ const SECTION3 = [
   ["returnpolicy", "Please select a return policy"],
 ];
 
-function validateAndStoreSection3Inputs() {
-  let collectedMessages = [];
-  let notPrintedIds = [];
-
-  SECTION3.forEach((item) => {
-    if (Array.isArray(item)) {
-      const [id, message] = item;
-      const inputElement = document.getElementById(id);
-
-      if (inputElement && inputElement.value) {
-        collectedMessages.push(`${message}: ${inputElement.value}`);
-      } else {
-        notPrintedIds.push(id);
-      }
-    } else if (typeof item === "object" && item.validate && item.errorMsg) {
-      if (item.validate()) {
-        collectedMessages.push(`${item.errorMsg}: Selected`);
-      } else {
-        notPrintedIds.push("Shipping Options");
-      }
-    }
-  });
-
-  collectedMessages.push(`Shopping option: ${getSelectedShippingOption()}`);
-
-  let words = wordList.join(" ");
-  collectedMessages.push(`Word List: ${words}`);
-
-  collectedMessages.forEach((message) => {
-    const key = message.split(":")[0].trim();
-    const val = message.split(":")[1].trim();
-    sessionStorage.setItem(key, val);
-  });
-}
-
-
 function validationList() {
   let op = true;
   const alertMsg = "You can't leave this empty";
@@ -1226,7 +1159,62 @@ function validationList() {
 
   return op;
 }
+function getShopinitData() {
+  var shopLanguage = document.getElementById("shopLanguage").value;
+  var shopCountry = document.getElementById("shopCountry").value;
+  var shopCurrency = document.getElementById("shopCurrency").value;
 
+  sessionStorage.setItem("shopLanguage", shopLanguage);
+  sessionStorage.setItem("shopCountry", shopCountry);
+  sessionStorage.setItem("shopCurrency", shopCurrency);
+}
+
+function getShopNameInfo() {
+  var shopName = document.getElementById("shopName").value;
+  sessionStorage.setItem("shopName", shopName);
+  
+  
+}
+
+function addShop(){
+  const dataToSend = retrieveDataFromSessionStorage();
+  sendDataToPHP(dataToSend);
+}
+
+function validateAndStoreSection3Inputs() {
+  let collectedMessages = [];
+  let notPrintedIds = [];
+
+  SECTION3.forEach((item) => {
+    if (Array.isArray(item)) {
+      const [id, message] = item;
+      const inputElement = document.getElementById(id);
+
+      if (inputElement && inputElement.value) {
+        collectedMessages.push(`${message}: ${inputElement.value}`);
+      } else {
+        notPrintedIds.push(id);
+      }
+    } else if (typeof item === "object" && item.validate && item.errorMsg) {
+      if (item.validate()) {
+        collectedMessages.push(`${item.errorMsg}: Selected`);
+      } else {
+        notPrintedIds.push("Shipping Options");
+      }
+    }
+  });
+
+  collectedMessages.push(`Shopping option: ${getSelectedShippingOption()}`);
+
+  let words = wordList.join(" ");
+  collectedMessages.push(`Word List: ${words}`);
+
+  collectedMessages.forEach((message) => {
+    const key = message.split(":")[0].trim();
+    const val = message.split(":")[1].trim();
+    sessionStorage.setItem(key, val);
+  });
+}
 function validateAndStoreSection6Inputs() {
   const inputIds = ["authMethod", "emailMethod", "email2"];
 
@@ -1260,7 +1248,6 @@ function validateAndStoreSection5Inputs() {
   });
 }
 
-
 function validateAndStoreSection4Inputs() {
   const inputIds = [
     "bank-location",
@@ -1280,24 +1267,13 @@ function validateAndStoreSection4Inputs() {
     "swift-bic",
   ];
 
-  let collectedValues = [];
-
-  inputIds.forEach((id) => {
-    const element = document.getElementById(id);
-    if (element && element.value) {
-      collectedValues.push(`${id}: ${element.value}`);
-    }
+  inputIds.forEach(function(id) {
+    const value = document.getElementById(id).value;
+  
+    sessionStorage.setItem(id, value);
   });
-
-  collectedValues.push(`DOB: ${printDateOfBirth()}`);
-
-  collectedValues.forEach((value) => {
-    const key = value.split(":")[0].trim();
-    const val = value.split(":")[1].trim();
-    sessionStorage.setItem(key, val);
-  });
+  addShop();
 }
-
 
 function handleSection() {
   switch (SectionNumber) {
@@ -1589,6 +1565,40 @@ function signIn() {
     r.send(form);
   }
 }
+
+function sendDataToPHP(data) {
+  const form = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      form.append(key, data[key]);
+    }
+  }
+
+  const xhr = new XMLHttpRequest();
+  const url = "addshopProcess.php";
+  xhr.open("POST", url, true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      const text = xhr.responseText;
+      console.log("Response from server:", text);
+      if (xhr.status === 200) {
+        if (text == "Success") {
+          SuccessM("Data sent successfully");
+        } else if (text == "Error") {
+          ErrorM("Error from server:", text);
+        } else {
+          ErrorM("Unexpected response:", text);
+        }
+      } else {
+        ErrorM("Failed to send data. Status:", xhr.status);
+      }
+    }
+  };
+
+  xhr.send(form);
+}
+
 
 function gotoPage(pageLocation) {
   window.location.href = pageLocation;

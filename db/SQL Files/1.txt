@@ -1,0 +1,521 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema artshopnew
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema artshopnew
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `artshopnew` DEFAULT CHARACTER SET utf8mb3 ;
+USE `artshopnew` ;
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`businesstype`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`businesstype` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`countries`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`countries` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 52
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`bankinfo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`bankinfo` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `businessType_id` INT NOT NULL,
+  `bankCountry` INT NOT NULL,
+  `IBAN` VARCHAR(45) NOT NULL,
+  `SWIFTBIC` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_bankInfo_businessType1_idx` (`businessType_id` ASC) VISIBLE,
+  INDEX `fk_bankInfo_countries1_idx` (`bankCountry` ASC) VISIBLE,
+  CONSTRAINT `fk_bankInfo_businessType1`
+    FOREIGN KEY (`businessType_id`)
+    REFERENCES `artshopnew`.`businesstype` (`id`),
+  CONSTRAINT `fk_bankInfo_countries1`
+    FOREIGN KEY (`bankCountry`)
+    REFERENCES `artshopnew`.`countries` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`months`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`months` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 13
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`cardinfo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`cardinfo` (
+  `cardNo` VARCHAR(30) NOT NULL,
+  `months_id` INT NOT NULL,
+  `year` VARCHAR(4) NOT NULL,
+  `ccv` VARCHAR(45) NOT NULL,
+  `nameOnCard` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`cardNo`),
+  INDEX `fk_cardInfo_months1_idx` (`months_id` ASC) VISIBLE,
+  CONSTRAINT `fk_cardInfo_months1`
+    FOREIGN KEY (`months_id`)
+    REFERENCES `artshopnew`.`months` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`currency`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`currency` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`gender`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`gender` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`customer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`customer` (
+  `email` VARCHAR(50) NOT NULL,
+  `fname` VARCHAR(45) NOT NULL,
+  `lname` VARCHAR(45) NOT NULL,
+  `mobile` VARCHAR(45) NOT NULL,
+  `pw` VARCHAR(45) NOT NULL,
+  `gender_id` INT NOT NULL,
+  PRIMARY KEY (`email`),
+  INDEX `fk_customer_gender1_idx` (`gender_id` ASC) VISIBLE,
+  CONSTRAINT `fk_customer_gender1`
+    FOREIGN KEY (`gender_id`)
+    REFERENCES `artshopnew`.`gender` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`customs`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`customs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `hstarifnumber` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`itemcategories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`itemcategories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`itemtype`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`itemtype` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`language`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`language` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`processing_time`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`processing_time` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `time` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`renewaloption`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`renewaloption` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`returnpolicy`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`returnpolicy` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Description` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`section`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`section` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`ship_to_where`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`ship_to_where` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `where` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`shippingoptype`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`shippingoptype` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`shippingservices`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`shippingservices` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`whomade`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`whomade` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`item` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
+  `Description` VARCHAR(45) NOT NULL,
+  `itemCategories_id` INT NOT NULL,
+  `whomade_id` INT NOT NULL,
+  `RenewalOption_id` INT NOT NULL,
+  `tags` VARCHAR(45) NOT NULL,
+  `materials` VARCHAR(45) NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `quantity` VARCHAR(45) NOT NULL,
+  `status_id` INT NOT NULL,
+  `personalizationInstructions` VARCHAR(45) NOT NULL,
+  `defaultInstructions` VARCHAR(45) NOT NULL,
+  `weight` DOUBLE NOT NULL,
+  `length` DOUBLE NOT NULL,
+  `width` DOUBLE NOT NULL,
+  `height` DOUBLE NOT NULL,
+  `returnPolicy_id` INT NOT NULL,
+  `customs_id` INT NOT NULL,
+  `shippingServices_id` INT NOT NULL,
+  `handingFee` DOUBLE NOT NULL,
+  `itemType_id` INT NOT NULL,
+  `shippingOpType_id` INT NOT NULL,
+  `language_id` INT NOT NULL,
+  `currency_id` INT NOT NULL,
+  `Section_id` INT NOT NULL,
+  `Ship_to_where_id` INT NOT NULL,
+  `itemType_id1` INT NOT NULL,
+  `Processing_time_id` INT NOT NULL,
+  `origin_ ZIP` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_item_itemCategories1_idx` (`itemCategories_id` ASC) VISIBLE,
+  INDEX `fk_item_whomade1_idx` (`whomade_id` ASC) VISIBLE,
+  INDEX `fk_item_RenewalOption1_idx` (`RenewalOption_id` ASC) VISIBLE,
+  INDEX `fk_item_status1_idx` (`status_id` ASC) VISIBLE,
+  INDEX `fk_item_returnPolicy1_idx` (`returnPolicy_id` ASC) VISIBLE,
+  INDEX `fk_item_customs1_idx` (`customs_id` ASC) VISIBLE,
+  INDEX `fk_item_shippingServices1_idx` (`shippingServices_id` ASC) VISIBLE,
+  INDEX `fk_item_itemType1_idx` (`itemType_id` ASC) VISIBLE,
+  INDEX `fk_item_shippingOpType1_idx` (`shippingOpType_id` ASC) VISIBLE,
+  INDEX `fk_item_language1_idx` (`language_id` ASC) VISIBLE,
+  INDEX `fk_item_currency1_idx` (`currency_id` ASC) VISIBLE,
+  INDEX `fk_item_Section1_idx` (`Section_id` ASC) VISIBLE,
+  INDEX `fk_item_Ship_to_where1_idx` (`Ship_to_where_id` ASC) VISIBLE,
+  INDEX `fk_item_itemType2_idx` (`itemType_id1` ASC) VISIBLE,
+  INDEX `fk_item_Processing_time1_idx` (`Processing_time_id` ASC) VISIBLE,
+  CONSTRAINT `fk_item_currency1`
+    FOREIGN KEY (`currency_id`)
+    REFERENCES `artshopnew`.`currency` (`id`),
+  CONSTRAINT `fk_item_customs1`
+    FOREIGN KEY (`customs_id`)
+    REFERENCES `artshopnew`.`customs` (`id`),
+  CONSTRAINT `fk_item_itemCategories1`
+    FOREIGN KEY (`itemCategories_id`)
+    REFERENCES `artshopnew`.`itemcategories` (`id`),
+  CONSTRAINT `fk_item_itemType1`
+    FOREIGN KEY (`itemType_id`)
+    REFERENCES `artshopnew`.`itemtype` (`id`),
+  CONSTRAINT `fk_item_itemType2`
+    FOREIGN KEY (`itemType_id1`)
+    REFERENCES `artshopnew`.`itemtype` (`id`),
+  CONSTRAINT `fk_item_language1`
+    FOREIGN KEY (`language_id`)
+    REFERENCES `artshopnew`.`language` (`id`),
+  CONSTRAINT `fk_item_Processing_time1`
+    FOREIGN KEY (`Processing_time_id`)
+    REFERENCES `artshopnew`.`processing_time` (`id`),
+  CONSTRAINT `fk_item_RenewalOption1`
+    FOREIGN KEY (`RenewalOption_id`)
+    REFERENCES `artshopnew`.`renewaloption` (`id`),
+  CONSTRAINT `fk_item_returnPolicy1`
+    FOREIGN KEY (`returnPolicy_id`)
+    REFERENCES `artshopnew`.`returnpolicy` (`id`),
+  CONSTRAINT `fk_item_Section1`
+    FOREIGN KEY (`Section_id`)
+    REFERENCES `artshopnew`.`section` (`id`),
+  CONSTRAINT `fk_item_Ship_to_where1`
+    FOREIGN KEY (`Ship_to_where_id`)
+    REFERENCES `artshopnew`.`ship_to_where` (`id`),
+  CONSTRAINT `fk_item_shippingOpType1`
+    FOREIGN KEY (`shippingOpType_id`)
+    REFERENCES `artshopnew`.`shippingoptype` (`id`),
+  CONSTRAINT `fk_item_shippingServices1`
+    FOREIGN KEY (`shippingServices_id`)
+    REFERENCES `artshopnew`.`shippingservices` (`id`),
+  CONSTRAINT `fk_item_status1`
+    FOREIGN KEY (`status_id`)
+    REFERENCES `artshopnew`.`status` (`id`),
+  CONSTRAINT `fk_item_whomade1`
+    FOREIGN KEY (`whomade_id`)
+    REFERENCES `artshopnew`.`whomade` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`keywords`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`keywords` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `word` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`item_has_keywords`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`item_has_keywords` (
+  `item_id` INT NOT NULL,
+  `Keywords_id` INT NOT NULL,
+  PRIMARY KEY (`item_id`, `Keywords_id`),
+  INDEX `fk_item_has_Keywords_Keywords1_idx` (`Keywords_id` ASC) VISIBLE,
+  INDEX `fk_item_has_Keywords_item1_idx` (`item_id` ASC) VISIBLE,
+  CONSTRAINT `fk_item_has_Keywords_item1`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `artshopnew`.`item` (`id`),
+  CONSTRAINT `fk_item_has_Keywords_Keywords1`
+    FOREIGN KEY (`Keywords_id`)
+    REFERENCES `artshopnew`.`keywords` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`seller`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`seller` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fname` VARCHAR(45) NOT NULL,
+  `lname` VARCHAR(45) NOT NULL,
+  `countries_id` INT NOT NULL,
+  `DOB` DATE NOT NULL,
+  `taxNumber` VARCHAR(45) NOT NULL,
+  `streetName` VARCHAR(45) NOT NULL,
+  `addressLine2` VARCHAR(45) NULL DEFAULT NULL,
+  `citytown` VARCHAR(45) NULL DEFAULT NULL,
+  `stateProvinceRegion` VARCHAR(45) NULL DEFAULT NULL,
+  `postalCode` VARCHAR(45) NOT NULL,
+  `mobile` VARCHAR(45) NOT NULL,
+  `cardInfo_cardNo` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_seller_countries1_idx` (`countries_id` ASC) VISIBLE,
+  INDEX `fk_seller_cardInfo1_idx` (`cardInfo_cardNo` ASC) VISIBLE,
+  CONSTRAINT `fk_seller_cardInfo1`
+    FOREIGN KEY (`cardInfo_cardNo`)
+    REFERENCES `artshopnew`.`cardinfo` (`cardNo`),
+  CONSTRAINT `fk_seller_countries1`
+    FOREIGN KEY (`countries_id`)
+    REFERENCES `artshopnew`.`countries` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`shipping_price_calculation_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`shipping_price_calculation_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`verified_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`verified_status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `status` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`shop`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`shop` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `shop_name` VARCHAR(45) NULL DEFAULT NULL,
+  `seller_id` INT NOT NULL,
+  `item_id` INT NOT NULL,
+  `verified_status_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_seller_has_item_item1_idx` (`item_id` ASC) VISIBLE,
+  INDEX `fk_seller_has_item_seller1_idx` (`seller_id` ASC) VISIBLE,
+  INDEX `fk_shop_verified_status1_idx` (`verified_status_id` ASC) VISIBLE,
+  CONSTRAINT `fk_seller_has_item_item1`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `artshopnew`.`item` (`id`),
+  CONSTRAINT `fk_seller_has_item_seller1`
+    FOREIGN KEY (`seller_id`)
+    REFERENCES `artshopnew`.`seller` (`id`),
+  CONSTRAINT `fk_shop_verified_status1`
+    FOREIGN KEY (`verified_status_id`)
+    REFERENCES `artshopnew`.`verified_status` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `artshopnew`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `artshopnew`.`users` (
+  `email` VARCHAR(50) NOT NULL,
+  `uname` VARCHAR(45) CHARACTER SET 'utf8mb3' NOT NULL,
+  `fname` VARCHAR(50) CHARACTER SET 'utf8mb3' NOT NULL,
+  `lname` VARCHAR(50) CHARACTER SET 'utf8mb3' NOT NULL,
+  `mobile` VARCHAR(10) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `gender_id` INT NOT NULL,
+  PRIMARY KEY (`email`),
+  INDEX `fk_users_gender_idx` (`gender_id` ASC) VISIBLE,
+  CONSTRAINT `fk_users_gender`
+    FOREIGN KEY (`gender_id`)
+    REFERENCES `artshopnew`.`gender` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
