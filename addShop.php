@@ -993,7 +993,7 @@ $page_title = "Sign In"
                 <label for="expiration-date">Expiration date *</label>
                 <div class="input-group">
                   <select class="custom-select" id="expiration-month">
-                    <option value="99" selected>Choose a month</option>
+                    <option value="99">Choose a month</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
                     <option value="03">March</option>
@@ -1008,9 +1008,9 @@ $page_title = "Sign In"
                     <option value="12">December</option>
                   </select>
                   <span id="expiration-monthError" class="error-message"></span>
-                  <br>  
+                  <br>
                   <select class="custom-select" id="expiration-year">
-                    <option value="99" selected>Choose year</option>
+                    <option value="99">Choose year</option>
                     <option>Year</option>
                     <option>2022</option>
                     <option>2021</option>
@@ -1078,8 +1078,7 @@ $page_title = "Sign In"
                     <i class="fas fa-info-circle me-2"></i>
                     Some countries may not support SMS or phone call authentication. For the best experience, we recommend using an authenticator app.
                   </div>
-                  <p><a href="#" class="text-decoration-none">Learn more about two-factor authentication <i class="fas fa-arrow-right ms-1"></i></a></p>
-                </div>
+                 </div>
                 <div class="col-md-6">
                   <h4 class="mb-3">Set Up Two-Factor Authentication</h4>
                   <form>

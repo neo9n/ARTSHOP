@@ -557,7 +557,7 @@ function showAdditionalFields(inputId) {
   additionalFields.style.opacity = 1;
 }
 
-var SectionNumber = 5;
+var SectionNumber = 6;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1000,6 +1000,15 @@ function validateDateField(fieldId, errorMsg) {
   }
 }
 
+function validateEXDate() {
+  const monthValid = validateDateField("expiration-month", "Please select a month");
+  const yearValid = validateDateField("expiration-year", "Please select a year");
+
+  const b = monthValid && yearValid;
+  alert(b);
+  return b;
+}
+
 function showError(errorSpan, element, msg) {
   errorSpan.textContent = msg;
   errorSpan.style.display = "block";
@@ -1168,13 +1177,8 @@ function validationList() {
       ["swift-bic", "Please enter swift-bic"],
     ],
     [SECTION_5]: [
-      ["card-number", "Please enter your card number"],
-      // [
-      //   {
-      //     validate: validateExpirationDate,
-      //     errorMsg: "Please select a valid expiration date",
-      //   },
-      // ],
+      ["card-number", "Please enter your card number"],      
+      // [{ validate: validateEXDate, errorMsg: "Please select a valid date" }],
       ["ccv", "Please enter your CCV"],
       ["name-on-card", "Please enter the name on your card"],
     ],
@@ -1185,7 +1189,9 @@ function validationList() {
     ],
   };
 
-  (validations[SectionNumber] || []).forEach((field) => {
+  // First block of code checks if the field is an array and if so, 
+  // calls the validateAndAlert function with the first element of the array and the second element of the array.
+(validations[SectionNumber] || []).forEach((field) => {
     if (Array.isArray(field)) {
       op = op && validateAndAlert(field[0], field[1]);
     } else {
@@ -1193,7 +1199,8 @@ function validationList() {
     }
   });
 
-  (validations[SectionNumber] || []).forEach((field) => {
+// Second block of code checks if the field is an array and if so, checks if the first element of the array is an object and if it has a validate property. If it is, it calls the validateAndAlert function with the first element of the array and the second element of the array. If it's not, it calls the validateAndAlert function with the first element of the array and the alertMsg.
+(validations[SectionNumber] || []).forEach((field) => {
     if (
       Array.isArray(field) &&
       typeof field[0] === "object" &&
@@ -1246,7 +1253,8 @@ function validateAndDisplaySection6Inputs() {
 function validateAndDisplaySection5Inputs() {
   const inputIds = [
     "card-number",
-    "expiration-date", // Assuming this is the ID for the expiration date input
+    "expiration-month",
+    "expiration-year",
     "ccv",
     "name-on-card",
   ];
@@ -1325,10 +1333,10 @@ function handleSection() {
       validateSection4Inputs();
       break;
     case SECTION_5:
-      validateAndDisplaySection5Inputs;
+      validateAndDisplaySection5Inputs();
       break;
     case SECTION_6:
-      validateAndDisplaySection6Inputs;
+      validateAndDisplaySection6Inputs();
       break;
     default:
       console.log("Invalid section number");
@@ -1344,7 +1352,6 @@ function savencon(pageName) {
       element.style.backgroundImage =
         "url(\"data:image/svg+xml;utf8,<svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/></svg>\")";
     }
-
     handleSection();
 
     // SectionNumber += 1;
