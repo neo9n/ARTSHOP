@@ -553,7 +553,7 @@ function retrieveDataFromSessionStorage() {
 
 function sendDataToPHP(data) {
   const xhr = new XMLHttpRequest();
-  const url = 'path/to/your/php/file.php';
+  const url = 'addshopProcess.php';
   xhr.open('POST', url, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onreadystatechange = function() {
@@ -565,7 +565,6 @@ function sendDataToPHP(data) {
       }
     }
   };
-
   xhr.send(JSON.stringify(data));
 }
 
