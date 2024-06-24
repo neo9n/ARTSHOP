@@ -993,7 +993,7 @@ $page_title = "Sign In"
                 <label for="expiration-date">Expiration date *</label>
                 <div class="input-group">
                   <select class="custom-select" id="expiration-month">
-                    <option selected>Choose a month</option>
+                    <option value="99" selected>Choose a month</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
                     <option value="03">March</option>
@@ -1008,8 +1008,9 @@ $page_title = "Sign In"
                     <option value="12">December</option>
                   </select>
                   <span id="expiration-monthError" class="error-message"></span>
+                  <br>  
                   <select class="custom-select" id="expiration-year">
-                    <option selected>Choose year</option>
+                    <option value="99" selected>Choose year</option>
                     <option>Year</option>
                     <option>2022</option>
                     <option>2021</option>

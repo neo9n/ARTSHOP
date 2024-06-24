@@ -85,50 +85,6 @@ function adminLogin() {
   }
 }
 
-function section3Backend() {
-  const values = {};
-
-  inputElements.forEach((id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      if (element.type === "file") {
-        values[id] =
-          element.files.length > 0 ? element.files[0].name : "No file selected";
-      } else if (element.type === "radio" || element.type === "checkbox") {
-        values[id] = element.checked;
-      } else {
-        values[id] = element.value;
-      }
-    } else {
-      console.warn(`Element with id "${id}" not found`);
-    }
-  });
-
-  // Additional radio button groups
-  values["renewal_option"] =
-    document.querySelector('input[name="renewal_option"]:checked')?.value || "";
-  values["item_type"] =
-    document.querySelector('input[name="item_type"]:checked')?.value || "";
-  values["enterFixedPrices"] =
-    document.querySelector('input[name="enterFixedPrices"]:checked')?.value ||
-    "";
-  values["shippingop"] =
-    document.querySelector('input[name="shippingop"]:checked')?.value || "";
-
-  // Additional checkboxes
-  values["freeShipping"] = document.getElementById("freeShipping").checked;
-  values["freeDomesticShipping"] = document.getElementById(
-    "freeDomesticShipping"
-  ).checked;
-  values["freeInternationalShipping"] = document.getElementById(
-    "freeInternationalShipping"
-  ).checked;
-
-  console.log("Input values:", values);
-
-  // You can add code here to send the values to a backend service or perform other actions
-}
-
 function getShopinitData() {
   // Get values from dropdown menus
   var shopLanguage = document.getElementById("shopLanguage").value;
@@ -187,71 +143,6 @@ function getBillingInfo() {
 
   // Display alert
   alert(alertMessage);
-}
-
-function getTwoFactorAuthInfo() {
-  // Get input values
-  var authMethod = document.getElementById("authMethod").value;
-  var emailMethod = document.getElementById("emailMethod").value;
-  var email = document.getElementById("email2").value;
-
-  // Prepare alert message
-  var alertMessage =
-    "Two-Factor Authentication Information:\n\n" +
-    "Authentication Method: " +
-    authMethod +
-    "\n" +
-    "Email Verification Method: " +
-    emailMethod +
-    "\n" +
-    "Email Address: " +
-    email;
-
-  // Display alert
-  alert(alertMessage);
-}
-
-function section4Backend() {
-  let inputValues = {
-    bankLocation: document.getElementById("bank-location").value,
-    countryName: document.getElementById("country-name").value,
-    sellerType: document.querySelector('input[name="seller-type"]:checked')
-      .value,
-    countryOfResidence: document.getElementById("bank-location").value,
-    firstName: document.getElementById("first-name").value,
-    lastName: document.getElementById("last-name").value,
-    dob: {
-      month: document.getElementById("month").value,
-      day: document.getElementById("day").value,
-      year: document.getElementById("year").value,
-    },
-    address: {
-      number: document.getElementById("number").value,
-      streetName: document.getElementById("street-name").value,
-      addressLine2: document.getElementById("address-line2").value,
-      cityTown: document.getElementById("city-town").value,
-      state: document.getElementById("state").value,
-      postalCode: document.getElementById("postal-code").value,
-    },
-    phoneNumber: document.getElementById("phone-number").value,
-    livedInSanctionedRegion: document.querySelector(
-      'input[name="lived"]:checked'
-    ).value,
-    sanctionedRegion: document.getElementById("sanctioned-region").value,
-    lastDayInSanctionedRegion: {
-      day: document.getElementById("Day2").value,
-      month: document.getElementById("month2").value,
-      year: document.getElementById("year2").value,
-    },
-    bankInfo: {
-      fullName: document.getElementById("full-name").value,
-      bankName: document.getElementById("bank-name").value,
-      iban: document.getElementById("iban").value,
-      swiftBic: document.getElementById("swift-bic").value,
-    },
-  };
-
-  alert(JSON.stringify(inputValues, null, 2));
 }
 
 const inputElements = [
@@ -666,7 +557,7 @@ function showAdditionalFields(inputId) {
   additionalFields.style.opacity = 1;
 }
 
-var SectionNumber = 3;
+var SectionNumber = 5;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -918,6 +809,24 @@ const friendlyNames = {
   "package-height": "Package Height",
 };
 
+function getSelectedShippingOption() {
+  const freeShipping = document.getElementById("freeShipping");
+  const freeDomesticShipping = document.getElementById("freeDomesticShipping");
+  const freeInternationalShipping = document.getElementById(
+    "freeInternationalShipping"
+  );
+
+  if (freeShipping.checked) {
+    return freeShipping.value;
+  } else if (freeDomesticShipping.checked) {
+    return freeDomesticShipping.value;
+  } else if (freeInternationalShipping.checked) {
+    return freeInternationalShipping.value;
+  } else {
+    return null;
+  }
+}
+
 function validateShippingOptions() {
   const freeShipping = document.getElementById("freeShipping");
   const freeDomesticShipping = document.getElementById("freeDomesticShipping");
@@ -1008,23 +917,27 @@ function validateAndAlert(idOrFunction, msg) {
 }
 
 function validateExpirationDate() {
+  alert("OK")
+  const monthInput = "expiration-month";
+  const yearInput = "expiration-year";
   const monthValid = validateExpirationField(
-    "expiration-month",
+    monthInput,
     "Please select a month"
   );
-  const yearValid = validateExpirationField(
-    "expiration-year",
-    "Please select a year"
-  );
-
-  if (monthValid && yearValid) {
-    clearError(document.getElementById("expiration-dateError"));
-    return true;
-  } else {
+  const yearValid = validateExpirationField(yearInput, "Please select a year");
+  if (!monthValid) {
     showError(
-      document.getElementById("expiration-dateError"),
-      null,
-      "Please select a valid expiration date"
+      document.getElementById("expiration-monthError"),
+      document.getElementById(monthInput),
+      "Please select a valid expiration month"
+    );
+    return false;
+  }
+  if (!yearValid) {
+    showError(
+      document.getElementById("expiration-yearError"),
+      document.getElementById(yearInput),
+      "Please select a valid expiration year"
     );
     return false;
   }
@@ -1034,13 +947,36 @@ function validateExpirationField(fieldId, errorMsg) {
   const field = document.getElementById(fieldId);
   const errorSpan = document.getElementById(fieldId + "Error");
 
-  if (field.value === field.options[0].text) {
+  if (!field) {
+    console.error(`Element with ID "${fieldId}" not found.`);
+    return false;
+  }
+
+  if (field.value === "" || field.value === "99") {
     showError(errorSpan, field, errorMsg);
     return false;
   } else {
     clearError(errorSpan, field);
     return true;
   }
+}
+
+function printDateOfBirth() {
+  const monthElement = document.getElementById("month");
+  const dayElement = document.getElementById("day");
+  const yearElement = document.getElementById("year");
+
+  if (monthElement && dayElement && yearElement) {
+    const month = monthElement.value;
+    const day = dayElement.value;
+    const year = yearElement.value;
+
+    if (month && day && year) {
+      return `Date of Birth: ${month}/${day}/${year}`;
+    }
+  }
+
+  return "Date of Birth: Not available";
 }
 
 function validateDate() {
@@ -1103,6 +1039,76 @@ function isEmpty(element) {
   }
 }
 
+const SECTION3 = [
+  ["image", "Please upload an image"],
+  ["images", "Please upload more pictures"],
+  ["brief-overview", "Please enter a brief overview"],
+  ["section", "Please enter the section name"],
+  ["price", "Please enter the price"],
+  ["quantity", "Please enter the quantity"],
+  ["instruction", "Please enter the personalization instructions"],
+  ["whatBuyerSees", "Please add what the buyer will see"],
+  ["originZIPCode", "Please enter the origin ZIP code"],
+  ["item-weight", "Please enter the item weight"],
+  ["package-length", "Please enter the package length"],
+  ["package-width", "Please enter the package width"],
+  ["package-height", "Please enter the package height"],
+  ["hs-tariff-number", "Please enter the HS Tariff Number"],
+  ["shippingop", "Please select a shipping option"],
+  ["SelCategory", "Please select a category"],
+  ["whomade", "Please select who made the item"],
+  {
+    validate: validateShippingOptions,
+    errorMsg: "Please select at least one shipping option",
+  },
+  ["handlingFee", "Please enter the Handling fee amount"],
+  ["processing_time", "Please select processing time"],
+  ["returnpolicy", "Please select a return policy"],
+];
+
+function validateSection3Inputs() {
+  let collectedMessages = [];
+  let notPrintedIds = [];
+
+  SECTION3.forEach((item) => {
+    if (Array.isArray(item)) {
+      const [id, message] = item;
+      const inputElement = document.getElementById(id);
+
+      if (inputElement && inputElement.value) {
+        collectedMessages.push(`${message}: ${inputElement.value}`);
+      } else {
+        notPrintedIds.push(id);
+      }
+    } else if (typeof item === "object" && item.validate && item.errorMsg) {
+      // Handle the special case for shipping options
+      if (item.validate()) {
+        collectedMessages.push(item.errorMsg + ": Selected");
+      } else {
+        notPrintedIds.push("Shipping Options");
+      }
+    }
+  });
+
+  collectedMessages.push("Shopping option : " + getSelectedShippingOption);
+  let words = "";
+  for (const word of wordList) {
+    words += (words ? " " : "") + word;
+  }
+  collectedMessages.push("Word List : " + words);
+
+  if (collectedMessages.length > 0) {
+    alert("Collected Input Values:\n\n" + collectedMessages.join("\n"));
+  }
+
+  if (notPrintedIds.length > 0) {
+    console.log(
+      "The following inputs were not printed due to empty values:",
+      notPrintedIds.join(", ")
+    );
+  }
+}
+
 function validationList() {
   let op = true;
   const alertMsg = "You can't leave this empty";
@@ -1111,34 +1117,37 @@ function validationList() {
     [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
     [SECTION_2]: ["shopName"],
     [SECTION_3]: [
-      // ["image", "Please upload an image"],
-      // ["images", "Please upload more pictures"],
-      // ["newCategory", "Please enter the name of the category"],
-      // ["brief-overview", "Please enter a brief overview"],
-      // ["section", "Please enter the section name"],
-      // ["price", "Please enter the price"],
-      // ["quantity", "Please enter the quantity"],
-      // ["instruction", "Please enter the personalization instructions"],
-      // ["whatBuyerSees", "Please add what the buyer will see"],
-      // ["fixed_price", "Please enter the fixed price"],
-      // ["originZIPCode", "Please enter the origin ZIP code"],
-      // ["item-weight", "Please enter the item weight"],
-      // ["package-length", "Please enter the package length"],
-      // ["package-width", "Please enter the package width"],
-      // ["package-height", "Please enter the package height"],
-      // ["hs-tariff-number", "Please enter the HS Tariff Number"],
-      // ["shippingop", "Please select a shipping option"],
-      // ["SelCategory", "Please select a category"],
-      // ["whomade", "Please select who made the item"],[
-      // { validate: validateShippingOptions, errorMsg: "Please select at least one shipping option" },
-      // ["handlingFee", "Please enter the Handling fee amount"],
-      // ["processing_time", "Please select processing time"],
-      // ["returnpolicy", "Please select a return policy"],
+      ["image", "Please upload an image"],
+      ["images", "Please upload more pictures"],
+      ["newCategory", "Please enter the name of the category"],
+      ["brief-overview", "Please enter a brief overview"],
+      ["section", "Please enter the section name"],
+      ["price", "Please enter the price"],
+      ["quantity", "Please enter the quantity"],
+      ["instruction", "Please enter the personalization instructions"],
+      ["whatBuyerSees", "Please add what the buyer will see"],
+      ["fixed_price", "Please enter the fixed price"],
+      ["originZIPCode", "Please enter the origin ZIP code"],
+      ["item-weight", "Please enter the item weight"],
+      ["package-length", "Please enter the package length"],
+      ["package-width", "Please enter the package width"],
+      ["package-height", "Please enter the package height"],
+      ["hs-tariff-number", "Please enter the HS Tariff Number"],
+      ["shippingop", "Please select a shipping option"],
+      ["SelCategory", "Please select a category"],
+      ["whomade", "Please select who made the item"],
+      {
+        validate: validateShippingOptions,
+        errorMsg: "Please select at least one shipping option",
+      },
+      ["handlingFee", "Please enter the Handling fee amount"],
+      ["processing_time", "Please select processing time"],
+      ["returnpolicy", "Please select a return policy"],
       ["seo_keywords", "Please add atleast One key Word"],
-      // [
-      //   "custom-return-policy-text",
-      //   "Please enter a custom return policy description",
-      // ],
+      [
+        "custom-return-policy-text",
+        "Please enter a custom return policy description",
+      ],
     ],
     [SECTION_4]: [
       ["bank-location", "Please enter bank-location"],
@@ -1160,10 +1169,12 @@ function validationList() {
     ],
     [SECTION_5]: [
       ["card-number", "Please enter your card number"],
-      [
-        { validate: validateExpirationDate },
-        "Please select a valid expiration date",
-      ],
+      // [
+      //   {
+      //     validate: validateExpirationDate,
+      //     errorMsg: "Please select a valid expiration date",
+      //   },
+      // ],
       ["ccv", "Please enter your CCV"],
       ["name-on-card", "Please enter the name on your card"],
     ],
@@ -1199,6 +1210,106 @@ function validationList() {
   return op;
 }
 
+function validateAndDisplaySection6Inputs() {
+  const inputIds = ["authMethod", "emailMethod", "email2"];
+
+  let collectedValues = [];
+
+  inputIds.forEach((id) => {
+    const inputElement = document.getElementById(id);
+    if (inputElement && inputElement.value.trim() !== "") {
+      let value = inputElement.value;
+
+      // For select elements, get the selected option text
+      if (inputElement.tagName.toLowerCase() === "select") {
+        value = inputElement.options[inputElement.selectedIndex].text;
+      }
+
+      collectedValues.push(`${id}: ${value}`);
+    } else {
+      console.log(
+        `Input with ID "${id}" was not printed (empty or not found).`
+      );
+    }
+  });
+
+  if (collectedValues.length > 0) {
+    alert(
+      "Collected authentication and verification information:\n\n" +
+        collectedValues.join("\n")
+    );
+  } else {
+    alert("No authentication or verification information was collected.");
+  }
+}
+
+function validateAndDisplaySection5Inputs() {
+  const inputIds = [
+    "card-number",
+    "expiration-date", // Assuming this is the ID for the expiration date input
+    "ccv",
+    "name-on-card",
+  ];
+
+  let collectedValues = [];
+
+  inputIds.forEach((id) => {
+    const inputElement = document.getElementById(id);
+    if (inputElement && inputElement.value.trim() !== "") {
+      collectedValues.push(`${id}: ${inputElement.value}`);
+    } else {
+      console.log(
+        `Input with ID "${id}" was not printed (empty or not found).`
+      );
+    }
+  });
+
+  if (collectedValues.length > 0) {
+    alert("Collected input values:\n\n" + collectedValues.join("\n"));
+  } else {
+    alert("No input values were collected.");
+  }
+}
+
+function validateSection4Inputs() {
+  const inputIds = [
+    "bank-location",
+    "country-residence",
+    "first-name",
+    "last-name",
+    "number",
+    "street-name",
+    "address-line2",
+    "city-town",
+    "state",
+    "postal-code",
+    "phone-number",
+    "full-name",
+    "bank-name",
+    "iban",
+    "swift-bic",
+  ];
+
+  let collectedValues = [];
+
+  inputIds.forEach((id) => {
+    const element = document.getElementById(id);
+    if (element && element.value) {
+      collectedValues.push(`${id}: ${element.value}`);
+    } else {
+      console.log(`Input value for ${id} was not retrieved.`);
+    }
+  });
+
+  collectedValues.push("DOB :" + printDateOfBirth());
+
+  if (collectedValues.length > 0) {
+    alert("Collected input values:\n\n" + collectedValues.join("\n"));
+  } else {
+    alert("No input values were collected.");
+  }
+}
+
 function handleSection() {
   switch (SectionNumber) {
     case SECTION_1:
@@ -1208,13 +1319,16 @@ function handleSection() {
       getShopNameInfo();
       break;
     case SECTION_3:
-      // section3Backend();
+      validateSection3Inputs();
       break;
     case SECTION_4:
-      section4Backend();
+      validateSection4Inputs();
       break;
     case SECTION_5:
-      getTwoFactorAuthInfo();
+      validateAndDisplaySection5Inputs;
+      break;
+    case SECTION_6:
+      validateAndDisplaySection6Inputs;
       break;
     default:
       console.log("Invalid section number");
@@ -1233,13 +1347,13 @@ function savencon(pageName) {
 
     handleSection();
 
-    SectionNumber += 1;
-    gloweffect(pageName);
-    load(pageName);
-    if (SectionNumber == 7) {
-      document.getElementById("section").style.display = "block";
-      document.getElementById("final").style.display = "block";
-    }
+    // SectionNumber += 1;
+    // gloweffect(pageName);
+    // load(pageName);
+    // if (SectionNumber == 7) {
+    //   document.getElementById("section").style.display = "block";
+    //   document.getElementById("final").style.display = "block";
+    // }
   }
 }
 
