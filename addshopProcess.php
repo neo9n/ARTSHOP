@@ -34,7 +34,8 @@ $shippingModel = $_POST["ShippingModel"];
 $productName = $_POST["product-name"];
 $shippingOption = $_POST["shopingOption"];
 $shopName = $_POST["shopName"];
-$shopCountry = $_POST["shopCountry"];$cardNumber = $_POST["card-number"];
+$shopCountry = $_POST["shopCountry"];
+$cardNumber = $_POST["card-number"];
 $expirationMonth = $_POST["expiration-month"];
 $expirationYear = $_POST["expiration-year"];
 $ccv = $_POST["ccv"];
@@ -83,7 +84,7 @@ try {
 } catch (Exception $e) {
     echo "Uncaught MySQL exception: " . $e->getMessage();
 }
-echo $cardId.PHP_EOL;
+echo $cardId . PHP_EOL;
 
 //bank
 $bankInfoSearchQuery = "SELECT * FROM `bankinfo` 
@@ -277,10 +278,39 @@ try {
         echo "Error";
     } else {
         Database::iud($shopInsertQuery);
-        echo "Success";
+        echo "Pass";
     }
 } catch (Exception $e) {
     echo "Uncaught MySQL exception: " . $e->getMessage();
 }
 
+//item has keywords 
+$item_id = Database::getLastInsertedId();
+$keywords = explode(",", $keywords);
 
+foreach ($keywords as $keyword) {
+    $keyword = trim($keyword);
+    $keywordSearchQuery = "SELECT * FROM `keywords` WHERE `word` = '$keyword'";
+    try {
+        $searchResult = Database::search($keywordSearchQuery);
+        $numRows = $searchResult->num_rows;
+
+        if ($numRows > 0) {
+            $row = $searchResult->fetch_assoc();
+            $keywordid = $row["id"];
+            echo "Keyword '$keyword' found with ID: $keywordid<br>";
+        } else {
+            $keywordInsertQuery = "INSERT INTO `keywords` (`word`) VALUES ('$keyword')";
+            Database::iud($keywordInsertQuery);
+            $keywordid = Database::getLastInsertedId();
+            echo "Keyword '$keyword' inserted with ID: $keywordid<br>";
+        }
+
+        $newSql = "INSERT INTO `item_has_keywords` (`item_id`, `keywords_id`) VALUES ('$item_id', '$keywordid')";
+        Database::iud($newSql);
+        echo "Inserted into `item_has_keywords`: item_id = $item_id, keyword_id = $keywordid<br>";
+        
+    } catch (Exception $e) {
+        echo "Uncaught MySQL exception: " . $e->getMessage() . "<br>";
+    }
+}

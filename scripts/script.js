@@ -534,7 +534,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 1;
+var SectionNumber = 3;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1227,6 +1227,7 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
+  addShop();
 }
 
 function getShippingCountryId() {
@@ -1359,7 +1360,7 @@ function handleSection() {
 }
 
 function savencon(pageName) {
-  if (validationList()) {
+  if (validationList()||true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
