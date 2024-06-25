@@ -534,7 +534,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 3;
+var SectionNumber = 1;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1190,9 +1190,9 @@ function getShopNameInfo() {
 }
 
 function addShop() {
-  const dataToSend = retrieveDataFromSessionStorage();
-  printSessionStorage();
-  sendDataToPHP(dataToSend);
+    const dataToSend = retrieveDataFromSessionStorage();
+    printSessionStorage();
+    sendDataToPHP(dataToSend);
 }
 
 function validateAndStoreSection3Inputs() {
@@ -1227,11 +1227,9 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
-  // alert(sessionStorage.getItem("price"));
-  addShop();
 }
 
-function getShippingCountryId(){  
+function getShippingCountryId() {
   op1 = document.getElementById("shipping-country");
   return op1.value;
 }
@@ -1273,6 +1271,7 @@ function validateAndStoreSection6Inputs() {
     } else {
     }
   });
+  addShop();
 }
 
 function validateAndStoreSection5Inputs() {
@@ -1646,6 +1645,7 @@ function sendDataToPHP(data) {
           SuccessM("Data sent successfully");
         } else if (text == "Error") {
           ErrorM("Error from server:", text);
+        } else if (text == "Pass") {
         } else {
           ErrorM("Unexpected response:", text);
         }

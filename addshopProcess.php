@@ -3,157 +3,9 @@ session_start();
 
 require "connection.php";
 
-//shop
-// if (isset($_SESSION['name']) && is_numeric($_SESSION['name'])) {
-//     $sellerId = intval($_SESSION['id']);
-// } else {
-//     $sellerId = "1";
-// }
-// $shopName = $_POST["shopName"];
-// $shopCountry = $_POST["shopCountry"];
-
-// $shopSearchQuery = "SELECT * FROM `shop` WHERE `shop_name` = '$shopName' AND `seller_id` = '$sellerId'";
-
-// $shopInsertQuery = "INSERT INTO `shop` (`shop_name`, `seller_id`, `verified_status_id`) 
-//                     VALUES ('$shopName', '$sellerId', 1)";
-
-// try {
-//     $searchResult = Database::search($shopSearchQuery);
-//     $numRows = $searchResult->num_rows;
-
-//     if ($numRows > 0) {
-//         echo "Error";
-//     } else {
-//         Database::iud($shopInsertQuery);
-//         echo "Success";
-//     }
-// } catch (Exception $e) {
-//     echo "Uncaught MySQL exception: " . $e->getMessage();
-// }
-// $shop_id = Database::getLastInsertedId();
-
-//card
-// $cardNumber = $_POST["card-number"];
-// $expirationMonth = $_POST["expiration-month"];
-// $expirationYear = $_POST["expiration-year"];
-// $ccv = $_POST["ccv"];
-// $nameOnCard = $_POST["name-on-card"];
-
-// $cardSearchQuery = "SELECT * FROM `cardinfo` 
-//                    WHERE `cardNo` = '$cardNumber'
-//                    AND `months_id` = '$expirationMonth'
-//                    AND `year` = '$expirationYear'
-//                    AND `ccv` = '$ccv'
-//                    AND `nameOnCard` = '$nameOnCard'";
-
-// $cardInsertQuery = "INSERT INTO `cardinfo` (`cardNo`, `months_id`, `year`, `ccv`, `nameOnCard`)
-//                    VALUES ('$cardNumber', '$expirationMonth', '$expirationYear', '$ccv', '$nameOnCard')";
-
-// $inserted_key = "";
-// try {
-//     $searchResult = Database::search($cardSearchQuery);
-//     $numRows = $searchResult->num_rows;
-
-//     if ($numRows > 0) {
-//         echo "Error";
-//     } else {
-//         Database::iud($cardInsertQuery);
-//         $inserted_key = Database::insert_id();
-//         echo "Success";
-//     }
-//         echo "Success";
-//     }
-// } catch (Exception $e) {
-//     echo "Uncaught MySQL exception: " . $e->getMessage();
-// }
-
-//bank
-// $bankLocation = $_POST["bank-location"];
-// $bankCountry = $_POST["country-residence"];
-// $bankName = $_POST["bank-name"];
-// $iban = $_POST["iban"];
-// $swiftBic = $_POST["swift-bic"];
-
-// $bankInfoSearchQuery = "SELECT * FROM `bankinfo` 
-//                        WHERE `name` = '$bankName'
-//                        AND `bankCountry` = '$bankCountry'
-//                        AND `IBAN` = '$iban'
-//                        AND `SWIFT/BIC` = '$swiftBic'";
-
-// $bankInfoInsertQuery = "INSERT INTO `bankinfo` (`name`, `bankCountry`, `IBAN`, `SWIFT/BIC`)
-//                        VALUES ('$bankName', '$bankCountry', '$iban', '$swiftBic')";
-
-// try {
-//     $searchResult = Database::search($bankInfoSearchQuery);
-//     $numRows = $searchResult->num_rows;
-
-//     if ($numRows > 0) {
-//         echo "Error";
-//     } else {
-//         Database::iud($bankInfoInsertQuery);
-//         echo "Success";
-//     }
-// } catch (Exception $e) {
-//     echo "Uncaught MySQL exception: " . $e->getMessage();
-// }
-
-//seller
-// $bankLocation = $_POST["bank-location"];
-// $countryResidence = $_POST["country-residence"];
-// $firstName = $_POST["first-name"];
-// $lastName = $_POST["last-name"];
-// $streetName = $_POST["street-name"];
-// $addressLine2 = $_POST["address-line2"];
-// $cityTown = $_POST["city-town"];
-// $stateProvince = $_POST["state"];
-// $postalCode = $_POST["postal-code"];
-// $phoneNumber = $_POST["phone-number"];
-// $fullName = $_POST["full-name"];
-// $bankName = $_POST["bank-name"];
-// $DOB = $_POST["dob"];
-// $taxNumber = $_POST["number"];
-// $swiftBic = $_POST["swift-bic"];
-
-// //Temp
-// $iban = "1";
-// $bankInfoID = "1";
-
-// $sellerSearchQuery = "SELECT * FROM `seller`
-// WHERE `fname` = '$firstName'
-// AND `lname` = '$lastName'
-// AND `countries_id` = '$countryResidence'
-// AND `DOB` = '$DOB'  
-// AND `taxNumber` = '$taxNumber'
-// AND `streetName` = '$streetName'
-// AND `addressLine2` = '$addressLine2'
-// AND `citytown` = '$cityTown'
-// AND `stateProvinceRegion` = '$stateProvince'
-// AND `postalCode` = '$postalCode'
-// AND `mobile` = '$phoneNumber'
-// AND `cardinfo_cardNo` = '$iban'";
-
-
-// $sellerInsertQuery = "INSERT INTO `seller` (`fname`,`bankinfo_id`, `lname`, `countries_id`, `DOB`, `taxNumber`, `streetName`, `addressLine2`, `citytown`, `stateProvinceRegion`, `postalCode`, `mobile`, `cardinfo_cardNo`)
-// VALUES ( '$firstName', '$bankInfoID','$lastName', '$countryResidence', '$DOB', '$taxNumber', '$streetName', '$addressLine2', '$cityTown', '$stateProvince', '$postalCode', '$phoneNumber', '$iban')";
-
-// try {
-//     $searchResult = Database::search($sellerSearchQuery);
-//     $numRows = $searchResult->num_rows;
-
-//     if ($numRows > 0) {
-//         echo "Error";
-//     } else {
-//         Database::iud($sellerInsertQuery);
-//         echo "Success";
-//     }
-// } catch (Exception $e) {
-//     echo "Uncaught MySQL exception: " . $e->getMessage();
-// }
-// $sellerId = Database::getLastInsertedId();
-
-//item
-// $shopLanguage = $_POST["shopLanguage"];
-// $shopCurrency = $_POST["shopCurrency"];
+//dataSet
+$shopLanguage = $_POST["shopLanguage"];
+$shopCurrency = $_POST["shopCurrency"];
 $brief_overview = $_POST["brief-overview"] ?? '';
 $SelCategory = $_POST["SelCategory"] ?? '';
 $whomade = $_POST["whomade"] ?? '';
@@ -181,12 +33,155 @@ $video = $_POST["videoInput"];
 $shippingModel = $_POST["ShippingModel"];
 $productName = $_POST["product-name"];
 $shippingOption = $_POST["shopingOption"];
+$shopName = $_POST["shopName"];
+$shopCountry = $_POST["shopCountry"];$cardNumber = $_POST["card-number"];
+$expirationMonth = $_POST["expiration-month"];
+$expirationYear = $_POST["expiration-year"];
+$ccv = $_POST["ccv"];
+$nameOnCard = $_POST["name-on-card"];
+$bankLocation = $_POST["bank-location"];
+$bankCountry = $_POST["country-residence"];
+$bankName = $_POST["bank-name"];
+$iban = $_POST["iban"];
+$swiftBic = $_POST["swift-bic"];
+$bankLocation = $_POST["bank-location"];
+$countryResidence = $_POST["country-residence"];
+$firstName = $_POST["first-name"];
+$lastName = $_POST["last-name"];
+$streetName = $_POST["street-name"];
+$addressLine2 = $_POST["address-line2"];
+$cityTown = $_POST["city-town"];
+$stateProvince = $_POST["state"];
+$postalCode = $_POST["postal-code"];
+$phoneNumber = $_POST["phone-number"];
+$fullName = $_POST["full-name"];
+$bankName = $_POST["bank-name"];
+$DOB = $_POST["dob"];
+$taxNumber = $_POST["number"];
+$swiftBic = $_POST["swift-bic"];
+$KeyWords = isset($_POST["KeyWords"]) ? $_POST["KeyWords"] : [];
+$cardId = $cardNumber;
 
-// Temp
-$shopLanguage = "1";
-$shopCurrency = "1";
-$sellerId = "2";
-$shop_id = "4";
+//card
+$cardSearchQuery = "SELECT * FROM `cardinfo` 
+                   WHERE `cardNo` = '$cardNumber'
+                   AND `months_id` = '$expirationMonth'
+                   AND `year` = '$expirationYear'
+                   AND `ccv` = '$ccv'
+                   AND `nameOnCard` = '$nameOnCard'";
+$cardInsertQuery = "INSERT INTO `cardinfo` (`cardNo`, `months_id`, `year`, `ccv`, `nameOnCard`)
+                   VALUES ('$cardNumber', '$expirationMonth', '$expirationYear', '$ccv', '$nameOnCard')";
+try {
+    $searchResult = Database::search($cardSearchQuery);
+    $numRows = $searchResult->num_rows;
+    if ($numRows > 0) {
+        echo "Error";
+    } else {
+        Database::iud($cardInsertQuery);
+        echo "Pass";
+    }
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
+}
+echo $cardId.PHP_EOL;
+
+//bank
+$bankInfoSearchQuery = "SELECT * FROM `bankinfo` 
+                       WHERE `name` = '$bankName'
+                       AND `bankCountry` = '$bankCountry'
+                       AND `IBAN` = '$iban'
+                       AND `SWIFT/BIC` = '$swiftBic'";
+$bankInfoInsertQuery = "INSERT INTO `bankinfo` (`name`, `bankCountry`, `IBAN`, `SWIFT/BIC`)
+                       VALUES ('$bankName', '$bankCountry', '$iban', '$swiftBic')";
+
+try {
+    $searchResult = Database::search($bankInfoSearchQuery);
+    $numRows = $searchResult->num_rows;
+    if ($numRows > 0) {
+        echo "Error";
+        $row = $result->fetch_assoc();
+        $bankInfoID = $row["id"];
+    } else {
+        Database::iud($bankInfoInsertQuery);
+        echo "Pass";
+    }
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
+}
+$bankInfoID = Database::getLastInsertedId();
+
+//seller
+$sellerSearchQuery = "SELECT * FROM `seller`
+WHERE `fname` = '$firstName'
+AND `lname` = '$lastName'
+AND `countries_id` = '$countryResidence'
+AND `DOB` = '$DOB'  
+AND `taxNumber` = '$taxNumber'
+AND `streetName` = '$streetName'
+AND `addressLine2` = '$addressLine2'
+AND `citytown` = '$cityTown'
+AND `stateProvinceRegion` = '$stateProvince'
+AND `postalCode` = '$postalCode'
+AND `mobile` = '$phoneNumber'
+AND `cardinfo_cardNo` = '$cardId'";
+$sellerInsertQuery = "INSERT INTO `seller` (`fname`,`bankinfo_id`, `lname`, `countries_id`, `DOB`, `taxNumber`, `streetName`, `addressLine2`, `citytown`, `stateProvinceRegion`, `postalCode`, `mobile`, `cardinfo_cardNo`)
+VALUES ( '$firstName', '$bankInfoID','$lastName', '$countryResidence', '$DOB', '$taxNumber', '$streetName', '$addressLine2', '$cityTown', '$stateProvince', '$postalCode', '$phoneNumber', '$cardId')";
+try {
+    $searchResult = Database::search($sellerSearchQuery);
+    $numRows = $searchResult->num_rows;
+    if ($numRows > 0) {
+        echo "Error";
+        $row = $result->fetch_assoc();
+        $sellerId = $row["id"];
+    } else {
+        Database::iud($sellerInsertQuery);
+        echo "Pass";
+    }
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
+}
+$sellerId = Database::getLastInsertedId();
+
+//keywords
+if (!is_array($KeyWords)) {
+    $KeyWords = explode(',', $KeyWords);
+}
+for ($i = 0; $i < count($KeyWords); $i++) {
+    $keyword = trim($KeyWords[$i]);
+    $keySql = "SELECT * FROM `keywords` WHERE `word` = '$keyword' ";
+    try {
+        $result = Database::search($keySql);
+        $numRows = $result->num_rows;
+
+        if ($numRows > 0) {
+        } else {
+            $insertSQL = "INSERT INTO `keywords` (`word`) VALUES ('$keyword')";
+            Database::iud($insertSQL);
+        }
+    } catch (Exception $e) {
+        echo "Uncaught MySQL exception: " . $e->getMessage();
+    }
+}
+
+//shop
+$shopSearchQuery = "SELECT * FROM `shop` WHERE `shop_name` = '$shopName' AND `seller_id` = '$sellerId'";
+$shopInsertQuery = "INSERT INTO `shop` (`shop_name`, `seller_id`, `verified_status_id`) 
+                    VALUES ('$shopName', '$sellerId', 1)";
+try {
+    $searchResult = Database::search($shopSearchQuery);
+    $numRows = $searchResult->num_rows;
+    if ($numRows > 0) {
+        echo "Error";
+        $row = $result->fetch_assoc();
+        $shop_id = $row["id"];
+    } else {
+        Database::iud($shopInsertQuery);
+        echo "Pass";
+    }
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
+}
+$shop_id = Database::getLastInsertedId();
 
 //section
 $sectionid = "";
@@ -202,7 +197,7 @@ try {
     } else {
         $insertSQL = "INSERT INTO `section` (`name`) VALUES ('$section')";
         Database::iud($insertSQL);
-        echo "Success";
+        echo "Pass";
         $sectionid = Database::getLastInsertedId();
     }
 } catch (Exception $e) {
@@ -278,7 +273,6 @@ $shopInsertQuery = "
 try {
     $searchResult = Database::search($shopSearchQuery);
     $numRows = $searchResult->num_rows;
-
     if ($numRows > 0) {
         echo "Error";
     } else {
@@ -290,26 +284,3 @@ try {
 }
 
 
-
-//keywords
-$KeyWords = isset($_POST["KeyWords"]) ? $_POST["KeyWords"] : [];
-
-if (!is_array($KeyWords)) {
-    $KeyWords = explode(',', $KeyWords);
-}
-for ($i = 0; $i < count($KeyWords); $i++) {
-    $keyword = trim($KeyWords[$i]);
-    $sql = "SELECT * FROM `keywords` WHERE `word` = '$keyword' ";
-    try {
-        $result = Database::search($sql);
-        $numRows = $result->num_rows;
-
-        if ($numRows > 0) {
-        } else {
-            $insertSQL = "INSERT INTO `keywords` (`word`) VALUES ('$keyword')";
-            Database::iud($insertSQL);
-        }
-    } catch (Exception $e) {
-        echo "Uncaught MySQL exception: " . $e->getMessage();
-    }
-}
