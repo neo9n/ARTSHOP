@@ -369,11 +369,11 @@ $page_title = "Sign In"
         <h3>Type</h3>
         <p>Select the type of item you're listing.</p>
         <div class="custom-control custom-radio">
-          <input type="radio" id="physical_good" name="item_type" class="custom-control-input" checked>
+          <input type="radio" id="physical_good" name="item_type" class="custom-control-input" checked value="1" >
           <label for="physical_good" class="custom-control-label">Physical item (A tangible item that you will ship to buyers)</label>
         </div>
         <div class="custom-control custom-radio">
-          <input type="radio" id="digital_good" name="item_type" class="custom-control-input">
+          <input type="radio" id="digital_good" name="item_type" class="custom-control-input" value="2" >
           <label for="digital_good" class="custom-control-label">Digital item (A digital file that buyers will download)</label>
         </div>
       </div>
@@ -505,8 +505,8 @@ $page_title = "Sign In"
             <p>Select the countries or regions you'll ship to. You can also set different shipping profiles for different regions.</p>
             <div class="select-wrapper">
               <select id="shipping-country" aria-label="Select countries or regions you ship to">
-                <option value="US">United States</option>
-                <option value="WW">Worldwide</option>
+                <option id="us" value="1">United States</option>
+                <option id="ww" value="2">Worldwide</option>
               </select>
               <span id="shipping-countryError" class="error-message"></span>
             </div>
@@ -518,20 +518,15 @@ $page_title = "Sign In"
 
             <div class="checkbox-wrapper">
               <div class="btn-group" role="group" aria-label="Shipping options">
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="1" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="1" autocomplete="off">
                 <label class="btn btn-outline-primary" for="shipping-service-usps">USPS First Class Mail</label>
 
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="2" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="2"  autocomplete="off">
                 <label class="btn btn-outline-primary" for="shipping-service-fedex">FedEx Priority Mail</label>
               </div>
 
               <br>
-            </div>
-
-
-            <p class="text-right">
-              <a href="#">Learn more about shipping services</a>
-            </p>
+            </div>            
             <div class="d-flex flex-wrap justify-content-between mt-4">
             </div>
           </div>

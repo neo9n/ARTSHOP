@@ -19,6 +19,7 @@
         "iban",
         "ifsc",
         "itemcategories",
+        "itemtype",
         "navbarhome",
         "rememberme",
         "returnpolicy",

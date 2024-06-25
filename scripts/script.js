@@ -1219,21 +1219,44 @@ function validateAndStoreSection3Inputs() {
     }
   });
 
-  collectedMessages.push(`Shopping option: ${getSelectedShippingOption()}`);
-  sessionStorage.setItem("Shopping option", getSelectedShippingOption());
+  collectedMessages.push(`ShippingModel: ${getSelectedShippingOption()}`);
+  sessionStorage.setItem("ShippingModel", getSelectedShippingOption());
   sessionStorage.setItem("KeyWords", wordList);
   sessionStorage.setItem("shippingop", getSelectedShippingMethod());
   sessionStorage.setItem("renewal_option", getRenewalOption());
-
-  // let words = wordList.join(" ");
-  // collectedMessages.push(`Word List: ${words}`);
-
-  // collectedMessages.forEach((message) => {
-  //   const key = message.split(":")[0].trim();
-  //   const val = message.split(":")[1].trim();
-  //   sessionStorage.setItem(key, val);
-  // });
+  sessionStorage.setItem("shopingOption", getShopingOption());
+  sessionStorage.setItem("itemtype", getItemtype());
+  sessionStorage.setItem("shippingCountryId", getShippingCountryId());
+  // alert(sessionStorage.getItem("price"));
   addShop();
+}
+
+function getShippingCountryId(){  
+  op1 = document.getElementById("shipping-country");
+  return op1.value;
+}
+
+function getShopingOption() {
+  op1 = document.getElementById("freeShipping");
+  op2 = document.getElementById("freeDomesticShipping");
+  op3 = document.getElementById("freeInternationalShipping");
+  if (op1.checked) {
+    return op1.value;
+  } else if (op2.checked) {
+    return op2.value;
+  } else {
+    return op3.value;
+  }
+}
+
+function getItemtype() {
+  op1 = document.getElementById("physical_good");
+  op2 = document.getElementById("digital_good");
+  if (op1.checked) {
+    return op1.value;
+  } else {
+    return op2.value;
+  }
 }
 
 function validateAndStoreSection6Inputs() {
@@ -1337,7 +1360,7 @@ function handleSection() {
 }
 
 function savencon(pageName) {
-  if (validationList() || true) {
+  if (validationList()) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
