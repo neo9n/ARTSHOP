@@ -132,9 +132,7 @@ const inputElements = [
   "originZIPCode",
   "processing_time",
   "shipping-country",
-  "name",
   "handlingFee",
-  "hs-tariff-number",
   "item-weight",
   "package-length",
   "package-width",
@@ -351,7 +349,7 @@ function createBox(text) {
   container.appendChild(newDiv);
 }
 
-wordList = [];
+var wordList = [];
 
 function validateWordList() {
   return wordList.length > 0;
@@ -646,9 +644,7 @@ const inputFieldIds = [
   "price",
   "fixed_price",
   "originZIPCode",
-  "name",
   "handlingFee",
-  "hs-tariff-number",
   "country-name",
   "first-name",
   "last-name",
@@ -687,7 +683,6 @@ const inputFieldIds = [
   "l1",
   "l2",
   "search-box",
-  "name",
   "mobile",
   "email",
   "qtyInput",
@@ -740,7 +735,6 @@ const friendlyNames = {
   originZIPCode: "Origin ZIP Code",
   name: "Name",
   handlingFee: "Handling Fee",
-  "hs-tariff-number": "HS Tariff Number",
   "country-name": "Country Name",
   "first-name": "First Name",
   "last-name": "Last Name",
@@ -804,6 +798,16 @@ function getSelectedShippingOption() {
   } else {
     return null;
   }
+}
+
+function getSelectedShippingMethod() {
+  var shippingOptions = document.getElementsByName("shippingop");
+  for (var i = 0; i < shippingOptions.length; i++) {
+    if (shippingOptions[i].checked) {
+      return shippingOptions[i].value;
+    }
+  }
+  return null;
 }
 
 function validateShippingOptions() {
@@ -1033,8 +1037,11 @@ function isEmpty(element) {
 }
 
 const SECTION3 = [
+  ["product-name", "Please enter the product name"],
   ["image", "Please upload an image"],
+  ["shipping-country", "Please select the Shipping countries"],
   ["images", "Please upload more pictures"],
+  ["videoInput", "Please select a suitable video of your product"],
   ["brief-overview", "Please enter a brief overview"],
   ["section", "Please enter the section name"],
   ["price", "Please enter the price"],
@@ -1046,7 +1053,6 @@ const SECTION3 = [
   ["package-length", "Please enter the package length"],
   ["package-width", "Please enter the package width"],
   ["package-height", "Please enter the package height"],
-  ["hs-tariff-number", "Please enter the HS Tariff Number"],
   ["shippingop", "Please select a shipping option"],
   ["SelCategory", "Please select a category"],
   ["whomade", "Please select who made the item"],
@@ -1059,6 +1065,16 @@ const SECTION3 = [
   ["returnpolicy", "Please select a return policy"],
 ];
 
+function getRenewalOption() {
+  op1 = document.getElementById("auto_renew");
+  op2 = document.getElementById("manual_renew");
+  if (op1.checked) {
+    return op1.value;
+  } else {
+    return op2.value;
+  }
+}
+
 function validationList() {
   let op = true;
   const alertMsg = "You can't leave this empty";
@@ -1067,6 +1083,7 @@ function validationList() {
     [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
     [SECTION_2]: ["shopName"],
     [SECTION_3]: [
+      ["product-name", "Please enter the product name"],
       ["image", "Please upload an image"],
       ["images", "Please upload more pictures"],
       ["newCategory", "Please enter the name of the category"],
@@ -1074,6 +1091,7 @@ function validationList() {
       ["section", "Please enter the section name"],
       ["price", "Please enter the price"],
       ["quantity", "Please enter the quantity"],
+      ["shipping-country", "Please select the Shipping countries"],
       ["instruction", "Please enter the personalization instructions"],
       ["whatBuyerSees", "Please add what the buyer will see"],
       ["fixed_price", "Please enter the fixed price"],
@@ -1082,7 +1100,6 @@ function validationList() {
       ["package-length", "Please enter the package length"],
       ["package-width", "Please enter the package width"],
       ["package-height", "Please enter the package height"],
-      ["hs-tariff-number", "Please enter the HS Tariff Number"],
       ["shippingop", "Please select a shipping option"],
       ["SelCategory", "Please select a category"],
       ["whomade", "Please select who made the item"],
@@ -1189,6 +1206,7 @@ function validateAndStoreSection3Inputs() {
 
       if (inputElement && inputElement.value) {
         collectedMessages.push(`${message}: ${inputElement.value}`);
+        sessionStorage.setItem(id, inputElement.value);
       } else {
         notPrintedIds.push(id);
       }
@@ -1202,18 +1220,22 @@ function validateAndStoreSection3Inputs() {
   });
 
   collectedMessages.push(`Shopping option: ${getSelectedShippingOption()}`);
+  sessionStorage.setItem("Shopping option", getSelectedShippingOption());
+  sessionStorage.setItem("KeyWords", wordList);
+  sessionStorage.setItem("shippingop", getSelectedShippingMethod());
+  sessionStorage.setItem("renewal_option", getRenewalOption());
 
-  let words = wordList.join(" ");
-  collectedMessages.push(`Word List: ${words}`);
+  // let words = wordList.join(" ");
+  // collectedMessages.push(`Word List: ${words}`);
 
-  collectedMessages.forEach((message) => {
-    const key = message.split(":")[0].trim();
-    const val = message.split(":")[1].trim();
-    sessionStorage.setItem(key, val);
-  });
-  sessionStorage.setItem("videoInput",document.getElementById("videoInput"));
+  // collectedMessages.forEach((message) => {
+  //   const key = message.split(":")[0].trim();
+  //   const val = message.split(":")[1].trim();
+  //   sessionStorage.setItem(key, val);
+  // });
   addShop();
 }
+
 function validateAndStoreSection6Inputs() {
   const inputIds = ["authMethod", "emailMethod", "email2"];
 
@@ -1281,7 +1303,6 @@ function getDOB() {
   return dob;
 }
 
-
 function printSessionStorage() {
   for (let i = 0; i < sessionStorage.length; i++) {
     const key = sessionStorage.key(i);
@@ -1316,7 +1337,7 @@ function handleSection() {
 }
 
 function savencon(pageName) {
-  if (true) {
+  if (validationList() || true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";

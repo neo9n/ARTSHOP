@@ -79,6 +79,9 @@ $page_title = "Sign In"
   <br>
 
   <section id="addShopsection1" class="container py-6">
+
+    
+
     <div class="container">
       <div class="row">
         <div class="col">
@@ -189,7 +192,21 @@ $page_title = "Sign In"
   </section>
 
   <section id="addShopsection3" class="container-py-5">
+  <div class="container py-5 " style="background-color:whitesmoke;">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <h1 class="my-3 py-2" >Product</h1>
+            <label class="my-3" >Add your Product Name Here</label>
+            <input type="text" class="form-control" id="product-name" placeholder="Enter your product Name Here">
+            <span id="product-nameError" class="error-message"></span>
+            <small class="form-text text-muted">Customers are going to see this as the Name of your Product</small>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container py-5">
+
       <div class="row">
         <div class="col-md-12">
           <h1>Create a listing</h1>
@@ -307,13 +324,10 @@ $page_title = "Sign In"
       <br>
       <section class="new-category" id="new-category">
         <h5>Add Your Category name here</h5>
-
         <div class="mb-3">
           <input type="text" class="form-control" id="newCategory" placeholder="Enter Name of the category here">
           <span id="newCategoryError" class="error-message"></span>
         </div>
-
-
         <button onclick="addCatergory();" class="button fast">Add</button>
       </section>
 
@@ -341,11 +355,11 @@ $page_title = "Sign In"
         <h3>Renewal options</h3>
         <p>Each renewal lasts for four months or until the listing sells out.</p>
         <div class="custom-control custom-radio">
-          <input type="radio" id="auto_renew" name="renewal_option" class="custom-control-input" checked>
+          <input type="radio" id="auto_renew" name="renewal_option" class="custom-control-input" checked value="1">
           <label for="auto_renew" class="custom-control-label">Automatic (recommended)</label>
         </div>
         <div class="custom-control custom-radio">
-          <input type="radio" id="manual_renew" name="renewal_option" class="custom-control-input">
+          <input type="radio" id="manual_renew" name="renewal_option" class="custom-control-input" value="2">
           <label for="manual_renew" class="custom-control-label">Manual</label>
         </div>
         <span id="renewal_optionError" class="error-message"></span>
@@ -504,25 +518,14 @@ $page_title = "Sign In"
 
             <div class="checkbox-wrapper">
               <div class="btn-group" role="group" aria-label="Shipping options">
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="USPS First Class Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="1" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
                 <label class="btn btn-outline-primary" for="shipping-service-usps">USPS First Class Mail</label>
 
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="FedEx Priority Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="2" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
                 <label class="btn btn-outline-primary" for="shipping-service-fedex">FedEx Priority Mail</label>
-
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-other" value="Other" onchange="toggleAdditionalFields('shipping-service-other', this.checked, 'ship');" autocomplete="off">
-                <label class="btn btn-outline-primary" for="shipping-service-other">Other</label>
               </div>
 
               <br>
-              <section class="ship" id="ship">
-                <h5>Add Shipping Service</h5>
-                <div class="mb-3">
-                  <input type="text" class="form-control" id="name" placeholder="Enter Name of the Shipping Service">
-                  <span id="nameError" class="error-message"></span>
-                </div>
-                <button type="submit" class="btn btn-primary">Add</button>
-              </section>
             </div>
 
 
@@ -538,16 +541,16 @@ $page_title = "Sign In"
 
       <div class="form-group">
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="freeShipping">
+          <input type="checkbox" class="form-check-input" id="freeShipping" value="1">
           <label class="form-check-label" for="freeShipping">Free shipping</label>
           <small class="form-text text-muted">Want to offer buyers a free shipping option?</small>
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="freeDomesticShipping">
+          <input type="checkbox" class="form-check-input" id="freeDomesticShipping" value="2">
           <label class="form-check-label" for="freeDomesticShipping">Free domestic shipping</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="freeInternationalShipping">
+          <input type="checkbox" class="form-check-input" id="freeInternationalShipping" value="3">
           <label class="form-check-label" for="freeInternationalShipping">Free international shipping</label>
         </div>
         <span id="shippingOptionsError" class="error-message"></span>
@@ -570,19 +573,6 @@ $page_title = "Sign In"
           </div>
           <p class="text-muted">*Some restrictions may apply. Learn more about Artisan Alley Shipping Labels.</p>
           <button id="saveShopingProfile" class="button">Save Shopping Profile</button>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <h2>Customs information *</h2>
-          <p>This information is required by customs agents to process your shipment. Provide accurate information to avoid delays.</p>
-          <div class="form-group">
-            <label for="hs-tariff-number">HS Tariff Number *</label>
-            <input type="text" class="form-control" id="hs-tariff-number" placeholder="Enter HS Tariff Number"> <span id="hs-tariff-numberError" class="error-message"></span>
-          </div>
         </div>
       </div>
     </div>

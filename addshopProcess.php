@@ -30,6 +30,9 @@ require "connection.php";
 // } catch (Exception $e) {
 //     echo "Uncaught MySQL exception: " . $e->getMessage();
 // }
+// $shop_id = Database::getLastInsertedId();
+
+$shop_id = "1";
 
 //card
 // $cardNumber = $_POST["card-number"];
@@ -148,17 +151,16 @@ require "connection.php";
 // } catch (Exception $e) {
 //     echo "Uncaught MySQL exception: " . $e->getMessage();
 // }
+// $sellerId = Database::getLastInsertedId();
+$sellerId = "1";
 
 //item
 $shopLanguage = $_POST["shopLanguage"];
 $shopCurrency = $_POST["shopCurrency"];
-$name = $_POST["name"] ?? '';
-$sellerId = $_POST["sellerId"] ?? '';
 $brief_overview = $_POST["brief-overview"] ?? '';
 $SelCategory = $_POST["SelCategory"] ?? '';
 $whomade = $_POST["whomade"] ?? '';
 $RenewalOption_id = $_POST["RenewalOption_id"] ?? '';
-$tags = $_POST["tags"] ?? '';
 $materials = $_POST["materials"] ?? '';
 $price = $_POST["price"] ?? '';
 $quantity = $_POST["quantity"] ?? '';
@@ -170,7 +172,6 @@ $package_length = $_POST["package-length"] ?? '';
 $package_width = $_POST["package-width"] ?? '';
 $package_height = $_POST["package-height"] ?? '';
 $returnpolicy = $_POST["returnpolicy"] ?? '';
-$customs_id = $_POST["customs_id"] ?? '';
 $shippingServices_id = $_POST["shippingServices_id"] ?? '';
 $handlingFee = $_POST["handlingFee"] ?? '';
 $itemType_id = $_POST["itemType_id"] ?? '';
@@ -178,54 +179,87 @@ $shippingop = $_POST["shippingop"] ?? '';
 $language_id = $_POST["language_id"] ?? '';
 $currency_id = $_POST["currency_id"] ?? '';
 $section = $_POST["section"] ?? '';
-$Ship_to_where_id = $_POST["Ship_to_where_id"] ?? '';
+$shippingCountries = $_POST["shipping-country"];
 $itemType_id1 = $_POST["itemType_id1"] ?? '';
 $processing_time = $_POST["processing_time"] ?? '';
 $originZIPCode = $_POST["originZIPCode"] ?? '';
-$shop_id = $_POST["shop_id"] ?? '';
 $video = $_POST["videoInput"];
+$shopingOption = $_POST["Shopping option"];
+$productName = $_POST["product-name"];
 
+// fake
+$language_id = "1";
+$currency_id = "2";
 //section
-$sql = "SELECT * FROM `section` WHERE `name` = '$name' ";
-
+$sectionid= "";
+$sql = "SELECT * FROM `section` WHERE `name` = '$section' ";
 try {
     $result = Database::search($sql);
     $numRows = $result->num_rows;
 
+if ($numRows > 0) {
+    echo "Error";
+    $row = $result->fetch_assoc();
+    $sectionid = $row["id"];
+} else {
+    $insertSQL = "INSERT INTO `section` (`name`) VALUES ('$section')";
+    Database::iud($insertSQL);
+    echo "Success";
+    $sectionid = Database::getLastInsertedId();
+}
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
+}
+
+//item
+$shopSearchQuery = "SELECT * FROM `item` 
+                    WHERE `name` = '$productName' 
+                    AND `seller_id` = '$sellerId'";
+
+$shopInsertQuery = "INSERT INTO `item` 
+                    (`name`, 
+                    `Description`, 
+                    `itemCategories_id`, 
+                    `whomade_id`, 
+                    `RenewalOption_id`,
+                    `price`, `quantity`, `status_id`, `personalizationInstructions`, `defaultInstructions`, `weight`, `length`, `width`, `height`, `returnPolicy_id`,`shippingServices_id`, `handlingFee`, `itemType_id`, `shippingOpType_id`, `language_id`, `currency_id`, `Section_id`, `Ship_to_where_id`, `Processing_time_id`, `origin_ZIP`, `shop_id`) 
+                    VALUES ('$productName','$brief_overview', '$SelCategory', '$whomade', '$RenewalOption_id','$price', '$quantity', '$status_id', '$instruction', '$whatBuyerSees', '$item_weight', '$package_length', '$package_width', '$package_height', '$returnpolicy','$shippingServices_id', '$handlingFee', '$itemType_id', '$shopingOption', '$language_id', '$currency_id', '$sectionid', '$shippingCountries','$processing_time', '$originZIPCode', '$shop_id')";
+echo $shopInsertQuery;
+try {
+    $searchResult = Database::search($shopSearchQuery);
+    $numRows = $searchResult->num_rows;
+
     if ($numRows > 0) {
         echo "Error";
     } else {
-        $insertSQL = "INSERT INTO `section` (`name`) VALUES ('$name')";
-        Database::iud($insertSQL);
+        Database::iud($shopInsertQuery);
         echo "Success";
     }
 } catch (Exception $e) {
     echo "Uncaught MySQL exception: " . $e->getMessage();
 }
 
-$sectionid = Database::getLastInsertedId();
 
 
-// $shopSearchQuery = "SELECT * FROM `item` 
-//                     WHERE `name` = '$name' 
-//                     AND `seller_id` = '$sellerId'";
+//keywords
+$KeyWords = isset($_POST["KeyWords"]) ? $_POST["KeyWords"] : [];
 
-// $shopInsertQuery = "INSERT INTO `item` 
-//                     (`name`, `seller_id`, `Description`, `itemCategories_id`, `whomade_id`, `RenewalOption_id`, `tags`, `materials`, `price`, `quantity`, `status_id`, `personalizationInstructions`, `defaultInstructions`, `weight`, `length`, `width`, `height`, `returnPolicy_id`, `customs_id`, `shippingServices_id`, `handlingFee`, `itemType_id`, `shippingOpType_id`, `language_id`, `currency_id`, `Section_id`, `Ship_to_where_id`, `itemType_id1`, `Processing_time_id`, `origin_ZIP`, `shop_id`) 
-//                     VALUES ('$name', '$sellerId', '$brief_overview', '$SelCategory', '$whomade', '$RenewalOption_id', '$tags', '$materials', '$price', '$quantity', '$status_id', '$instruction', '$whatBuyerSees', '$item_weight', '$package_length', '$package_width', '$package_height', '$returnpolicy', '$customs_id', '$shippingServices_id', '$handlingFee', '$itemType_id', '$shippingop', '$language_id', '$currency_id', '$section', '$Ship_to_where_id', '$itemType_id1', '$processing_time', '$originZIPCode', '$shop_id')";
+if (!is_array($KeyWords)) {
+    $KeyWords = explode(',', $KeyWords);
+}
+for ($i = 0; $i < count($KeyWords); $i++) {
+    $keyword = trim($KeyWords[$i]);
+    $sql = "SELECT * FROM `keywords` WHERE `word` = '$keyword' ";
+    try {
+        $result = Database::search($sql);
+        $numRows = $result->num_rows;
 
-// try {
-//     $searchResult = Database::search($shopSearchQuery);
-//     $numRows = $searchResult->num_rows;
-
-//     if ($numRows > 0) {
-//         echo "Error";
-//     } else {
-//         Database::iud($shopInsertQuery);
-//         echo "Success";
-//     }
-// } catch (Exception $e) {
-//     echo "Uncaught MySQL exception: " . $e->getMessage();
-// }
-
-
+        if ($numRows > 0) {
+        } else {
+            $insertSQL = "INSERT INTO `keywords` (`word`) VALUES ('$keyword')";
+            Database::iud($insertSQL);
+        }
+    } catch (Exception $e) {
+        echo "Uncaught MySQL exception: " . $e->getMessage();
+    }
+}
