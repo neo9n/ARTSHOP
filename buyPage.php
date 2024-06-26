@@ -3,8 +3,9 @@ session_start();
 require "connection.php";
 
 $id = intval($_GET['item-id']);
+$qty = intval($_GET['qty']);
+$page_title = "Place Order";
 
-$page_title = "Place Order"
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,14 +155,7 @@ $page_title = "Place Order"
                                         <input type="text" class="form-control" id="securityCode" placeholder="CVV" maxlength="3" required> <span id="shopNameError" class="error-message"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="sameBillingAddress">
-                                <label class="form-check-label" for="sameBillingAddress">My billing address is the same as my shipping address:</label>
-                            </div>
-                            <div id="billingAddress" class="d-none">
-                                <p>Tharindu Geeshan, sfagda, gadga, DGAGDA, 60232, Sri Lanka, 078-998-9158</p>
-                            </div>
+                            </div>                            
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="setDefaultBillingAddress">
                                 <label class="form-check-label" for="setDefaultBillingAddress">Set as default</label>
@@ -207,16 +201,35 @@ $page_title = "Place Order"
                 <div class="col-md-6">
                     <div class="border rounded p-3">
                         <h5>Item(s) total</h5>
+                        <?php
+                        $q = "SELECT * FROM itempics INNER JOIN item ON itempics.item_id = item.id";
+                        try {
+                            $searchResult = Database::search($q);
+                            $numRows = $searchResult->num_rows;
+                            if ($numRows > 0) {
+                                $row = $searchResult->fetch_assoc();
+                                $price = $row["price"];
+                                $handlingFee = $row["handlingFee"];
+                                $tax = number_format($price / 100 * 3, 2);
+                                $orderTotal = $qty * floatval($price);
+                                $name = $row["Name"];
+                                $location = $row["location"];
+                            }
+                        } catch (Exception $e) {
+                            echo "Uncaught MySQL exception: " . $e->getMessage();
+                        }
+                        ?>
+
                         <p>USD 32.90</p>
                         <hr>
                         <h5>Shipping</h5>
-                        <p>USD 31.90</p>
+                        <p>USD <?php echo $handlingFee; ?>.00</p>
                         <hr>
-                        <h5>Tax</h5>
-                        <p>USD 0.00</p>
+                        <h5>Tax(3%)</h5>
+                        <p>USD <?php echo $tax; ?></p>
                         <hr>
-                        <h5>Order total (1 item)</h5>
-                        <p>USD 64.80</p>
+                        <h5>Order total (<?php echo $qty; ?> item)</h5>
+                        <p>USD <?php echo $orderTotal; ?> </p>
                         <p>* Local taxes included (where applicable)</p>
                         <p>*Additional duties and taxes may apply</p>
                     </div>
@@ -227,21 +240,15 @@ $page_title = "Place Order"
                     </div>
                 </div>
             </div>
-            <div class="row py-5">
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-primary">Submit your order to dgagda</button>
-                    <p class="mt-3 text-muted">By clicking Submit your order to dgagda, you agree to Etay's Terms of Use and Privacy Policy.</p>
-                </div>
-            </div>
         </div>
 
         <div class="container">
             <div class="row justify-content-between mt-4">
                 <div class="col-6">
                     <div class="d-flex align-items-center">
-                        <img src="images/bear-necklace.jpg" alt="Bear Necklace with Name" class="img-fluid me-3" style="width: 80px; height: 80px;">
+                        <img src="<?php echo $location; ?>" alt="<?php echo $name; ?>" class="img-fluid me-3" style="width: 80px; height: 80px;">
                         <div class="flex-grow-1">
-                            <h5 class="mb-1">Bear Necklace with Name, Silver Name Necklace, Ma...</h5>
+                            <h5 class="mb-1"><?php echo $name; ?></h5>
                             <p class="text-muted">USD 32.90</p>
                         </div>
                     </div>
@@ -253,25 +260,7 @@ $page_title = "Place Order"
             </div>
             <hr class="my-4">
             <div class="row">
-                <div class="col-6">
-                    <p class="text-muted">Gold Plating Color: Yellow Gold</p>
-                    <p class="text-muted">Chain Length: 16 inch (40 cm)</p>
-                    <p class="text-muted">Personalization: Tharindu</p>
-                </div>
                 <div class="col-6 d-flex flex-column align-items-end">
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="markGift">
-                        <label class="form-check-label" for="markGift">Mark order as a gift</label>
-                    </div>
-                    <div class="text-end">
-                        <p class="text-muted">Add an optional note to the seller</p>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="hidePrice">
-                        <label class="form-check-label" for="hidePrice">Write a gift note and hide the price. Send a gift teaser with tracking info and even a sneak peek</label>
-                    </div>
-                    <button type="button" class="btn btn-primary mt-3">Choose gift options</button>
                 </div>
             </div>
         </div>
