@@ -1899,3 +1899,45 @@ function setQty(sign) {
   qtyElement.innerHTML = newValue;
 }
 
+// ADMIN DASHBOARD ITEMS SAVE PROCESS //
+
+function itemsDetails(id) {
+
+  var price = document.getElementById("p").value;
+  var quantity = document.getElementById("q").value;
+
+  var f = new FormData();
+  f.append("i", id);
+  f.append("p", price);
+  f.append("q", quantity);
+
+  var r = new XMLHttpRequest();
+  r.onreadystatechange = function () {
+    if (r.readyState == 4) {
+      var t = r.responseText;
+      if (t == "ok") {
+        location.reload();
+      }
+    }
+  }
+
+  r.open("POST", "updateItemData.php", true);
+  r.send(f);
+
+}
+
+function itemDelete(id) {
+
+  var r = new XMLHttpRequest();
+  r.onreadystatechange = function () {
+    if (r.readyState == 4) {
+      var t = r.responseText;
+      alert(t);
+      if (t == "ok") {
+        location.reload();
+      }
+    }
+  }
+  r.open("GET", "deleteItem.php?id=" + id, true);
+  r.send();
+}
