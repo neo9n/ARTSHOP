@@ -1827,28 +1827,28 @@ function sendDataToPHP(data) {
 }
 
 function CreateOrder(itemId) {
-  // if (SectionNumber > 2) {
-  //   const form = new FormData();
-  //   const fields = [
-  //     "address-country",
-  //     "full-name",
-  //     "street-address",
-  //     "apt-suite",
-  //     "city",
-  //     "postal-code",
-  //     "phone-number",
-  //     "nameOnCard",
-  //     "cardNumber",
-  //     "expirationDate",
-  //     "securityCode",
-  //   ];
-  //   fields.forEach((field) => {
-  //     const element = document.getElementById(field);
-  //     form.append(field, element.value);
-  //   });
-  //   form.append("itemId", itemId);
-  //   submitForm("placeOrderProcess.php", form);
-  // }
+  if (SectionNumber > 2) {
+    const form = new FormData();
+    const fields = [
+      "address-country",
+      "full-name",
+      "street-address",
+      "apt-suite",
+      "city",
+      "postal-code",
+      "phone-number",
+      "nameOnCard",
+      "cardNumber",
+      "expirationDate",
+      "securityCode",
+    ];
+    fields.forEach((field) => {
+      const element = document.getElementById(field);
+      form.append(field, element.value);
+    });
+    form.append("itemId", itemId);
+    submitForm("placeOrderProcess.php", form);
+  }
 }
 
 function storeItemInSession(key, Value) {

@@ -155,14 +155,7 @@ $page_title = "Place Order";
                                         <input type="text" class="form-control" id="securityCode" placeholder="CVV" maxlength="3" required> <span id="shopNameError" class="error-message"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="sameBillingAddress">
-                                <label class="form-check-label" for="sameBillingAddress">My billing address is the same as my shipping address:</label>
-                            </div>
-                            <div id="billingAddress" class="d-none">
-                                <p>Tharindu Geeshan, sfagda, gadga, DGAGDA, 60232, Sri Lanka, 078-998-9158</p>
-                            </div>
+                            </div>                            
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="setDefaultBillingAddress">
                                 <label class="form-check-label" for="setDefaultBillingAddress">Set as default</label>
