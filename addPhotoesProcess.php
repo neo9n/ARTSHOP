@@ -1,10 +1,10 @@
 <?php
 session_start();
 require "connection.php";
-// $item_id = $_SESSION['item_id'];
+$item_id = $_SESSION['item_id'];
 
 //temp
-$item_id = 3;
+// $item_id = 3;
 
 $allowed_image_extensions = array("image/jpg", "image/jpeg", "image/png", "image/svg+xml");
 
