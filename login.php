@@ -39,6 +39,9 @@ $page_title = "Sign In"
                                 <a href="register.php" class="text-decoration-none align-content-center">Don't have an Account yet?</a>
                             </div>
                         </div>
+                        <div class="form-group col-12 justify-content-end align-items-end d-flex">
+                            <a href="adminSignin.php" class="text-decoration-none align-content-end">Login as an Admin</a>
+                        </div>
                         </form>
                     </div>
                 </div>

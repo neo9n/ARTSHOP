@@ -182,6 +182,14 @@ function selectResponseNExecute(url, text) {
     } else {
       ErrorM("Something went wrong!");
     }
+  } else if (url == "placeOrderProcess.php") {
+    if (text == "Success") {
+      SuccessM("Do you have successfully placed your order!");
+    } else if (text == "Error") {
+      ErrorM("Something is wrong with the inputs you");
+    } else {
+      ErrorM("Something went wrong!");
+    }
   }
 }
 
@@ -420,6 +428,25 @@ function previewImage(event, imageField, previewContainerId) {
   }
 }
 
+function openDialog() {
+  const modal = document.getElementById("order-details-modal");
+  const closeButton = document.getElementsByClassName("close-button")[0];
+
+  // Add event listeners before displaying the modal
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Now display the modal
+  modal.style.display = "block";
+}
+
 var imgList = [];
 
 function previewAndCreateImages(event, imageFieldId, previewContainerId) {
@@ -450,11 +477,10 @@ function previewAndCreateImages(event, imageFieldId, previewContainerId) {
   }
 }
 
-function viewProduct(itemID) {
-  window.location.href = 'viewProduct.php?item-id=' + encodeURIComponent(itemID);
+function moveTOPage(itemID, url) {
+  // alert(url + "?item-id=" + encodeURIComponent(itemID));
+  window.location.href = url + "?item-id=" + encodeURIComponent(itemID);
 }
-
-
 function loadImages() {
   var inputId = "images";
   const input = document.getElementById(inputId);
@@ -579,7 +605,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 3;
+var SectionNumber = 1;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -658,6 +684,9 @@ const SECTION_3 = 3;
 const SECTION_4 = 4;
 const SECTION_5 = 5;
 const SECTION_6 = 6;
+
+const BSECTION_1 = 1;
+const BSECTION_2 = 2;
 
 const dropdownIds = [
   "shopLanguage",
@@ -1119,103 +1148,102 @@ function getRenewalOption() {
   }
 }
 
-function validationList() {
+function validationList(page) {
   let op = true;
-  const alertMsg = "You can't leave this empty";
-
-  const validations = {
-    [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
-    [SECTION_2]: ["shopName"],
-    [SECTION_3]: [
-      ["product-name", "Please enter the product name"],
-      ["image", "Please upload an image"],
-      ["images", "Please upload more pictures"],
-      ["newCategory", "Please enter the name of the category"],
-      ["brief-overview", "Please enter a brief overview"],
-      ["section", "Please enter the section name"],
-      ["price", "Please enter the price"],
-      ["quantity", "Please enter the quantity"],
-      ["shipping-country", "Please select the Shipping countries"],
-      ["instruction", "Please enter the personalization instructions"],
-      ["whatBuyerSees", "Please add what the buyer will see"],
-      ["fixed_price", "Please enter the fixed price"],
-      ["originZIPCode", "Please enter the origin ZIP code"],
-      ["item-weight", "Please enter the item weight"],
-      ["package-length", "Please enter the package length"],
-      ["package-width", "Please enter the package width"],
-      ["package-height", "Please enter the package height"],
-      ["shippingop", "Please select a shipping option"],
-      ["SelCategory", "Please select a category"],
-      ["whomade", "Please select who made the item"],
-      {
-        validate: validateShippingOptions,
-        errorMsg: "Please select at least one shipping option",
-      },
-      ["handlingFee", "Please enter the Handling fee amount"],
-      ["processing_time", "Please select processing time"],
-      ["returnpolicy", "Please select a return policy"],
-      ["seo_keywords", "Please add atleast One key Word"],
-      [
-        "custom-return-policy-text",
-        "Please enter a custom return policy description",
+  if (page == "addShop") {
+    alert("OK");
+    const alertMsg = "You can't leave this empty";
+    const validations = {
+      [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
+      [SECTION_2]: ["shopName"],
+      [SECTION_3]: [
+        ["product-name", "Please enter the product name"],
+        ["image", "Please upload an image"],
+        ["images", "Please upload more pictures"],
+        ["newCategory", "Please enter the name of the category"],
+        ["brief-overview", "Please enter a brief overview"],
+        ["section", "Please enter the section name"],
+        ["price", "Please enter the price"],
+        ["quantity", "Please enter the quantity"],
+        ["shipping-country", "Please select the Shipping countries"],
+        ["instruction", "Please enter the personalization instructions"],
+        ["whatBuyerSees", "Please add what the buyer will see"],
+        ["fixed_price", "Please enter the fixed price"],
+        ["originZIPCode", "Please enter the origin ZIP code"],
+        ["item-weight", "Please enter the item weight"],
+        ["package-length", "Please enter the package length"],
+        ["package-width", "Please enter the package width"],
+        ["package-height", "Please enter the package height"],
+        ["shippingop", "Please select a shipping option"],
+        ["SelCategory", "Please select a category"],
+        ["whomade", "Please select who made the item"],
+        {
+          validate: validateShippingOptions,
+          errorMsg: "Please select at least one shipping option",
+        },
+        ["handlingFee", "Please enter the Handling fee amount"],
+        ["processing_time", "Please select processing time"],
+        ["returnpolicy", "Please select a return policy"],
+        ["seo_keywords", "Please add atleast One key Word"],
+        [
+          "custom-return-policy-text",
+          "Please enter a custom return policy description",
+        ],
       ],
-    ],
-    [SECTION_4]: [
-      ["bank-location", "Please enter bank-location"],
-      ["country-residence", "Please enter country-residence"],
-      ["first-name", "Please enter first-name"],
-      ["last-name", "Please enter last-name"],
-      [{ validate: validateDate, errorMsg: "Please select a valid date" }],
-      ["number", "Please enter number"],
-      ["street-name", "Please enter street-name"],
-      ["address-line2", "Please enter address-line2"],
-      ["city-town", "Please enter city-town"],
-      ["state", "Please enter state"],
-      ["postal-code", "Please enter postal-code"],
-      ["phone-number", "Please enter phone-number"],
-      ["full-name", "Please enter full-name"],
-      ["bank-name", "Please enter bank-name"],
-      ["iban", "Please enter iban"],
-      ["swift-bic", "Please enter swift-bic"],
-    ],
-    [SECTION_5]: [
-      ["card-number", "Please enter your card number"],
-      // [{ validate: validateEXDate, errorMsg: "Please select a valid date" }],
-      ["ccv", "Please enter your CCV"],
-      ["name-on-card", "Please enter the name on your card"],
-    ],
-    [SECTION_6]: [
-      ["authMethod", "Please choose an authentication method"],
-      ["emailMethod", "Please select a verification method"],
-      ["email2", "Please enter your email address for verification"],
-    ],
-  };
-
-  // First block of code checks if the field is an array and if so,
-  // calls the validateAndAlert function with the first element of the array and the second element of the array.
-  (validations[SectionNumber] || []).forEach((field) => {
-    if (Array.isArray(field)) {
-      op = op && validateAndAlert(field[0], field[1]);
-    } else {
-      op = op && validateAndAlert(field, alertMsg);
-    }
-  });
-
-  // Second block of code checks if the field is an array and if so, checks if the first element of the array is an object and if it has a validate property. If it is, it calls the validateAndAlert function with the first element of the array and the second element of the array. If it's not, it calls the validateAndAlert function with the first element of the array and the alertMsg.
-  (validations[SectionNumber] || []).forEach((field) => {
-    if (
-      Array.isArray(field) &&
-      typeof field[0] === "object" &&
-      field[0].validate
-    ) {
-      op = op && validateAndAlert(field[0], field[1]);
-    } else if (Array.isArray(field)) {
-      op = op && validateAndAlert(field[0], field[1]);
-    } else {
-      op = op && validateAndAlert(field, alertMsg);
-    }
-  });
-
+      [SECTION_4]: [
+        ["bank-location", "Please enter bank-location"],
+        ["country-residence", "Please enter country-residence"],
+        ["first-name", "Please enter first-name"],
+        ["last-name", "Please enter last-name"],
+        [{ validate: validateDate, errorMsg: "Please select a valid date" }],
+        ["number", "Please enter number"],
+        ["street-name", "Please enter street-name"],
+        ["address-line2", "Please enter address-line2"],
+        ["city-town", "Please enter city-town"],
+        ["state", "Please enter state"],
+        ["postal-code", "Please enter postal-code"],
+        ["phone-number", "Please enter phone-number"],
+        ["full-name", "Please enter full-name"],
+        ["bank-name", "Please enter bank-name"],
+        ["iban", "Please enter iban"],
+        ["swift-bic", "Please enter swift-bic"],
+      ],
+      [SECTION_5]: [
+        ["card-number", "Please enter your card number"],
+        // [{ validate: validateEXDate, errorMsg: "Please select a valid date" }],
+        ["ccv", "Please enter your CCV"],
+        ["name-on-card", "Please enter the name on your card"],
+      ],
+      [SECTION_6]: [
+        ["authMethod", "Please choose an authentication method"],
+        ["emailMethod", "Please select a verification method"],
+        ["email2", "Please enter your email address for verification"],
+      ],
+    };
+    (validations[SectionNumber] || []).forEach((field) => {
+      if (Array.isArray(field)) {
+        op = op && validateAndAlert(field[0], field[1]);
+      } else {
+        op = op && validateAndAlert(field, alertMsg);
+      }
+    });
+    (validations[SectionNumber] || []).forEach((field) => {
+      if (
+        Array.isArray(field) &&
+        typeof field[0] === "object" &&
+        field[0].validate
+      ) {
+        op = op && validateAndAlert(field[0], field[1]);
+      } else if (Array.isArray(field)) {
+        op = op && validateAndAlert(field[0], field[1]);
+      } else {
+        op = op && validateAndAlert(field, alertMsg);
+      }
+    });
+  } else {
+    op = true;
+    return op;
+  }
   return op;
 }
 function getShopinitData() {
@@ -1391,33 +1419,108 @@ function printSessionStorage() {
   }
 }
 
-function handleSection() {
-  switch (SectionNumber) {
-    case SECTION_1:
-      getShopinitData();
-      break;
-    case SECTION_2:
-      getShopNameInfo();
-      break;
-    case SECTION_3:
-      validateAndStoreSection3Inputs();
-      break;
-    case SECTION_4:
-      validateAndStoreSection4Inputs();
-      break;
-    case SECTION_5:
-      validateAndStoreSection5Inputs();
-      break;
-    case SECTION_6:
-      validateAndStoreSection6Inputs();
-      break;
-    default:
-      console.log("Invalid section number");
+function handleSection(page) {
+  if (page == "addShop") {
+    switch (SectionNumber) {
+      case SECTION_1:
+        getShopinitData();
+        break;
+      case SECTION_2:
+        getShopNameInfo();
+        break;
+      case SECTION_3:
+        validateAndStoreSection3Inputs();
+        break;
+      case SECTION_4:
+        validateAndStoreSection4Inputs();
+        break;
+      case SECTION_5:
+        validateAndStoreSection5Inputs();
+        break;
+      case SECTION_6:
+        validateAndStoreSection6Inputs();
+        break;
+      default:
+        console.log("Invalid section number");
+    }
+  } else {
+    op = true;
+    function validateBsection1() {
+      op = op && validateAndAlert("country", "Please enter country");
+      op = op && validateAndAlert("full-name", "Please enter full name");
+      op =
+        op && validateAndAlert("street-address", "Please enter street address");
+      op = op && validateAndAlert("apt-suite", "Please enter apt/suite/other");
+      op = op && validateAndAlert("city", "Please enter city");
+      op = op && validateAndAlert("postal-code", "Please enter postal code");
+      op = op && validateAndAlert("phone-number", "Please enter phone number");
+    }
+
+    function validateBsection2() {
+      op =
+        op && validateAndAlert("nameOnCard", "Please enter the name on card");
+      op = op && validateAndAlert("cardNumber", "Please enter the card number");
+      op =
+        op &&
+        validateAndAlert("expirationDate", "Please enter the expiration date");
+      op =
+        op &&
+        validateAndAlert("securityCode", "Please enter the security code");
+      op =
+        op &&
+        validateAndAlert(
+          "sameBillingAddress",
+          "Please check if your billing address is the same as your shipping address"
+        );
+      op =
+        op &&
+        validateAndAlert(
+          "setDefaultBillingAddress",
+          "Please specify if you want to set this as your default billing address"
+        );
+    }
+    if (SectionNumber === BSECTION_1) {
+      validateBsection1();
+    } else if (SectionNumber === BSECTION_2) {
+      validateBsection2();
+    }
+    return op;
   }
 }
 
+function validateBsection1() {
+  op = op && validateAndAlert("country", "Please enter country");
+  op = op && validateAndAlert("full-name", "Please enter full name");
+  op = op && validateAndAlert("street-address", "Please enter street address");
+  op = op && validateAndAlert("apt-suite", "Please enter apt/suite/other");
+  op = op && validateAndAlert("city", "Please enter city");
+  op = op && validateAndAlert("postal-code", "Please enter postal code");
+  op = op && validateAndAlert("phone-number", "Please enter phone number");
+}
+
+function validateBsection2() {
+  op = op && validateAndAlert("nameOnCard", "Please enter the name on card");
+  op = op && validateAndAlert("cardNumber", "Please enter the card number");
+  op =
+    op &&
+    validateAndAlert("expirationDate", "Please enter the expiration date");
+  op = op && validateAndAlert("securityCode", "Please enter the security code");
+  op =
+    op &&
+    validateAndAlert(
+      "sameBillingAddress",
+      "Please check if your billing address is the same as your shipping address"
+    );
+  op =
+    op &&
+    validateAndAlert(
+      "setDefaultBillingAddress",
+      "Please specify if you want to set this as your default billing address"
+    );
+}
+
 function savencon(pageName) {
-  if (validationList() || true) {
+  if (validationList(pageName) || true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
@@ -1425,7 +1528,7 @@ function savencon(pageName) {
       element.style.backgroundImage =
         "url(\"data:image/svg+xml;utf8,<svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'/></svg>\")";
     }
-    handleSection();
+    handleSection(pageName);
 
     SectionNumber += 1;
     gloweffect(pageName);
@@ -1716,6 +1819,28 @@ function sendDataToPHP(data) {
   xhr.send(form);
 }
 
-function gotoPage(pageLocation) {
-  window.location.href = pageLocation;
+function CreateOrder(itemId) {
+  // if (SectionNumber >= 2) {
+  //   const form = new FormData();
+  //   const fields = [
+  //     "address-country",
+  //     "full-name",
+  //     "street-address",
+  //     "apt-suite",
+  //     "city",
+  //     "postal-code",
+  //     "phone-number",
+  //     "nameOnCard",
+  //     "cardNumber",
+  //     "expirationDate",
+  //     "securityCode"
+  //   ];
+  //   fields.forEach(field => {
+  //     const element = document.getElementById(field);
+  //     form.append(field, element.value);
+  //   });
+  //   form.append("itemId", itemId)
+  //   submitForm("placeOrderProcess.php", form);
+  // }
 }
+

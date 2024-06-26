@@ -47,7 +47,7 @@ $page_title = "Browsing Menu";
                 echo "<div class='card-body'>";
                 echo "<h5 class='card-title'>" . $row["Name"] . "</h5>";
                 echo "<p class='card-text'>" . $row["Description"] . "</p>";
-                echo "<a href='#' class='btn btn-primary'  onclick='viewProduct(".$row["item_id"].")' >View Product</a>";
+                echo "<a href='#' class='btn btn-primary' onclick='moveTOPage(" . $row["item_id"] . ", \"viewProduct.php\")'>View Product</a>";
                 echo "</div>";
                 echo "</div>";
                 echo "</div>";
