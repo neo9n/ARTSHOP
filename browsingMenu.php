@@ -36,7 +36,7 @@ $page_title = "Browsing Menu";
     <!-- Product listings -->
     <div class="row">
         <?php
-        $sql = "SELECT * FROM itempics INNER JOIN `item` ON `itempics`.`item_id`=`item`.`id`";
+        $sql = "SELECT * FROM itempics INNER JOIN `item` ON `itempics`.`item_id`=`item`.`id` WHERE `pic_status_id`='1'";
         $result = Database::search($sql);
 
         if ($result->num_rows > 0) {
@@ -47,7 +47,7 @@ $page_title = "Browsing Menu";
                 echo "<div class='card-body'>";
                 echo "<h5 class='card-title'>" . $row["Name"] . "</h5>";
                 echo "<p class='card-text'>" . $row["Description"] . "</p>";
-                echo "<a href='#' class='btn btn-primary'>View Product</a>";
+                echo "<a href='#' class='btn btn-primary'  onclick='viewProduct(".$row["item_id"].")' >View Product</a>";
                 echo "</div>";
                 echo "</div>";
                 echo "</div>";

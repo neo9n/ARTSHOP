@@ -69,45 +69,6 @@ if (isset($_POST['images'])) {
     $imageList = [];
 }
 
-//temp
-$item_id = "3";
-
-//addPics-Sub
-foreach ($imageList as $img) {
-    $picSearchQuery = "SELECT * FROM `itempics` WHERE `location` = '$img'";
-    $picInsertQuery = "INSERT INTO `itempics` (`location`, `pic_status_id`, `item_id`) VALUES ('$img', '2', '$item_id')";
-    try {
-        $searchResult = Database::search($picSearchQuery);
-        $numRows = $searchResult->num_rows;
-        if ($numRows > 0) {
-            $row = $searchResult->fetch_assoc();
-            echo "Error";
-        } else {
-            Database::iud($picInsertQuery);
-            echo "Pass";
-        }
-    } catch (Exception $e) {
-        echo "Uncaught MySQL exception: " . $e->getMessage();
-    }
-}
-
-// add one picture
-$picSearchQuery = "SELECT * FROM `itempics` WHERE `location` = '$img'";
-$picInsertQuery = "INSERT INTO `itempics` (`location`,`pic_status_id`,`item_id`) VALUES ('$img','1','$item_id')";
-try {
-    $searchResult = Database::search($picSearchQuery);
-    $numRows = $searchResult->num_rows;
-    if ($numRows > 0) {
-        $row = $searchResult->fetch_assoc();
-        echo "Error";
-    } else {
-        Database::iud($picInsertQuery);
-        echo "Pass";
-    }
-} catch (Exception $e) {
-    echo "Uncaught MySQL exception: " . $e->getMessage();
-}
-
 //card
 $cardSearchQuery = "SELECT * FROM `cardinfo` 
                    WHERE `cardNo` = '$cardNumber'
@@ -357,4 +318,42 @@ foreach ($keywords as $keyword) {
     } catch (Exception $e) {
         echo "Uncaught MySQL exception: " . $e->getMessage() . "<br>";
     }
+}
+
+
+
+//addPics-Sub
+foreach ($imageList as $img) {
+    $picSearchQuery = "SELECT * FROM `itempics` WHERE `location` = '$img'";
+    $picInsertQuery = "INSERT INTO `itempics` (`location`, `pic_status_id`, `item_id`) VALUES ('$img', '2', '$item_id')";
+    try {
+        $searchResult = Database::search($picSearchQuery);
+        $numRows = $searchResult->num_rows;
+        if ($numRows > 0) {
+            $row = $searchResult->fetch_assoc();
+            echo "Error";
+        } else {
+            Database::iud($picInsertQuery);
+            echo "Pass";
+        }
+    } catch (Exception $e) {
+        echo "Uncaught MySQL exception: " . $e->getMessage();
+    }
+}
+
+// add one picture
+$picSearchQuery = "SELECT * FROM `itempics` WHERE `location` = '$img'";
+$picInsertQuery = "INSERT INTO `itempics` (`location`,`pic_status_id`,`item_id`) VALUES ('$img','1','$item_id')";
+try {
+    $searchResult = Database::search($picSearchQuery);
+    $numRows = $searchResult->num_rows;
+    if ($numRows > 0) {
+        $row = $searchResult->fetch_assoc();
+        echo "Error";
+    } else {
+        Database::iud($picInsertQuery);
+        echo "Pass";
+    }
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
 }

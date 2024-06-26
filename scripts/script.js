@@ -440,15 +440,23 @@ function previewAndCreateImages(event, imageFieldId, previewContainerId) {
       createIMGBox(objectURL, previewContainerId, imageFieldId);
 
       // Store the blob URL in the imgList array
-      imgList.push(objectURL);
+      if (imageFieldId == "image") {
+      } else {
+        imgList.push(objectURL);
+      }
     }
   } else {
     previewContainer.innerHTML = "";
   }
 }
 
+function viewProduct(itemID) {
+  window.location.href = 'viewProduct.php?item-id=' + encodeURIComponent(itemID);
+}
+
+
 function loadImages() {
-  var inputId = 'images';
+  var inputId = "images";
   const input = document.getElementById(inputId);
   const files = input.files;
   const imgList = [];
@@ -476,10 +484,9 @@ function loadImages() {
       console.log(imgList);
     })
     .catch((error) => {
-      console.error('Error reading files:', error);
+      console.error("Error reading files:", error);
     });
 }
-
 
 function previewVideo(event) {
   const videoUpload = document.getElementById("videoInput");
@@ -1264,12 +1271,13 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
-  sessionStorage.setItem('images', JSON.stringify(imgList));
+  sessionStorage.setItem("images", JSON.stringify(imgList));
+  sessionStorage.setItem("image", getImgLocation());
   addShop();
 }
 
 function getImgLocation() {
-  const imageInput = document.getElementById('image');
+  const imageInput = document.getElementById("image");
   if (imageInput.files.length > 0) {
     const file = imageInput.files[0];
     const imageLocation = URL.createObjectURL(file);
