@@ -1928,3 +1928,7 @@ function itemDelete(id) {
   r.open("GET", "deleteItem.php?id=" + id, true);
   r.send();
 }
+
+function checkout(){
+  
+}
