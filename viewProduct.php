@@ -17,7 +17,6 @@ if ($result->num_rows > 0) {
         $description = $row["Description"];
         $price = $row["price"];
         $location = $row["location"];
-        $material = $row["material"];
         $weight = $row["weight"];
         $width = $row["width"];
         $height = $row["height"];
@@ -35,6 +34,7 @@ Database::close();;
 <div class="container my-5">
     <div class="row">
         <div class="col-md-6">
+            <p><?php echo $location; ?></p>
             <img src="assests/collections/20231122_093800.jpg" class="img-fluid img-preview" alt="Custom Two Name Handwriting Necklace">
         </div>
         <div class="col-md-6">
@@ -42,10 +42,8 @@ Database::close();;
             <br>
             <p class="font-weight-bold"><?php echo $price; ?>$</p>
             <p class="text-success">New markdown! Biggest sale in 60+ days</p>
-            <form>
-                <button type="submit" class="btn btn-primary btn-block" onclick="openDialog()">Buy it now</button>
-                <button type="button" class="btn btn-outline-secondary btn-block">Add to cart</button>
-            </form>
+            <button class="btn btn-primary btn-block" onclick="moveTOPage('1','buyPage.php');">Buy it now</button>
+            <button class="btn btn-outline-secondary btn-block">Add to cart</button>
         </div>
     </div>
     <br>

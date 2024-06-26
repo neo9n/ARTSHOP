@@ -1,5 +1,7 @@
 <?php
 session_start();
+require "connection.php";
+
 $page_title = "Sign In"
 ?>
 <!DOCTYPE html>
@@ -61,41 +63,52 @@ $page_title = "Sign In"
             <div class="row">
                 <div class="col-md-6">
                     <label for="country">Country *</label>
-                    <select class="form-select" id="country" required>
-                        <option value="">Choose...</option>
-                        <option>Sri Lanka</option>
-                        <!-- Add other country options here if needed -->
-                    </select>
+                    <?php
+                    $query = "SELECT * FROM countries";
+                    $resultSet = Database::search($query);
+
+                    echo '<select class="form-control" id="address-country"  >';
+                    echo '<option value="" selected disabled></option>';
+
+                    while ($row = $resultSet->fetch_assoc()) {
+                        $country_code = $row['id'];
+                        $country_name = $row['name'];
+                        echo "<option value=\"$country_code\">$country_name</option>";
+                    }
+                    echo '</select>';
+
+                    $resultSet->close();
+                    ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="full-name">Full name *</label>
-                    <input type="text" class="form-control" id="full-name" required>   <span id="shopNameError" class="error-message"></span>
+                    <input type="text" class="form-control" id="full-name" required> <span id="shopNameError" class="error-message"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="street-address">Street address *</label>
-                    <input type="text" class="form-control" id="street-address" required>   <span id="shopNameError" class="error-message"></span>
+                    <input type="text" class="form-control" id="street-address" required> <span id="shopNameError" class="error-message"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="apt-suite">Apt / Suite / Other (optional)</label>
-                    <input type="text" class="form-control" id="apt-suite">   <span id="shopNameError" class="error-message"></span>
+                    <input type="text" class="form-control" id="apt-suite"> <span id="shopNameError" class="error-message"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="city">City *</label>
-                    <input type="text" class="form-control" id="city" required>   <span id="shopNameError" class="error-message"></span>
+                    <input type="text" class="form-control" id="city" required> <span id="shopNameError" class="error-message"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="postal-code">Postal code (optional)</label>
-                    <input type="text" class="form-control" id="postal-code">   <span id="shopNameError" class="error-message"></span>
+                    <input type="text" class="form-control" id="postal-code"> <span id="shopNameError" class="error-message"></span>
                 </div>
             </div>
             <div class="row">
@@ -120,7 +133,7 @@ $page_title = "Sign In"
                             <img src="res/visa.png" alt="Visa logo" class="img-fluid mb-3 payment-icon" />
                             <div class="form-group">
                                 <label for="nameOnCard">Name on card*</label>
-                                <input type="text" class="form-control" id="nameOnCard" placeholder="Make sure to enter the full name that's on your card." required>   <span id="shopNameError" class="error-message"></span>
+                                <input type="text" class="form-control" id="nameOnCard" placeholder="Make sure to enter the full name that's on your card." required> <span id="shopNameError" class="error-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="cardNumber">Card number*</label>
@@ -130,13 +143,13 @@ $page_title = "Sign In"
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="expirationDate">Expiration date*</label>
-                                        <input type="text" class="form-control" id="expirationDate" placeholder="MM/YYYY" maxlength="5" required>   <span id="shopNameError" class="error-message"></span>
+                                        <input type="text" class="form-control" id="expirationDate" placeholder="MM/YYYY" maxlength="5" required> <span id="shopNameError" class="error-message"></span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="securityCode">Security code *</label>
-                                        <input type="text" class="form-control" id="securityCode" placeholder="CVV" maxlength="3" required>   <span id="shopNameError" class="error-message"></span>
+                                        <input type="text" class="form-control" id="securityCode" placeholder="CVV" maxlength="3" required> <span id="shopNameError" class="error-message"></span>
                                     </div>
                                 </div>
                             </div>
