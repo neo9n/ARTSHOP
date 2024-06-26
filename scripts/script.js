@@ -612,7 +612,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 1;
+var SectionNumber = 3;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1305,17 +1305,46 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
-  sessionStorage.setItem("images", JSON.stringify(imgList));
-  sessionStorage.setItem("image", getImgLocation());
-  addShop();
+  // addShop();
+  setPhotoes();
+}
+
+function setPhotoes() {
+  const file = getImgLocation();
+  if (file) {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'addshopProcess.php', true);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log('File uploaded successfully');
+      } else {
+        console.error('An error occurred');
+      }
+    };
+    xhr.send(formData);
+  } else {
+    console.error('No file selected');
+  }
 }
 
 function getImgLocation() {
   const imageInput = document.getElementById("image");
   if (imageInput.files.length > 0) {
+    return imageInput.files[0];
+  } else {
+    return null;
+  }
+}
+
+
+function getImgLocation() {
+  const imageInput = document.getElementById("image");
+  if (imageInput.files.length > 0) {
     const file = imageInput.files[0];
-    const imageLocation = URL.createObjectURL(file);
-    return imageLocation;
+    return file;
   } else {
     return null;
   }
