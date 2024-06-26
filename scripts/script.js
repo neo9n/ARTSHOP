@@ -1158,7 +1158,6 @@ function getRenewalOption() {
 function validationList(page) {
   let op = true;
   if (page == "addShop") {
-    alert("OK");
     const alertMsg = "You can't leave this empty";
     const validations = {
       [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
@@ -1527,7 +1526,7 @@ function validateBsection2() {
 }
 
 function savencon(pageName) {
-  if (validationList(pageName) || true) {
+  if (validationList(pageName)||true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
@@ -1596,6 +1595,7 @@ function loadingFunctions() {
 }
 
 function reverseSavencon(pageName) {
+  alert("NICE");
   if (SectionNumber > 1) {
     var ball = document.getElementById(pageName + "d" + SectionNumber);
     ball.style.backgroundColor = "";
