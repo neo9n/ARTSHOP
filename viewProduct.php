@@ -2,63 +2,102 @@
 session_start();
 require "connection.php";
 
-$id = intval($_GET['item-id']); 
-$sql = "SELECT * FROM item WHERE id = $id";
+//set Vars
+$page_title = "";
+$description = "";
+
+$id = intval($_GET['item-id']);
+$sql = "SELECT * FROM itempics INNER JOIN `item` ON `itempics`.`item_id`=`item`.`id`  WHERE item_id = $id";
 
 $result = Database::search($sql);
 echo "<ul class='list-group'>";
 if ($result->num_rows > 0) {
     if ($row = $result->fetch_assoc()) {
         $page_title = $row["Name"];
+        $description = $row["Description"];
+        $price = $row["price"];
+        $location = $row["location"];
+        $material = $row["material"];
+        $weight = $row["weight"];
+        $width = $row["width"];
+        $height = $row["height"];
     }
-} 
+}
 Database::close();;
+
+//set page Name
+
 ?>
 
 <?php include('includes/header.php'); ?>
 <?php include('includes/navbar.php'); ?>
 
 <div class="container my-5">
-  <div class="row">
-    <div class="col-md-6">
-      <img src="product-image.jpg" class="img-fluid" alt="Custom Two Name Handwriting Necklace">
-    </div>
-    <div class="col-md-6">
-      <h1><?php echo $page_title; ?></h1>
-      <p class="lead">18k gold, Personalized Jewelry, Name Necklace, Personalized Gift, Baby Shower, Custom Gifts for Her</p>
-      <p class="font-weight-bold">USD 24.00 <del>USD 40.00</del> <span class="text-success">40% off</span></p>
-      <p>In demand. 26 people bought this in the last 24 hours.</p>
-      <p>Sale ends in 21:16:20</p>
-      <p class="text-success">New markdown! Biggest sale in 60+ days</p>
-      <form>
-        <div class="form-group">
-          <label for="color-size">Color/Size</label>
-          <select class="form-control" id="color-size">
-            <option selected>Select an option</option>
-          </select>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="assests/collections/20231122_093800.jpg" class="img-fluid img-preview" alt="Custom Two Name Handwriting Necklace">
         </div>
-        <div class="form-group">
-          <label for="pendant-counts">Pendant/Counts</label>
-          <select class="form-control" id="pendant-counts">
-            <option selected>Select an option</option>
-          </select>
+        <div class="col-md-6">
+            <h1><?php echo $page_title; ?></h1>
+            <br>
+            <p class="font-weight-bold"><?php echo $price; ?>$</p>
+            <p class="text-success">New markdown! Biggest sale in 60+ days</p>
+            <form>
+                <button type="submit" class="btn btn-primary btn-block" onclick="openDialog()">Buy it now</button>
+                <button type="button" class="btn btn-outline-secondary btn-block">Add to cart</button>
+            </form>
         </div>
-        <div class="form-group">
-          <label for="personalization">Add your personalization</label>
-          <textarea class="form-control" id="personalization" rows="3" placeholder="Handmade with love and care ✨ Please write the name you want. Like: kate-olivia"></textarea>
+    </div>
+    <br>
+    <div class="row mt-5 pt-5">
+        <div class="col">
+            <h2>Product Description</h2>
+            <p class="lead"><?php echo $description; ?></p>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Buy it now</button>
-        <button type="button" class="btn btn-outline-secondary btn-block">Add to cart</button>
-      </form>
     </div>
-  </div>
-  <div class="row mt-5">
-    <div class="col">
-      <h2>Reviews</h2>
-      <p>6,214 reviews ★★★★★</p>
-      <p>I love these necklaces. So unique and beautiful! - Celly Jones</p>
+    <div class="row mt-5">
+        <div class="col">
+            <h2>Product Details</h2>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Height</th>
+                        <td><?php echo $height; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Width</th>
+                        <td><?php echo $width; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Weight</th>
+                        <td><?php echo $weight; ?></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
     </div>
-  </div>
+    <div class="row mt-5">
+        <div class="col">
+            <h2>Reviews</h2>
+            <p>6,214 reviews ★★★★★</p>
+            <p>I love these necklaces. So unique and beautiful! - Celly Jones</p>
+        </div>
+    </div>
+</div>
+
+<div id="order-details-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Order Details</h2>
+        <p>Shipping: USD 19.00 (Jul 6-15, Standard Shipping)</p>
+        <p>Shipping address: Tharindu Geeshan, sfagda, gadga, DGAGDA, 60232, 078-998-9158</p>
+        <p>Payment: VISA ..0341</p>
+        <p>Discount: -USD 22.00</p>
+        <p>Shipping: USD 19.00</p>
+        <p>Order total: USD 52.00</p>
+        <button>Submit your order to dgagda</button>
+    </div>
 </div>
 
 <?php include('includes/advertisement.php'); ?>

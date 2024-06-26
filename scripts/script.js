@@ -420,6 +420,25 @@ function previewImage(event, imageField, previewContainerId) {
   }
 }
 
+function openDialog() {
+  const modal = document.getElementById("order-details-modal");
+  const closeButton = document.getElementsByClassName("close-button")[0];
+
+  // Add event listeners before displaying the modal
+  closeButton.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Now display the modal
+  modal.style.display = "block";
+}
+
 var imgList = [];
 
 function previewAndCreateImages(event, imageFieldId, previewContainerId) {
@@ -451,9 +470,9 @@ function previewAndCreateImages(event, imageFieldId, previewContainerId) {
 }
 
 function viewProduct(itemID) {
-  window.location.href = 'viewProduct.php?item-id=' + encodeURIComponent(itemID);
+  window.location.href =
+    "viewProduct.php?item-id=" + encodeURIComponent(itemID);
 }
-
 
 function loadImages() {
   var inputId = "images";
