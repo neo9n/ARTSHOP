@@ -79,6 +79,9 @@ $page_title = "Sign In"
   <br>
 
   <section id="addShopsection1" class="container py-6">
+
+    
+
     <div class="container">
       <div class="row">
         <div class="col">
@@ -189,7 +192,21 @@ $page_title = "Sign In"
   </section>
 
   <section id="addShopsection3" class="container-py-5">
+  <div class="container py-5 " style="background-color:whitesmoke;">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <h1 class="my-3 py-2" >Product</h1>
+            <label class="my-3" >Add your Product Name Here</label>
+            <input type="text" class="form-control" id="product-name" placeholder="Enter your product Name Here">
+            <span id="product-nameError" class="error-message"></span>
+            <small class="form-text text-muted">Customers are going to see this as the Name of your Product</small>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container py-5">
+
       <div class="row">
         <div class="col-md-12">
           <h1>Create a listing</h1>
@@ -200,8 +217,7 @@ $page_title = "Sign In"
       <div class="row">
         <div class="col-md-6">
           <h2>Photos</h2>
-          <p>Add as many as you can so buyers can see every detail.</p>
-          <p>Use up to ten photos to show your item's most important qualities.</p>
+          <p>Clear photos add clear quality.</p>
           <div class="mb-3">
             <label for="image" class="form-label">Upload an image</label>
             <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewAndCreateImages(event,this.id,'img-holder-one')">
@@ -307,13 +323,10 @@ $page_title = "Sign In"
       <br>
       <section class="new-category" id="new-category">
         <h5>Add Your Category name here</h5>
-
         <div class="mb-3">
           <input type="text" class="form-control" id="newCategory" placeholder="Enter Name of the category here">
           <span id="newCategoryError" class="error-message"></span>
         </div>
-
-
         <button onclick="addCatergory();" class="button fast">Add</button>
       </section>
 
@@ -341,11 +354,11 @@ $page_title = "Sign In"
         <h3>Renewal options</h3>
         <p>Each renewal lasts for four months or until the listing sells out.</p>
         <div class="custom-control custom-radio">
-          <input type="radio" id="auto_renew" name="renewal_option" class="custom-control-input" checked>
+          <input type="radio" id="auto_renew" name="renewal_option" class="custom-control-input" checked value="1">
           <label for="auto_renew" class="custom-control-label">Automatic (recommended)</label>
         </div>
         <div class="custom-control custom-radio">
-          <input type="radio" id="manual_renew" name="renewal_option" class="custom-control-input">
+          <input type="radio" id="manual_renew" name="renewal_option" class="custom-control-input" value="2">
           <label for="manual_renew" class="custom-control-label">Manual</label>
         </div>
         <span id="renewal_optionError" class="error-message"></span>
@@ -355,11 +368,11 @@ $page_title = "Sign In"
         <h3>Type</h3>
         <p>Select the type of item you're listing.</p>
         <div class="custom-control custom-radio">
-          <input type="radio" id="physical_good" name="item_type" class="custom-control-input" checked>
+          <input type="radio" id="physical_good" name="item_type" class="custom-control-input" checked value="1" >
           <label for="physical_good" class="custom-control-label">Physical item (A tangible item that you will ship to buyers)</label>
         </div>
         <div class="custom-control custom-radio">
-          <input type="radio" id="digital_good" name="item_type" class="custom-control-input">
+          <input type="radio" id="digital_good" name="item_type" class="custom-control-input" value="2" >
           <label for="digital_good" class="custom-control-label">Digital item (A digital file that buyers will download)</label>
         </div>
       </div>
@@ -491,8 +504,8 @@ $page_title = "Sign In"
             <p>Select the countries or regions you'll ship to. You can also set different shipping profiles for different regions.</p>
             <div class="select-wrapper">
               <select id="shipping-country" aria-label="Select countries or regions you ship to">
-                <option value="US">United States</option>
-                <option value="WW">Worldwide</option>
+                <option id="us" value="1">United States</option>
+                <option id="ww" value="2">Worldwide</option>
               </select>
               <span id="shipping-countryError" class="error-message"></span>
             </div>
@@ -504,31 +517,15 @@ $page_title = "Sign In"
 
             <div class="checkbox-wrapper">
               <div class="btn-group" role="group" aria-label="Shipping options">
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="USPS First Class Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-usps" value="1" autocomplete="off">
                 <label class="btn btn-outline-primary" for="shipping-service-usps">USPS First Class Mail</label>
 
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="FedEx Priority Mail" onchange="toggleAdditionalFields('shipping-service-other', !this.checked, 'ship');" autocomplete="off">
+                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-fedex" value="2"  autocomplete="off">
                 <label class="btn btn-outline-primary" for="shipping-service-fedex">FedEx Priority Mail</label>
-
-                <input type="radio" class="btn-check" name="shippingop" id="shipping-service-other" value="Other" onchange="toggleAdditionalFields('shipping-service-other', this.checked, 'ship');" autocomplete="off">
-                <label class="btn btn-outline-primary" for="shipping-service-other">Other</label>
               </div>
 
               <br>
-              <section class="ship" id="ship">
-                <h5>Add Shipping Service</h5>
-                <div class="mb-3">
-                  <input type="text" class="form-control" id="name" placeholder="Enter Name of the Shipping Service">
-                  <span id="nameError" class="error-message"></span>
-                </div>
-                <button type="submit" class="btn btn-primary">Add</button>
-              </section>
-            </div>
-
-
-            <p class="text-right">
-              <a href="#">Learn more about shipping services</a>
-            </p>
+            </div>            
             <div class="d-flex flex-wrap justify-content-between mt-4">
             </div>
           </div>
@@ -538,22 +535,24 @@ $page_title = "Sign In"
 
       <div class="form-group">
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="freeShipping">
+          <input type="checkbox" class="form-check-input" id="freeShipping" value="1">
           <label class="form-check-label" for="freeShipping">Free shipping</label>
           <small class="form-text text-muted">Want to offer buyers a free shipping option?</small>
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="freeDomesticShipping">
+          <input type="checkbox" class="form-check-input" id="freeDomesticShipping" value="2">
           <label class="form-check-label" for="freeDomesticShipping">Free domestic shipping</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="freeInternationalShipping">
+          <input type="checkbox" class="form-check-input" id="freeInternationalShipping" value="3">
           <label class="form-check-label" for="freeInternationalShipping">Free international shipping</label>
         </div>
+        <span id="shippingOptionsError" class="error-message"></span>
         <div class="form-group">
           <label for="handlingFee">Handling fee</label>
           <small class="form-text text-muted">We'll add this to the buyer's shipping total, they won't see it separately</small>
-          <input type="text" class="form-control" id="handlingFee" placeholder="USD"> <span id="handlingFeeError" class="error-message"></span>
+          <input type="text" class="form-control" id="handlingFee" placeholder="USD">
+          <span id="handlingFeeError" class="error-message"></span>
         </div>
       </div>
     </div>
@@ -568,19 +567,6 @@ $page_title = "Sign In"
           </div>
           <p class="text-muted">*Some restrictions may apply. Learn more about Artisan Alley Shipping Labels.</p>
           <button id="saveShopingProfile" class="button">Save Shopping Profile</button>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <h2>Customs information *</h2>
-          <p>This information is required by customs agents to process your shipment. Provide accurate information to avoid delays.</p>
-          <div class="form-group">
-            <label for="hs-tariff-number">HS Tariff Number *</label>
-            <input type="text" class="form-control" id="hs-tariff-number" placeholder="Enter HS Tariff Number"> <span id="hs-tariff-numberError" class="error-message"></span>
-          </div>
         </div>
       </div>
     </div>
@@ -745,20 +731,6 @@ $page_title = "Sign In"
           <span id="bank-locationError" class="error-message"></span>
         </div>
 
-        <div class="custom-control custom-radio">
-          <input type="checkbox" id="add-country" name="new-op" class="custom-control-input" onchange="toggleAdditionalFieldscheckbox('countries', this.id,)">
-          <label class="custom-control-label">Add Your Country</label>
-        </div>
-
-        <br>
-        <section class="countries" id="countries">
-          <h5>Add Your Country name here</h5>
-          <div class="mb-3">
-            <input type="text" class="form-control" id="country-name" placeholder="Enter Name of the country here"> <span id="country-nameError" class="error-message"></span>
-          </div>
-          <button type="submit" class="button fast" onclick="addCountry();">Add</button>
-        </section>
-
         <div class="col-md-6">
           <fieldset>
             <legend>For tax purposes, what type of seller are you?</legend>
@@ -793,9 +765,8 @@ $page_title = "Sign In"
           <?php
           $query = "SELECT * FROM countries";
           $resultSet = Database::search($query);
-          echo '<select class="form-control" id="bank-location" >';
+          echo '<select class="form-control" id="country-residence" >';
           echo '<option value="" selected disabled></option>';
-
           while ($row = $resultSet->fetch_assoc()) {
             $country_id = $row['id'];
             $country_name = $row['name'];
@@ -804,7 +775,7 @@ $page_title = "Sign In"
           echo '</select>';
           $resultSet->close();
           ?>
-          <span id="bank-locationError" class="error-message"></span>
+          <span id="country-residenceError" class="error-message"></span>
         </div>
         <div class="col-md-4">
           <label for="first-name">First name *</label>
@@ -815,7 +786,7 @@ $page_title = "Sign In"
           <input type="text" id="last-name" class="form-control"> <span id="last-nameError" class="error-message"></span>
         </div>
       </div>
-      <div class="row">
+      <div id="date-of-birth" class="row">
         <div class="col-md-4">
           <label for="dob">Your date of birth *</label>
           <div class="row">
@@ -840,79 +811,80 @@ $page_title = "Sign In"
             <div class="col">
               <select id="day" class="form-select">
                 <option>Day</option>
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-                <option>05</option>
-                <option>06</option>
-                <option>07</option>
-                <option>08</option>
-                <option>09</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-                <option>18</option>
-                <option>19</option>
-                <option>20</option>
-                <option>21</option>
-                <option>22</option>
-                <option>23</option>
-                <option>24</option>
-                <option>25</option>
-                <option>26</option>
-                <option>27</option>
-                <option>28</option>
-                <option>29</option>
-                <option>30</option>
-                <option>31</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
               </select>
               <span id="dayError" class="error-message"></span>
             </div>
             <div class="col">
               <select id="year" class="form-select">
                 <option>Year</option>
-                <option>Year</option>
-                <option>2022</option>
-                <option>2021</option>
-                <option>2020</option>
-                <option>2019</option>
-                <option>2018</option>
-                <option>2017</option>
-                <option>2016</option>
-                <option>2015</option>
-                <option>2014</option>
-                <option>2013</option>
-                <option>2012</option>
-                <option>2011</option>
-                <option>2010</option>
-                <option>2009</option>
-                <option>2008</option>
-                <option>2007</option>
-                <option>2006</option>
-                <option>2005</option>
-                <option>2004</option>
-                <option>2003</option>
-                <option>2002</option>
-                <option>2001</option>
-                <option>2000</option>
-                <option>1999</option>
-                <option>1998</option>
-                <option>1997</option>
-                <option>1996</option>
-                <option>1995</option>
-                <option>1994</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+                <option value="2000">2000</option>
+                <option value="1999">1999</option>
+                <option value="1998">1998</option>
+                <option value="1997">1997</option>
+                <option value="1996">1996</option>
+                <option value="1995">1995</option>
+                <option value="1994">1994</option>
               </select>
               <span id="yearError" class="error-message"></span>
             </div>
           </div>
+          <span id="date-of-birthError" class="error-message"></span>
         </div>
       </div>
+      <span id="date-of-birthError" class="error-message"></span>
       <div class="row">
         <div class="col-md-12">
           <p><strong>Taxpayer address *</strong> <em>This should be the same address used when filing taxes, not a P.O. Box or business address</em></p>
@@ -950,143 +922,6 @@ $page_title = "Sign In"
         <div class="col-md-4">
           <label for="phone-number">Phone number</label>
           <input type="text" id="phone-number" class="form-control"> <span id="phone-numberError" class="error-message"></span>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h4>Share some more info about where you've lived</h4>
-          <p>Due to sanctions laws that help keep our marketplace safe, you'll need to let us know if you've lived in one of these places for more than 6 months in the past 10 years: Cuba, Iran, North Korea, Syria, Crimea, Donetsk People's Republic ("DNR"), or Luhansk People's Republic ("LNR"). You'll still be able to sell on Artisan Alley once we can verify that you're living somewhere else now. <a href="#">Review our Sanctions Policy</a></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-check">
-            <input onchange="showAdditionalFields('additional-fields');" class="form-check-input" type="radio" name="lived" id="yes" value="yes">
-            <label class="form-check-label" for="yes">
-              Yes
-            </label>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-check">
-            <input onchange="hideAdditionalFields('additional-fields');" class="form-check-input" type="radio" name="lived" id="no" value="no">
-            <label class="form-check-label" for="no">
-              No
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div id="additional-fields" style="display: none;">
-        <div class="row">
-          <div class="col-md-6">
-            <label for="sanctioned-region">Which sanctioned region did you live in? *</label>
-            <select id="sanctioned-region" class="form-select">
-              <option>Select region</option>
-              <!-- Add region options here -->
-            </select>
-            <span id="sanctioned-regionError" class="error-message"></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="last-day">When was the last day you lived there? *</label>
-            <div class="row">
-              <div class="col">
-                <select id="Day2" class="form-select">
-                  <option>Day</option>
-                  <option>01</option>
-                  <option>02</option>
-                  <option>03</option>
-                  <option>04</option>
-                  <option>05</option>
-                  <option>06</option>
-                  <option>07</option>
-                  <option>08</option>
-                  <option>09</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
-                  <option>15</option>
-                  <option>16</option>
-                  <option>17</option>
-                  <option>18</option>
-                  <option>19</option>
-                  <option>20</option>
-                  <option>21</option>
-                  <option>22</option>
-                  <option>23</option>
-                  <option>24</option>
-                  <option>25</option>
-                  <option>26</option>
-                  <option>27</option>
-                  <option>28</option>
-                  <option>29</option>
-                  <option>30</option>
-                  <option>31</option>
-                </select>
-                <span id="day2Error" class="error-message"></span>
-              </div>
-              <div class="col">
-                <select id="month2" class="form-select">
-                  <option>Month</option>
-                  <option value="01">January</option>
-                  <option value="02">February</option>
-                  <option value="03">March</option>
-                  <option value="04">April</option>
-                  <option value="05">May</option>
-                  <option value="06">June</option>
-                  <option value="07">July</option>
-                  <option value="08">August</option>
-                  <option value="09">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
-                </select>
-                <span id="month2Error" class="error-message"></span>
-              </div>
-              <div class="col">
-                <select id="year2" class="form-select">
-                  <option>Year</option>
-                  <option>2022</option>
-                  <option>2021</option>
-                  <option>2020</option>
-                  <option>2019</option>
-                  <option>2018</option>
-                  <option>2017</option>
-                  <option>2016</option>
-                  <option>2015</option>
-                  <option>2014</option>
-                  <option>2013</option>
-                  <option>2012</option>
-                  <option>2011</option>
-                  <option>2010</option>
-                  <option>2009</option>
-                  <option>2008</option>
-                  <option>2007</option>
-                  <option>2006</option>
-                  <option>2005</option>
-                  <option>2004</option>
-                  <option>2003</option>
-                  <option>2002</option>
-                  <option>2001</option>
-                  <option>2000</option>
-                  <option>1999</option>
-                  <option>1998</option>
-                  <option>1997</option>
-                  <option>1996</option>
-                  <option>1995</option>
-                  <option>1994</option>
-                </select>
-                <span id="year2Error" class="error-message"></span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1142,7 +977,7 @@ $page_title = "Sign In"
                 <label for="expiration-date">Expiration date *</label>
                 <div class="input-group">
                   <select class="custom-select" id="expiration-month">
-                    <option selected>Choose a month</option>
+                    <option value="99">Choose a month</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
                     <option value="03">March</option>
@@ -1157,9 +992,10 @@ $page_title = "Sign In"
                     <option value="12">December</option>
                   </select>
                   <span id="expiration-monthError" class="error-message"></span>
+                  <br>
                   <select class="custom-select" id="expiration-year">
-                    <option selected>Choose year</option>
-                    <option>year</option>
+                    <option value="99">Choose year</option>
+                    <option>Year</option>
                     <option>2022</option>
                     <option>2021</option>
                     <option>2020</option>
@@ -1192,6 +1028,7 @@ $page_title = "Sign In"
                   </select>
                   <span id="expiration-yearError" class="error-message"></span>
                 </div>
+                <span id="expiration-dateError" class="error-message"></span>
               </div>
               <div class="form-group col-md-6">
                 <label for="ccv">CCV *</label>
@@ -1209,38 +1046,58 @@ $page_title = "Sign In"
 
   </section>
 
-  <section id="addShopsection6" class="container py-5">
+  <section id="addShopsection6" class="bg-light py-5">
     <div class="container">
-      <h1>Keep your shop extra safe</h1>
-      <div class="row">
-        <div class="col-md-6">
-          <p>Set up two-factor authentication to ensure that you're the only one who can access your Artisan Alley account. Then, every time you sign in, you'll enter a unique code sent to your phone.</p>
-          <p>Heads up: Some countries may not accept SMS or phone call authentication. For the best experience, we recommend using an authenticator app.</p>
-          <p><a href="#">Learn more about two-factor authentication</a></p>
-        </div>
-        <div class="col-md-6">
-          <form>
-            <div class="form-group">
-              <label for="authMethod">Choose an option to get started</label>
-              <select class="form-control" id="authMethod">
-                <option>Email</option>
-              </select>
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="mb-4 text-center">Keep Your Shop Extra Safe</h2>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 border-end">
+                  <h4 class="mb-3">Two-Factor Authentication</h4>
+                  <p class="text-muted">Enhance your account security by setting up two-factor authentication. This ensures that only you can access your Artisan Alley account.</p>
+                  <p class="text-muted">After setup, you'll enter a unique code sent to your chosen method every time you sign in.</p>
+                  <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Some countries may not support SMS or phone call authentication. For the best experience, we recommend using an authenticator app.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h4 class="mb-3">Set Up Two-Factor Authentication</h4>
+                  <form>
+                    <div class="mb-3">
+                      <label for="authMethod" class="form-label">Choose an authentication method</label>
+                      <select class="form-select" id="authMethod">
+                        <option selected disabled value="">Select a method</option>
+                        <option value="1">Email</option>
+                        <option value="2">Authenticator App</option>
+                        <option value="3">SMS</option>
+                      </select>
+                      <span id="authMethodError" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                      <label for="emailMethod" class="form-label">Verification method</label>
+                      <select class="form-select" id="emailMethod">
+                        <option selected disabled value="">Select a verification method</option>
+                        <option value="1">Receive authentication code via Email</option>
+                      </select>
+                      <span id="emailMethodError" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email2" class="form-label">Email address</label>
+                      <input type="email" class="form-control" id="email2" placeholder="Enter your email">
+                      <span id="email2Error" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Set Up Two-Factor Authentication</button>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="smsMethod">Verify your account through</label>
-              <select class="form-control" id="emailMethod">
-                <option>Receive authentication code via Email</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Verify your account through</label>
-              <input type="text" class="email" id="email2" /> <span id="email2Error" class="error-message"></span>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-
   </section>
 
   <section id="final" class="container py-5 final">
@@ -1265,9 +1122,4 @@ $page_title = "Sign In"
       </div>
     </div>
   </div>
-
-
-
-
-
   <?php include('includes/footer.php'); ?>

@@ -15,8 +15,16 @@ $n = $resultset->num_rows;
 if ($n == 1) {
   echo "Success";
   $d = $resultset->fetch_assoc(); 
-  $name = $d['name'];
+  $name = $d['uname'];
   $_SESSION["name"] = $name;
+  $_SESSION["email"] = $d['email'];
+} else if ($n == 0) {
+  echo "Wrong email or password";
+} else {
+  echo "Error";
+}
+
+if ($n == 1) {
 
 
   if ($rememberMe == "1") {
