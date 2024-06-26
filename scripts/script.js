@@ -534,7 +534,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 3;
+var SectionNumber = 1;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {

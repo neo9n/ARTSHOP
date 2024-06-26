@@ -31,7 +31,16 @@
                     </a>
                     <div class="dropdown dropdown">
                         <div class="dropdown-content">
-                            <a href="#">Add My Store</a>
+                            <a href="addShop.php">Add My Store</a>
+                            <?php
+                            $shopSearchQuery = "SELECT * FROM `seller` WHERE ``";
+                            if (isset($_SESSION['name'])) {
+                                echo ('<a href="login.php">Sign Out</a>');
+                            } else {
+                                echo ('<a href="login.php">Login</a>');
+                                echo ('<a href="register.php">Register</a>');
+                            }
+                            ?>
                             <a href="#">Manage My Store</a>
                         </div>
                     </div>
@@ -48,6 +57,7 @@
                             if (isset($_SESSION['name'])) {
                                 echo ('<a href="login.php">Sign Out</a>');
                             } else {
+                                echo ('<a href="login.php">Login</a>');
                                 echo ('<a href="register.php">Register</a>');
                             }
                             ?>
