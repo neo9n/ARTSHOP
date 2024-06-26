@@ -1445,7 +1445,6 @@ function handleSection(page) {
     }
   } else {
     op = true;
-    CreateOrder();
     function validateBsection1() {
       op = op && validateAndAlert("country", "Please enter country");
       op = op && validateAndAlert("full-name", "Please enter full name");
@@ -1820,28 +1819,28 @@ function sendDataToPHP(data) {
   xhr.send(form);
 }
 
-function CreateOrder() {
-  alert("yes");
-  if (SectionNumber >= 2) {
-    const form = new FormData();
-    const fields = [
-      "address-country",
-      "full-name",
-      "street-address",
-      "apt-suite",
-      "city",
-      "postal-code",
-      "phone-number",
-      "nameOnCard",
-      "cardNumber",
-      "expirationDate",
-      "securityCode"
-    ];
-    fields.forEach(field => {
-      const element = document.getElementById(field);
-      form.append(field, element.value);
-    });
-    submitForm("placeOrderProcess.php", form);
-  }
+function CreateOrder(itemId) {
+  // if (SectionNumber >= 2) {
+  //   const form = new FormData();
+  //   const fields = [
+  //     "address-country",
+  //     "full-name",
+  //     "street-address",
+  //     "apt-suite",
+  //     "city",
+  //     "postal-code",
+  //     "phone-number",
+  //     "nameOnCard",
+  //     "cardNumber",
+  //     "expirationDate",
+  //     "securityCode"
+  //   ];
+  //   fields.forEach(field => {
+  //     const element = document.getElementById(field);
+  //     form.append(field, element.value);
+  //   });
+  //   form.append("itemId", itemId)
+  //   submitForm("placeOrderProcess.php", form);
+  // }
 }
 

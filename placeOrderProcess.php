@@ -43,11 +43,18 @@ VALUES
 
         if ($numRows > 0) {
             echo "Error";
+            
         } else {
             Database::iud($insertQuery);
+            $orderId= Database::getLastInsertedId();
             echo "Success";
         }
     } catch (Exception $e) {
         echo "Uncaught MySQL exception: " . $e->getMessage();
     }
+
+    //place order
+    $orderId = 
+    $itemId= $_POST['itemId'] ?? '';
+    $quantity = $_POST['qty'] ?? '';
 }

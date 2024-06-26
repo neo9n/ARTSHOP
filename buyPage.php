@@ -2,7 +2,9 @@
 session_start();
 require "connection.php";
 
-$page_title = "Sign In"
+$id = intval($_GET['item-id']);
+
+$page_title = "Place Order"
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -298,8 +300,9 @@ $page_title = "Sign In"
                 <button id="back" onclick="reverseSavencon('buypage');" class="button ">Back</button>
             </div>
             <div class="col-6 text-end">
-                <button onclick="savencon('buypage');" id="buyPageConbtn" class="button fast">Continue to Payment</button>
+                <button onclick="savencon('buypage'); CreateOrder(<?php echo $id; ?>);" id="buyPageConbtn" class="button fast">Continue to Payment</button>
             </div>
+
         </div>
     </div>
 
