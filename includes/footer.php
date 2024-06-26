@@ -56,7 +56,7 @@
     </div>
     <div class="row mt-4">
       <div class="col text-center">
-        <p>&copy; 2022 Kelectrix Design. All rights reserved.</p>
+        <p>&copy; 2024 Artisan Alley. All rights reserved.</p>
       </div>
     </div>
   </div>
