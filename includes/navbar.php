@@ -41,7 +41,7 @@
                                 echo ('<a href="register.php">Register</a>');
                             }
                             ?>
-                            <a href="#">Manage My Store</a>
+                            <a href="marketManagement.php">Manage My Store</a>
                         </div>
                     </div>
                 </li>

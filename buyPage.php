@@ -160,7 +160,6 @@ $page_title = "Place Order";
                                 <input type="checkbox" class="form-check-input" id="setDefaultBillingAddress">
                                 <label class="form-check-label" for="setDefaultBillingAddress">Set as default</label>
                             </div>
-                            <a href="#" class="btn btn-primary mt-3">Review your order</a>
                         </div>
                     </div>
                 </div>

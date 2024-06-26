@@ -34,8 +34,7 @@ Database::close();;
 <div class="container my-5">
     <div class="row">
         <div class="col-md-6">
-            <p><?php echo $location; ?></p>
-            <img src="assests/collections/20231122_093800.jpg" class="img-fluid img-preview" alt="Custom Two Name Handwriting Necklace">
+            <img src="<?php echo $location; ?>" class="img-fluid img-preview" alt="Custom Two Name Handwriting Necklace">
         </div>
         <div class="col-md-6">
             <h1><?php echo $page_title; ?></h1>
