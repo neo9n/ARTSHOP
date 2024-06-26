@@ -334,6 +334,8 @@ try {
 
 //item has keywords 
 $item_id = Database::getLastInsertedId();
+$_SESSION['item_id'] = $item_id;
+
 $keywords = explode(",", $keywords);
 
 foreach ($keywords as $keyword) {

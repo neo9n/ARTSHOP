@@ -612,7 +612,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 3;
+var SectionNumber = 1;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1270,7 +1270,8 @@ function getShopNameInfo() {
 function addShop() {
   const dataToSend = retrieveDataFromSessionStorage();
   // printSessionStorage();
-  sendDataToPHP(dataToSend);
+  sendDataToPHP(dataToSend);  
+  setPhotoes();
 }
 
 function validateAndStoreSection3Inputs() {
@@ -1305,8 +1306,6 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
-  // addShop();
-  setPhotoes();
 }
 
 function setPhotoes() {
@@ -1314,19 +1313,7 @@ function setPhotoes() {
   if (file) {
     const formData = new FormData();
     formData.append('image', file);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'addshopProcess.php', true);
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        console.log('File uploaded successfully');
-      } else {
-        console.error('An error occurred');
-      }
-    };
-    xhr.send(formData);
-  } else {
-    console.error('No file selected');
+    submitForm('addPhotoesProcess.php',formData);
   }
 }
 
@@ -1555,7 +1542,7 @@ function validateBsection2() {
 }
 
 function savencon(pageName) {
-  if (validationList(pageName)||true) {
+  if (validationList(pageName)) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
