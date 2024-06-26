@@ -1,6 +1,6 @@
 <?php
 session_start();
-$page_title = "Sign In"
+$page_title = "Sign Up"
 ?>
 <?php include('includes/header.php'); ?>
 <?php include('includes/navbar.php'); ?>
@@ -17,7 +17,7 @@ $page_title = "Sign In"
                 </div>
                 <div class="card shadow">
                     <div class="card-header">
-                        <h1 class="headings">Sign In &</h1>
+                        <h1 class="headings">Sign Up &</h1>
                         <h5>Step into the retail realm with flair</h5>
                     </div>
                     <div class="card-body">
@@ -69,7 +69,7 @@ $page_title = "Sign In"
                         </div>
                         <div class="row">
                             <div class="form-group col-6">
-                                <button onclick="signUp();" class="button alternative">Sign In</button>
+                                <button onclick="signUp();" class="button alternative">Sign Up</button>
                             </div>
                             <div class="form-group col-6 justify-content-end align-items-center d-flex">
                                 <a href="login.php" class="text-decoration-none align-content-center">Already Registered?</a>

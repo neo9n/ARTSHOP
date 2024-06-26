@@ -612,7 +612,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 1;
+var SectionNumber = 3;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1158,7 +1158,6 @@ function getRenewalOption() {
 function validationList(page) {
   let op = true;
   if (page == "addShop") {
-    alert("OK");
     const alertMsg = "You can't leave this empty";
     const validations = {
       [SECTION_1]: ["shopLanguage", "shopCountry", "shopCurrency"],
@@ -1306,17 +1305,46 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
-  sessionStorage.setItem("images", JSON.stringify(imgList));
-  sessionStorage.setItem("image", getImgLocation());
-  addShop();
+  // addShop();
+  setPhotoes();
+}
+
+function setPhotoes() {
+  const file = getImgLocation();
+  if (file) {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'addshopProcess.php', true);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log('File uploaded successfully');
+      } else {
+        console.error('An error occurred');
+      }
+    };
+    xhr.send(formData);
+  } else {
+    console.error('No file selected');
+  }
 }
 
 function getImgLocation() {
   const imageInput = document.getElementById("image");
   if (imageInput.files.length > 0) {
+    return imageInput.files[0];
+  } else {
+    return null;
+  }
+}
+
+
+function getImgLocation() {
+  const imageInput = document.getElementById("image");
+  if (imageInput.files.length > 0) {
     const file = imageInput.files[0];
-    const imageLocation = URL.createObjectURL(file);
-    return imageLocation;
+    return file;
   } else {
     return null;
   }
@@ -1527,7 +1555,7 @@ function validateBsection2() {
 }
 
 function savencon(pageName) {
-  if (validationList(pageName) || true) {
+  if (validationList(pageName)||true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
@@ -1596,6 +1624,7 @@ function loadingFunctions() {
 }
 
 function reverseSavencon(pageName) {
+  alert("NICE");
   if (SectionNumber > 1) {
     var ball = document.getElementById(pageName + "d" + SectionNumber);
     ball.style.backgroundColor = "";
