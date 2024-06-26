@@ -481,6 +481,13 @@ function moveTOPage(itemID, url) {
   // alert(url + "?item-id=" + encodeURIComponent(itemID));
   window.location.href = url + "?item-id=" + encodeURIComponent(itemID);
 }
+
+
+function moveBillingPage(itemID, url) {
+  const qty = document.getElementById("qty").innerHTML;
+  window.location.href = url + "?item-id=" + encodeURIComponent(itemID) + "&qty=" + encodeURIComponent(qty);
+}
+
 function loadImages() {
   var inputId = "images";
   const input = document.getElementById(inputId);
@@ -1820,7 +1827,7 @@ function sendDataToPHP(data) {
 }
 
 function CreateOrder(itemId) {
-  // if (SectionNumber >= 2) {
+  // if (SectionNumber > 2) {
   //   const form = new FormData();
   //   const fields = [
   //     "address-country",
@@ -1833,14 +1840,33 @@ function CreateOrder(itemId) {
   //     "nameOnCard",
   //     "cardNumber",
   //     "expirationDate",
-  //     "securityCode"
+  //     "securityCode",
   //   ];
-  //   fields.forEach(field => {
+  //   fields.forEach((field) => {
   //     const element = document.getElementById(field);
   //     form.append(field, element.value);
   //   });
-  //   form.append("itemId", itemId)
+  //   form.append("itemId", itemId);
   //   submitForm("placeOrderProcess.php", form);
   // }
+}
+
+function storeItemInSession(key, Value) {
+  sessionStorage.setItem(key, Value);
+  alert(sessionStorage.getItem(key));
+}
+
+function setQty(sign) {
+  const qtyElement = document.getElementById("qty");
+  var qty = parseInt(qtyElement.innerHTML);
+  var newValue = qty;
+  if (sign === "-") {
+    if (qty > 1) {
+      newValue = qty - 1;
+    }
+  } else {
+    newValue = qty + 1;
+  }
+  qtyElement.innerHTML = newValue;
 }
 

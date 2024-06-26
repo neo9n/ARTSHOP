@@ -40,9 +40,14 @@ Database::close();;
         <div class="col-md-6">
             <h1><?php echo $page_title; ?></h1>
             <br>
-            <p class="font-weight-bold"><?php echo $price; ?>$</p>
-            <p class="text-success">New markdown! Biggest sale in 60+ days</p>
-            <button class="btn btn-primary btn-block" onclick="moveTOPage('1','buyPage.php');">Buy it now</button>
+            <p class="text-success font-weight-bold"><?php echo $price; ?>$</p>
+            <p class="text-black">New markdown! Biggest sale in 60+ days</p>
+            <div class="d-flex align-items-center m-3">
+                <button class="button" onclick="setQty('-');">-</button>
+                <label class="form-control mx-2 text-center" style="max-width: 50px;" id="qty">1</label>
+                <button class="button" onclick="setQty('+');" >+</button>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="moveBillingPage('<?php echo $id ?>','buyPage.php');">Buy it now</button>
             <button class="btn btn-outline-secondary btn-block">Add to cart</button>
         </div>
     </div>
