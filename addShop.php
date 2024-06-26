@@ -217,8 +217,7 @@ $page_title = "Sign In"
       <div class="row">
         <div class="col-md-6">
           <h2>Photos</h2>
-          <p>Add as many as you can so buyers can see every detail.</p>
-          <p>Use up to ten photos to show your item's most important qualities.</p>
+          <p>Clear photos add clear quality.</p>
           <div class="mb-3">
             <label for="image" class="form-label">Upload an image</label>
             <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewAndCreateImages(event,this.id,'img-holder-one')">

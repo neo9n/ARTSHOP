@@ -5,6 +5,7 @@ require "connection.php";
 
 //dataSet
 $shopLanguage = $_POST["shopLanguage"];
+$img = $_POST["image"];
 $shopCurrency = $_POST["shopCurrency"];
 $brief_overview = $_POST["brief-overview"] ?? '';
 $SelCategory = $_POST["SelCategory"] ?? '';
@@ -62,6 +63,50 @@ $taxNumber = $_POST["number"];
 $swiftBic = $_POST["swift-bic"];
 $KeyWords = isset($_POST["KeyWords"]) ? $_POST["KeyWords"] : [];
 $cardId = $cardNumber;
+if (isset($_POST['images'])) {
+    $imageList = json_decode($_POST['images'], true);
+} else {
+    $imageList = [];
+}
+
+//temp
+$item_id = "3";
+
+//addPics-Sub
+foreach ($imageList as $img) {
+    $picSearchQuery = "SELECT * FROM `itempics` WHERE `location` = '$img'";
+    $picInsertQuery = "INSERT INTO `itempics` (`location`, `pic_status_id`, `item_id`) VALUES ('$img', '2', '$item_id')";
+    try {
+        $searchResult = Database::search($picSearchQuery);
+        $numRows = $searchResult->num_rows;
+        if ($numRows > 0) {
+            $row = $searchResult->fetch_assoc();
+            echo "Error";
+        } else {
+            Database::iud($picInsertQuery);
+            echo "Pass";
+        }
+    } catch (Exception $e) {
+        echo "Uncaught MySQL exception: " . $e->getMessage();
+    }
+}
+
+// add one picture
+$picSearchQuery = "SELECT * FROM `itempics` WHERE `location` = '$img'";
+$picInsertQuery = "INSERT INTO `itempics` (`location`,`pic_status_id`,`item_id`) VALUES ('$img','1','$item_id')";
+try {
+    $searchResult = Database::search($picSearchQuery);
+    $numRows = $searchResult->num_rows;
+    if ($numRows > 0) {
+        $row = $searchResult->fetch_assoc();
+        echo "Error";
+    } else {
+        Database::iud($picInsertQuery);
+        echo "Pass";
+    }
+} catch (Exception $e) {
+    echo "Uncaught MySQL exception: " . $e->getMessage();
+}
 
 //card
 $cardSearchQuery = "SELECT * FROM `cardinfo` 
@@ -298,18 +343,17 @@ foreach ($keywords as $keyword) {
         if ($numRows > 0) {
             $row = $searchResult->fetch_assoc();
             $keywordid = $row["id"];
-            echo "Keyword '$keyword' found with ID: $keywordid<br>";
+            echo "Error";
         } else {
             $keywordInsertQuery = "INSERT INTO `keywords` (`word`) VALUES ('$keyword')";
             Database::iud($keywordInsertQuery);
             $keywordid = Database::getLastInsertedId();
-            echo "Keyword '$keyword' inserted with ID: $keywordid<br>";
+            echo "Pass";
         }
 
         $newSql = "INSERT INTO `item_has_keywords` (`item_id`, `keywords_id`) VALUES ('$item_id', '$keywordid')";
         Database::iud($newSql);
-        echo "Inserted into `item_has_keywords`: item_id = $item_id, keyword_id = $keywordid<br>";
-        
+        echo "Pass";
     } catch (Exception $e) {
         echo "Uncaught MySQL exception: " . $e->getMessage() . "<br>";
     }

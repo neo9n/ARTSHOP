@@ -420,28 +420,66 @@ function previewImage(event, imageField, previewContainerId) {
   }
 }
 
+var imgList = [];
+
 function previewAndCreateImages(event, imageFieldId, previewContainerId) {
   const imageUpload = document.getElementById(imageFieldId);
   const previewContainer = document.getElementById(previewContainerId);
+
   if (event.target.files) {
     previewContainer.innerHTML = "";
+
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
       if (!file.type.match("image.*")) {
         ErrorM("Please select only image files.");
         return;
       }
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const imgURL = e.target.result;
-        createIMGBox(imgURL, previewContainerId, imageFieldId);
-      };
-      reader.readAsDataURL(file);
+
+      const objectURL = URL.createObjectURL(file);
+      createIMGBox(objectURL, previewContainerId, imageFieldId);
+
+      // Store the blob URL in the imgList array
+      imgList.push(objectURL);
     }
   } else {
     previewContainer.innerHTML = "";
   }
 }
+
+function loadImages() {
+  var inputId = 'images';
+  const input = document.getElementById(inputId);
+  const files = input.files;
+  const imgList = [];
+
+  // Use a promise to wait for all files to be read
+  const readFile = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imgList.push(e.target.result);
+        resolve();
+      };
+      reader.onerror = function (e) {
+        reject(e);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const promises = Array.from(files).map(readFile);
+
+  // Wait for all promises to resolve
+  Promise.all(promises)
+    .then(() => {
+      console.log(imgList);
+    })
+    .catch((error) => {
+      console.error('Error reading files:', error);
+    });
+}
+
 
 function previewVideo(event) {
   const videoUpload = document.getElementById("videoInput");
@@ -534,7 +572,7 @@ function retrieveDataFromSessionStorage() {
   return data;
 }
 
-var SectionNumber = 1;
+var SectionNumber = 3;
 
 function preview() {
   for (var i = 1; i <= 7; i++) {
@@ -1038,7 +1076,6 @@ function isEmpty(element) {
 
 const SECTION3 = [
   ["product-name", "Please enter the product name"],
-  ["image", "Please upload an image"],
   ["shipping-country", "Please select the Shipping countries"],
   ["images", "Please upload more pictures"],
   ["videoInput", "Please select a suitable video of your product"],
@@ -1190,9 +1227,9 @@ function getShopNameInfo() {
 }
 
 function addShop() {
-    const dataToSend = retrieveDataFromSessionStorage();
-    printSessionStorage();
-    sendDataToPHP(dataToSend);
+  const dataToSend = retrieveDataFromSessionStorage();
+  // printSessionStorage();
+  sendDataToPHP(dataToSend);
 }
 
 function validateAndStoreSection3Inputs() {
@@ -1227,7 +1264,19 @@ function validateAndStoreSection3Inputs() {
   sessionStorage.setItem("shopingOption", getShopingOption());
   sessionStorage.setItem("itemtype", getItemtype());
   sessionStorage.setItem("shippingCountryId", getShippingCountryId());
+  sessionStorage.setItem('images', JSON.stringify(imgList));
   addShop();
+}
+
+function getImgLocation() {
+  const imageInput = document.getElementById('image');
+  if (imageInput.files.length > 0) {
+    const file = imageInput.files[0];
+    const imageLocation = URL.createObjectURL(file);
+    return imageLocation;
+  } else {
+    return null;
+  }
 }
 
 function getShippingCountryId() {
@@ -1360,7 +1409,7 @@ function handleSection() {
 }
 
 function savencon(pageName) {
-  if (validationList()||true) {
+  if (validationList() || true) {
     const element = document.getElementById(pageName + "d" + SectionNumber);
     if (element) {
       element.style.backgroundColor = "";
